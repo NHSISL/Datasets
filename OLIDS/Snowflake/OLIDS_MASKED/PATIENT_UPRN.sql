@@ -1,0 +1,20 @@
+create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.PATIENT_UPRN (
+	"lds_id" VARCHAR(16777216),
+	"id" VARCHAR(16777216),
+	"lds_dataset_id" VARCHAR(16777216),
+	"lds_datetime_data_acquired" TIMESTAMP_NTZ(9),
+	"lds_start_date_time" TIMESTAMP_NTZ(9),
+	"registrar_event_id" VARCHAR(16777216),
+	"masked_uprn" VARCHAR(16777216),
+	"masked_upsn" VARCHAR(16777216),
+	"masked_postcode" VARCHAR(16777216),
+	"address_format_quality" VARCHAR(16777216),
+	"post_code_quality" VARCHAR(16777216),
+	"matched_with_assign" VARCHAR(16777216),
+	"qualifier" VARCHAR(16777216),
+	"classification" VARCHAR(16777216),
+	"algorithm" VARCHAR(16777216),
+	"match_pattern" VARCHAR(16777216),
+	"unstructured_postal_address" VARCHAR(16777216),
+	"lds_end_date_time" TIMESTAMP_NTZ(9)
+);
