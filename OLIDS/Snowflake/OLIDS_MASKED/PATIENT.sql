@@ -1,0 +1,22 @@
+create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.PATIENT (
+	"lds_id" VARCHAR(16777216),
+	"id" VARCHAR(16777216),
+	"lds_business_key" VARCHAR(16777216),
+	"lds_dataset_id" VARCHAR(16777216),
+	"lds_datetime_data_acquired" TIMESTAMP_NTZ(9),
+	"lds_start_date_time" TIMESTAMP_NTZ(9),
+	"record_owner_organisation_code" VARCHAR(16777216),
+	"nhs_number_hash" BINARY(8388608),
+	"sk_patient_id" NUMBER(38,0),
+	"title" VARCHAR(16777216),
+	"gender_concept_id" VARCHAR(16777216),
+	"registered_practice_id" VARCHAR(16777216),
+	"birth_year" NUMBER(38,0),
+	"birth_month" NUMBER(38,0),
+	"death_year" NUMBER(38,0),
+	"death_month" NUMBER(38,0),
+	"is_confidential" BOOLEAN,
+	"is_dummy_patient" BOOLEAN,
+	"is_spine_sensitive" BOOLEAN,
+	"lds_end_date_time" TIMESTAMP_NTZ(9)
+);
