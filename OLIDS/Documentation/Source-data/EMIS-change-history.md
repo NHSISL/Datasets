@@ -8,8 +8,8 @@ The following change history is provided as reported by EMIS.
   - [Contents](#contents)
   - [Version 5.2 - 5.5](#version-5.2---5.5)
   - [Version 6.0](#version-6.0)
-  - [Version 7.0](#version-7.0)
-  - [Version 8.0](#version-8.0)
+  - [Version 7.0 - 7.1](#version-7.0---7.1)
+  - [Version 8.0 - 8.2](#version-8.0---8.2)
 
 ## Version 5.2 - 5.5
 
@@ -45,15 +45,17 @@ The following change history is provided as reported by EMIS.
 | --- | --- | --- |
 | 26/03/2020 | Added value for ""example data"" column for CareRecord_Observation  - AssociatedText CareRecord_problem – Comment | 6 |
 
-## Version 7.0
+## Version 7.0 - 7.1
 
 | Date | Description | Version |
 | --- | --- | --- |
 | 28/08/2020 | <span>Updated previous_location mapping for the below columns in:<br>CareRecord_ObservationReferral --<br>ReferralReceivedDate*<br>ReferralReceivedTime*<br>ReferralEndDate*<br>ReferralSourceId*<br>ReferralSourceOrganisationGuid*<br>ReferralReasonCodeId*<br>ReferringCareProfessionalStaffGroupCodeId*<br>ReferralEpisodeRTTMeasurementTypeId*<br>ReferralEpisodeClosureDate*<br>ReferralEpisodeDischargeLetterIssuedDate*<br>ReferralClosureReasonCodeId*<br>Coding_ClinicalCode --<br>CodeId<br>Term<br>ReadTermId<br>SnomedCTConceptId<br>SnomedCTDescriptionId<br>EmisCodeCategoryDescription<br>ParentCodeID<br>Updated excel cell format of ""example data"" column in<br>CareRecord_Diary -- CareRecord.Diary.AssociatedText<br>CareRecord_Observation -- CareRecord.Observation.AssociatedText<br>CareRecord_Problem -- CareRecord.Diary.Comment</span> | 7 |
 | 16/04/2021 | Removed: CareRecord_Diary.. AssociatedText, CareRecord_Observation.AssociatedText, CareRecord_Problem.Comment fields removed - undergoing Information Governance review | 7.1 |
 
-## Version 8.0
+## Version 8.0 - 8.2
 
 | Date | Description | Version |
 | --- | --- | --- |
 | 05/04/2023 | - New table Admin_PatientHistory<br>- Added RegistrationNumber to Admin_UserInRole.<br>- Added ContactComments to Admin_Patient. <br>- Added BookedDate, BookedTime and SlotType to Appointment_Slot.<br>- ConsultationType added to CareRecord_Consultation.  <br>- Qualifiers, Abnormal, AbnormalReason and Episodicity added to CareRecord_Observation<br>- TransportRequired, ReferralTargetClinician and ReferralTargetDepartment added to CareRecord_ObservationReferral<br>- BNFChapterRef added to Coding_DrugCode<br>- EmisCode, PatientMessage, ScriptPharmacyStamp, Compliance, AverageCompliance, IsPrescribedAsContraceptive, IsPrivatelyPrescribed, PharmacyMessage, PharmacyText, ConsultationGuid added to Prescribing_IssueRecord<br>- Added: CareRecord_Diary.AssociatedText, CareRecord_Observation.AssociatedText, CareRecord_Problem.Comment fields | 8 |
+|24/04/2024	| • Coding_DrugCode table - BNFChapterRef discontinued and replaced with NULL values<br>• ExpiryDate field discontinued in Issue_Record table and replaced with NULL values<br>• ExpiryDate field added to Drug_Record table | 8.1 |
+| 13/02/2025 | • Added columns to the appointment slot table:  Isblocked, NationalSlotCategoryName, ContextType, ServiceSetting.<br>• Added issuemethodDescription to issue record table.	| 8.2 |
