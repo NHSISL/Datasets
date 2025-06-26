@@ -9,6 +9,8 @@
     - [medication\_order](#medication_order)
     - [medication\_statement](#medication_statement)
     - [observation](#observation)
+    - [person](#person)
+    - [person\_address (masked)](#person_address-(masked))
 
 
 The below is a report of the currently known issues within the One London Integrated Data Set (OLIDS)
@@ -50,3 +52,11 @@ The below is a report of the currently known issues within the One London Integr
 - the field `observation_core_concept_id` is reflective of the source datas encoding (or surrogate key value) and is therefore a **raw** concept. This should be relabelled as such. This will be relabelled as `observation_raw_concept_id` and will replace the existing field of the same name.
 - the field `is_problem` is **not** defined correctly and will display `TRUE/1` for all records.
 - the field `is_primary` is **not** defined correctly and will display `FALSE/0` for all records.
+
+### person
+
+- the field `organisation_id` is missing.
+
+### person_address (masked)
+
+- the field `organisation_id` is missing.

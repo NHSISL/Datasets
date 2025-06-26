@@ -397,3 +397,123 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `close_date` | date(0) |  | Date the organisation closed (maximum of operational or legal dates) |  | <none> |
 | `is_obsolete` | bit |  | Is the organisation closed |  | <none> |
 
+### patient (masked)
+
+| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | 'Unique Id of the patient' |  | id |
+| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
+| `lds_dataset_id` | tinyint |  | LDS assigned identifier for the source dataset |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | <none> |
+| `nhs_number_hash` | binary(32) |  | internal irreversible hash of the patient NHS number |  | <none> |
+| `sk_patient_id` | int |  | Consistent LDS pseudonym for secondary care planning purposes |  | <none> |
+| `title` | varchar(50) |  | 'The title of the patient' |  | <none> |
+| `gender_concept_id` | uniqueidentifier |  | 'Reference to the gender of the patient' |  | <none> |
+| `registered_practice_id` | uniqueidentifier |  | LDS assigned identifier for patient's registered practice |  | <none> |
+| `birth_year` | int |  | year of the date of birth |  | <none> |
+| `birth_month` | int |  | month of the date of birth |  | <none> |
+| `death_year` | int |  | year of the date of death |  | <none> |
+| `death_month` | int |  | month of the date of death |  | <none> |
+| `is_confidential` | bit |  | true/false - is the observation marked as confidential/sensitive |  | <none> |
+| `is_dummy_patient` | bit |  | true/false - is the patient flagged or denoted as a test patient in the source system |  | <none> |
+| `is_spine_sensitive` | bit |  | true/false - is the patient marked as spine sensitive |  | <none> |
+| `lds_end_date_time` | datetime(3) |  | LDS datetime stamp from which the record version no longer correct/latest |  | <none> |
+
+### patient_address (masked)
+
+| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | 'Unique Id of the address' |  | id |
+| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
+| `lds_dataset_id` | tinyint |  | LDS assigned identifier for the source dataset |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | organization_id |
+| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
+| `address_type_concept_id` | uniqueidentifier |  | Type of address (i.e. Temporary, Correspondence only, Home) |  | use_concept_id |
+| `post_code_hash` | binary(32) |  | The postcode of the address - hashed |  | postcode |
+| `start_date` | datetime(3) |  | 'The start date of this address being relevant' |  | start_date |
+| `end_date` | datetime(3) |  | 'The end date of this address being relevant' |  | end_date |
+| `lds_end_date_time` | datetime(3) |  | LDS datetime stamp from which the record version no longer correct/latest |  | <none> |
+| `person_id` | uniqueidentifier |  | the unique identifier for the person |  | person_id |
+
+### patient_contact (masked)
+
+| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | 'Unique Id of the patient contact' |  | id |
+| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_dataset_id` | tinyint |  | LDS assigned identifier for the source dataset |  | <none> |
+| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | organization_id |
+| `person_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | person_id |
+| `patient_id` | varchar(255) |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `description` | varchar(255) |  | <to be confirmed> |  | <none> |
+| `contact_type_concept_id` | varchar(255) |  | use of contact (e.g. mobile, home,work' (Combines type into single concept) |  | use_concept_id |
+| `start_date` | varchar(255) |  | 'The start date of the contact being valid' |  | start_date |
+| `end_date` | varchar(255) |  | 'The end date of the contact being valid' |  | end_date |
+
+### patient_person
+
+| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | Unique identifier for the patient to practitioner relationship |  | <none> |
+| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `lds_end_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was superseded |  | <none> |
+| `lds_dataset_id` | tinyint |  | LDS assigned identifier for the source dataset |  | <none> |
+| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | <none> |
+| `person_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | <none> |
+
+### patient_registered_practitioner_in_role
+
+| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | Unique identifier for the patient to practitioner relationship |  | <none> |
+| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
+| `lds_is_deleted` | bit |  | LDS marker for the deleted state of the record (should be false/0 in all subscribed cases) |  | <none> |
+| `lds_dataset_id` | uniqueidentifier | the identifier for the source of the data |  | <none> |
+| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `person_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | <none> |
+| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | <none> |
+| `organisation_id` | uniqueidentifier |  | 'Owning organisation (i.e. publisher)' |  | <none> |
+| `practitioner_id` | uniqueidentifier |  | The clinician the episode of care is registered under' |  | <none> |
+| `episode_of_care_id` | uniqueidentifier |  | The episode of care (registration to service provider) that the patient is recorded under with this practitioner/clinician |  | <none> |
+| `start_date` | datetime(3) |  | start date of the relationship between patient and practitioner |  | <none> |
+| `end_date` | datetime(3) |  | end date of the relationship between patient and practitioner |  | <none> |
+
+### patient_uprn (masked)
+
+| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `LakehouseDateProcessed` | date(0) |  |  |  |  |
+| `LakehouseDateTimeUpdated` | datetime(3) |  |  |  |  |
+| `LDSIsDeleted` | bit |  |  |  |  |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | Unique Id of the patient uprn match' |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `registrar_event_id` | uniqueidentifier |  | LDS processing event identifier for the processing of the uprn match |  | <none> |
+| `masked_uprn` | varchar(255) |  | the matched unique property reference number, with hashing applied |  | <none> |
+| `masked_upsn` | varchar(255) |  | the matched unique street reference number, with hashing applied |  | <none> |
+| `masked_postcode` | varchar(255) |  | the masked input postcode |  | <none> |
+| `address_format_quality` | varchar(255) |  | The quality of the input address (i.e. 'good') |  | <none> |
+| `post_code_quality` | varchar(255) |  | The quality of the input postcode (i.e. 'good') |  | <none> |
+| `matched_with_assign` | varchar(255) |  | True/false - was a match possible |  | <none> |
+| `qualifier` | varchar(255) |  | type of matched address (residential, child) |  | <none> |
+| `classification` | varchar(255) | <to be confirmed> | <to be confirmed> |  | <none> |
+| `algorithm` | varchar(255) | <to be confirmed> | <to be confirmed> |  | <none> |
+| `match_pattern` | varchar(255) | <to be confirmed> | <to be confirmed> |  | <none> |
+| `unstructured_postal_address` | varchar(255) | MUST BE REMOVED | The full input address as a string |  | <none> |
+| `lds_end_date_time` | datetime(3) |  | Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre |  | <none> |
