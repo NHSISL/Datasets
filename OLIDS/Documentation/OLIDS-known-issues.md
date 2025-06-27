@@ -11,6 +11,10 @@
     - [observation](#observation)
     - [person](#person)
     - [person\_address (masked)](#person_address-(masked))
+    - [person (masked)](#person-(masked))
+    - [practitioner](#practitioner)
+    - [procedure\_request](#procedure_request)
+    - [referral\_request](#referral_request)
 
 
 The below is a report of the currently known issues within the One London Integrated Data Set (OLIDS)
@@ -20,6 +24,7 @@ The below is a report of the currently known issues within the One London Integr
 ### general
 
 - There is general inconsistency of the inclusion or exclusion of the fields `lds_start_date_time` and `lds_end_date_time`. These fields are system fields to denote the lifespan of the version of the record with the stated business key. They are of no value for analytical purposes. As such we will likely remove these in future releases.
+- There is a general inconsistency of the inclusion of exclusion of the fields `lds_is_deleted` and `is_deleted`. The former is the dataset agnostic deletion indicator, the latter is the dataset source systems own indicator. In relational stores the service will be applying deletions and hence all records will be in an active state only. This therefore means that these fields may not be required and may simply cause confusion by their inclusion in the tables. As such we will likely remove these in future releases.
 
 ### allergy_intolerance
 
@@ -60,3 +65,25 @@ The below is a report of the currently known issues within the One London Integr
 ### person_address (masked)
 
 - the field `organisation_id` is missing.
+
+### person (masked)
+
+- `primary_patient_id` is incorrectly labelled as `LDSBusinessId_PrimaryPatient`.
+- `matched_nhs_number_hash` is missing an underscore, and is incorrectly shown as `matched_nhs_numberhash`
+
+### practitioner
+
+- the field `organisation_id` is missing.
+
+### procedure_request
+
+- the field `procedure_core_concept_id` is a reflection of the source datas encoding (or surrogate key), and should be labelled as such as a **raw** concept. This field will be relabelled to `procedure_raw_concept_id`
+- the field `organisation_id` is missing.
+- the field `status_concept_id` is a reflection of the source datasets representation of the concept, but does undergo transformation to standardise this representation (expressed as boolean columns in the source). It will be confirmed whether this should be relabelled as **raw** or left as is.
+
+### referral_request
+
+- the field `referral_request_priority_concept_id` is reflective of the source datasets coding system and is therefore a **raw** concept. This should be relabelled as such. This field will be relabbeld as `referral_request_priority_raw_concept_id` at a later release.
+- the field `referal_request_type_concept_id` is reflective of the source datasets coding system and is therefore a **raw** concept. This should be relabelled as such. This field will be relabbeld as `referral_request_type_raw_concept_id` at a later release.
+- the field `referral_request_specialty_concept_id` is reflective of the source datasets coding system and is therefore a **raw** concept. This should be relabelled as such. This field will be relabbeld as `referral_request_specialty_raw_concept_id` at a later release.
+- the field `encounter_id` is currently hardcoded to `null` for all EMIS data. We will investigate if it is possible to map this safely in a future release (using the `CareRecord_Observation` field `ConsultationGuid`, which is a foreign key to the table `CareRecord_Consultation` which is used to populate the `encounter` OLIDS table)
