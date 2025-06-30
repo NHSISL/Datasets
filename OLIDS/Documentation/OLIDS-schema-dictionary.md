@@ -481,7 +481,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `id` | uniqueidentifier |  | Unique identifier for the patient to practitioner relationship |  | <none> |
 | `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
 | `lds_is_deleted` | bit |  | LDS marker for the deleted state of the record (should be false/0 in all subscribed cases) |  | <none> |
-| `lds_dataset_id` | uniqueidentifier | the identifier for the source of the data |  | <none> |
+| `lds_dataset_id` | uniqueidentifier |  | the identifier for the source of the data |  | <none> |
 | `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | <none> |
 | `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
 | `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
@@ -664,6 +664,18 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_private` | bit |  | true/false - is the schedule marked as private |  | <none> |
 
 ### schedule_practitioner
+
+| Column Name | Data Type | Status | Comment | Foreign Key Reference | Compass Equivalent |
+| --- | --- | ---- | ---- | ---- | ---- |
+| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
+| `id` | uniqueidentifier |  | Unique identifier for this practitioner to schedule relation |  | <none> |
+| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
+| `lds_dataset_id` | tinyint |  | LDS assigned identifier for the source dataset |  | <none> |
+| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | <none> |
+| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
+| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  | <none> |
+| `schedule_id` | uniqueidentifier |  | Reference to the schedule |  | <none> |
+| `practitioner_id` | uniqueidentifier |  | Reference to the practitioner |  | <none> |
 
 ## [OLIDS_PCD] Schema
 
