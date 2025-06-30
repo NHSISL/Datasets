@@ -302,7 +302,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  | <none> |
 | `id` | uniqueidentifier |  | 'Unique Id of the medication' |  | id |
 | `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  | <none> |
-| `lds_is_deleted` | bit |  | supplier agnostic representaiton of whether the record is deleted |  | <none> |
+| `lds_is_deleted` | bit |  | supplier agnostic representation of whether the record is deleted |  | <none> |
 | `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | <none> |
 | `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  | <none> |
 | `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  | <none> |
@@ -321,7 +321,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `medication_statement_core_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the medication' |  | non_core_concept_id |
 | `clinical_effective_date` | datetime(3) |  | 'The date the medication was clinical relevant' |  | clinical_effective_date |
 | `cancellation_date` | datetime(3) |  | 'The date the medication was cancelled' |  | cancellation_date |
-| `dose` | varchar(1000) |  | 'Texual description of the dose of the medication' |  | dose |
+| `dose` | varchar(1000) |  | 'Textual description of the dose of the medication' |  | dose |
 | `quantity_value_description` | varchar(500) |  | 'The value of the medication that was prescribed eg 50' |  | <none> |
 | `quantity_value` | float |  | 'The value of the medication that was prescribed eg 50' |  | quantity_value |
 | `quantity_unit` | varchar(255) |  | 'The unit of the medication that was prescribed eg tablets' |  | quantity_unit |
