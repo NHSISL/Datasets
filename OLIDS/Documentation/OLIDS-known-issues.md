@@ -16,7 +16,6 @@
     - [procedure\_request](#procedure_request)
     - [referral\_request](#referral_request)
 
-
 The below is a report of the currently known issues within the One London Integrated Data Set (OLIDS)
 
 ## Schema issues
