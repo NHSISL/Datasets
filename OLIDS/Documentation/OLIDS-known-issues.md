@@ -22,6 +22,12 @@ The below is a report of the currently known issues within the One London Integr
 
 ### general
 
+- The following tables are not populated:
+  - `PATIENT_CONTACT` - this is due to a misconfiguration of the transforms. This will be resolved in a subsequent release.
+  - `PATIENT_PERSON` - this is due to a PDS tracing misconfiguration. This will be resovled in a subsequent release.
+  - `PERSON` - this is due to a PDS tracing misconfiguration. This will be resolved in a subsequent release.
+  - `PATIENT_UPRN` - this is due to Address tracing not yet being enabled. This will be resolved in a subsequent release.
+  - `FLAG` - this is because there is currently no mapping from EMIS data to the flag table.
 - There is general inconsistency of the inclusion or exclusion of the fields `lds_start_date_time` and `lds_end_date_time`. These fields are system fields to denote the lifespan of the version of the record with the stated business key. They are of no value for analytical purposes. As such we will likely remove these in future releases.
 - There is a general inconsistency of the inclusion of exclusion of the fields `lds_is_deleted` and `is_deleted`. The former is the dataset agnostic deletion indicator, the latter is the dataset source systems own indicator. In relational stores the service will be applying deletions and hence all records will be in an active state only. This therefore means that these fields may not be required and may simply cause confusion by their inclusion in the tables. As such we will likely remove these in future releases.
 
