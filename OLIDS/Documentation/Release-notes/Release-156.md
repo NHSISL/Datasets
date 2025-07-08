@@ -49,14 +49,14 @@ The below is a summary of the changes from release 154 (previous pre-production 
 - Added or amended priority condition in OLIDS masked and PCD views for improved data joins. *[SQL, !2211, #22726]*
     > 🐞 ***Fixes**: This fixes an issue that prevents the population of person_id values from OLIDS tables. This is a fix for one cause of / factor impeding this issue. Please note however that Person_ID and person related objects will remain unpopulated at this time.*
 
-- Added dummy `CDM_masked.PatientPerson` procedure to prevent failures in Common Model Loop Tables activities. This was preventing the processing of the patient person tables within the common data model processing. *[SQL, !2208, #22709]* 
+- Added dummy `CDM_masked.PatientPerson` procedure to prevent failures in Common Model Loop Tables activities. This was preventing the processing of the patient person tables within the common data model processing. *[SQL, !2208, #22709]*
     > 🐞 ***Fixes**: This will unblock the processing of OLIDS PatientPerson objects. This is a fix for one cause of / factor impeding this issue. Please note however that Person_ID and person related objects will remain unpopulated at this time.*
 
 - Fixed issue where dynamic SQL 'COPY INTO' returned NULL row counts for new label queries, resolving data load failures into Versioner and CommonModel Synapse databases. *[SQL, !2244, #22932, #22937]*
     > 🐞 ***Fixes**: This fixes an issue encountered when loading real data for the first time.*
 
 - Fixed EMIS PatientAddress Transform view to use hashed postcode for PostCodeHash. *[SQL, !2231, #22862]*
-    > 🐞 ***Fixes**: hashed postcode was previously coded as a placeholder 'null' value.*
+    > 🐞 ***Fixes**: hashed postcode was previously coded as a placeholder 'null' value. This fixes Issue [#14: PATIENT_ADDRESS: Post_code_hash is always NULL](https://github.com/NHSISL/Datasets/issues/14)*
 
 - Fixed event ID parameter name error in Common Model Queue Files pipeline, preventing repeated pipeline runs. *[SynapseWorkspace, !2228, #22782]*
     > 🐞 ***Fixes**: This fixes an issue that caused a pipeline to hang continuously waiting for a pipeline that would never end.*
