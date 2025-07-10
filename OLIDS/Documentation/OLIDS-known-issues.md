@@ -15,6 +15,7 @@
     - [practitioner](#practitioner)
     - [procedure\_request](#procedure_request)
     - [referral\_request](#referral_request)
+    - [person (pcd)](#person-(pcd))
 
 The below is a report of the currently known issues within the One London Integrated Data Set (OLIDS)
 
@@ -92,3 +93,15 @@ The below is a report of the currently known issues within the One London Integr
 - the field `referal_request_type_concept_id` is reflective of the source datasets coding system and is therefore a **raw** concept. This should be relabelled as such. This field will be relabbeld as `referral_request_type_raw_concept_id` at a later release.
 - the field `referral_request_specialty_concept_id` is reflective of the source datasets coding system and is therefore a **raw** concept. This should be relabelled as such. This field will be relabeled as `referral_request_specialty_raw_concept_id` at a later release.
 - the field `encounter_id` is currently hardcoded to `null` for all EMIS data. We will investigate if it is possible to map this safely in a future release (using the `CareRecord_Observation` field `ConsultationGuid`, which is a foreign key to the table `CareRecord_Consultation` which is used to populate the `encounter` OLIDS table)
+
+### person (pcd)
+
+- the birth date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar) is applied.
+- the birth week (iso) is not currently derived.
+- the death date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar)is applied.
+- the death week (iso) is not currently derived.
+- the following fields are labelled by PDS as to be ignored, but are still currently displayed in the person object, these will be removed in a subsequent release:
+  - `as_at_date`
+  - `local_patient_id`
+  - `internal_id`
+  - `mps_id`
