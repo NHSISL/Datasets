@@ -48,7 +48,7 @@
   > 🐞 ***Fixes***: This fixes [GitHub issue #17: Person table is empty](https://github.com/NHSISL/Datasets/issues/17) due to missing dataset ID value from registrar responses.
 
 - Addressed issue causing EpisodeOfCare records to be missing for some patients, ensuring all EMIS patients have at least one episode of care. *[SQL, PR2267, WI22886]*
-  > 🐞 ***Fixes***: This fixes [Github issue #16: Not all patients have an episode of care record](https://github.com/NHSISL/Datasets/issues/16)
+  > 🐞 ***Fixes***: This fixes [GitHub issue #16: Not all patients have an episode of care record](https://github.com/NHSISL/Datasets/issues/16)
 
 - Removed CDM_pcd tables from reports to prevent downstream processing issues when tables are empty. *[SQL, PR2272]*
   > 🐞 ***Fixes***: This fixes issue with concept map reporting, which was blocked by empty PCD tables
@@ -57,7 +57,7 @@
     > 🐞 ***Fixes***: This fixes DevOps item [RegistrarAddressRequest CSVs have formatting error](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/23237) causing issue with integration with the Assign Address Matching Service, otherwise preventing processing of UPRN address matching.
 
 - Fixed issue where filters on deleted records in left joins were inadvertently removing valid references, resolving orphaned observation records. *[SQL, PR2254, WI22763, WI22809]*
-  > 🐞 ***Fixes***: This fixes [Github issue #21: Orphaned Observation records](https://github.com/NHSISL/Datasets/issues/21)
+  > 🐞 ***Fixes***: This fixes [GitHub issue #21: Orphaned Observation records](https://github.com/NHSISL/Datasets/issues/21)
 
 - Removed UnstructuredPostalAddress from masked PatientUPRN objects as it was redacted and not useful. *[SQL, PR2256, WI23060]*
   > 🐞 ***Fixes***: This fixes issue with presence of PCD field in the planned masked UPRN output.
@@ -72,4 +72,4 @@
   > 🐞 ***Fixes***: Unable to deploy salted Hash lookup to SQL Serverless Pools
 
 - Fixed issue with file validator not removing invalid rows when no replacement values were specified. *[SynapseWorkspace, PR2258, WI22336]*
-  > 🐞 ***Fixes***: DevOps [item 22205: TC05_FV: File Validator Invalid Data - mismatching data datatype failed](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/22205) 
+  > 🐞 ***Fixes***: DevOps [item 22205: TC05_FV: File Validator Invalid Data - mismatching data datatype failed](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/22205)
