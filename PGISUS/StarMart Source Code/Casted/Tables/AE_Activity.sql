@@ -1,0 +1,10 @@
+CREATE TABLE [Casted].[AE_Activity] (
+	[Generated Record ID] BIGINT NOT NULL
+	,[ActivityDate] DATE NOT NULL
+	,[ActivityPeriod] INT NOT NULL
+	,CONSTRAINT [PK_Casted_AE_Activity] PRIMARY KEY NONCLUSTERED ([Generated Record ID] ASC) NOT ENFORCED
+	)
+	WITH (
+			CLUSTERED COLUMNSTORE INDEX
+			,DISTRIBUTION = ROUND_ROBIN
+			);
