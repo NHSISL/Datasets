@@ -77,8 +77,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_review` | bit | Is this instance of the code a review of a previous encounter |  | `is_review` |
 | `medication_name` | varchar(255) | Reference to the clinical name of the medication the patient has an allergy to |  |  |
 | `multi_lex_action` | varchar(25) |  |  | |
-| `allergy_intolerance_core_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy |  |  |
-| `allergy_intolerance_raw_concept_id` | uniqueidentifier | Reference to the MultiLex Action clinical coding of the allergy (TPP only) |  |  |
+| `allergy_intolerance_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier |  |  |
 | `age_at_event` | int | The age the patient was at the time of this event |  | |
 | `age_at_event_baby` | int |  The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
 | `age_at_event_neonate` | int |The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
@@ -185,8 +184,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_problem` | bit | Whether the observation is marked as a problem |  | is_problem |
 | `is_review` | bit | Whether the observation is a review of an existing problem |  | is_review |
 | `problem_end_date` | datetime(3) | 'The end date of the problem' |  | problem_end_date |
-| `diagnostic_order_core_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the result' |  | core_concept_id |
-| `diagnostic_order_raw_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the result' |  | non_core_concept_id |
+| `diagnostic_order_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the result provided by the supplier' |  | raw_concept_id |
 | `age_at_event` | int | 'The age of the patient at the time of the observation' |  | age_at_event |
 | `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
@@ -220,7 +218,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `clinical_effective_date` | datetime(3) |  | 'The date the clinical code is recorded for' |  | clinical_effective_date |
 | `date_precision_concept_id` | int |  | 'Reference to the precision of the date of the encounter' |  | date_precision_concept_id |
 | `location` | varchar(200) |  | Reference to the location that the encounter took place at' |  | institution_location_id |
-| `encounter_core_concept_id` | uniqueidentifier |  | 'Reference to the type of encounter' |  | non_core_concept_id |
+| `encounter_source_concept_id` | uniqueidentifier |  | 'Reference to the type of encounter' |  | non_core_concept_id |
 | `age_at_event` | int |  | 'The age the patient was when this encounter took place' |  | age_at_event |
 | `age_at_event_baby` | int |  | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
 | `age_at_event_neonate` | int |  | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
@@ -251,8 +249,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `organisation_id` | uniqueidentifier |  | 'Owning organisation (i.e. publisher)' |  | organization_id |
 | `patient_id` | uniqueidentifier |  | 'The patient this event belongs to' |  | patient_id |
 | `person_id` | uniqueidentifier |  | 'The person this event belongs to' |  | person_id |
-| `episode_type_raw_concept_id` | uniqueidentifier |  | 'Reference to the registration type of the patient' |  | registration_type_concept_id |
-| `episode_status_raw_concept_id` | uniqueidentifier |  | 'Reference to the registration status of the patient' |  | registration_status_concept_id |
+| `episode_type_source_concept_id` | uniqueidentifier |  | 'Reference to the registration type of the patient' |  | registration_type_concept_id |
+| `episode_status_source_concept_id` | uniqueidentifier |  | 'Reference to the registration status of the patient' |  | registration_status_concept_id |
 | `episode_of_care_start_date` | datetime(3) |  | The date the episode of care started' |  | date_registered |
 | `episode_of_care_end_date` | datetime(3) |  | The date the episode of care ended' |  | date_registered_end |
 | `care_manager_practitioner_id` | uniqueidentifier |  | 'Reference to the usual GP for this episode of care' |  | usual_gp_practitioner_id |
@@ -372,7 +370,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `duration_days` | int | 'How many days the medication is prescribed for' |  | duration_days |
 | `estimated_cost` | float | 'The estimated cost of the medication' |  | estimated_cost |
 | `medication_name` | varchar(500) | The name of the medication in the order |  |  |
-| `medication_order_core_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the medication' |  | non_core_concept_id |
+| `medication_order_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the medication provided by the supplier' |  | non_core_concept_id |
 | `bnf_reference` | varchar(10) | 'Reference to the clinical coding of the medication' |  | bnf_reference |
 | `age_at_event` | int | 'The age the patient was at the time of this event' |  | age_at_event |
 | `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
@@ -410,7 +408,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `referral_request_id` | uniqueidentifier |  | Reference to referral requests attached to this medication order |  |  |
 | `authorisation_type_concept_id` | int |  | 'Reference to the authorisation type' |  | authorisation_type_concept_id |
 | `date_precision_concept_id` | int |  | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' |  | date_precision_concept_id |
-| `medication_statement_core_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the medication' |  | non_core_concept_id |
+| `medication_statement_source_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the medication provided by the supplier' |  | non_core_concept_id |
 | `clinical_effective_date` | datetime(3) |  | 'The date the medication was clinical relevant' |  | clinical_effective_date |
 | `cancellation_date` | datetime(3) |  | 'The date the medication was cancelled' |  | cancellation_date |
 | `dose` | varchar(1000) |  | 'Textual description of the dose of the medication' |  | dose |
@@ -460,8 +458,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_problem` | bit |  | 'Whether the observation is marked as a problem' |  | is_problem |
 | `is_review` | bit |  | 'Whether the observation is a review of an existing problem' |  | is_review |
 | `problem_end_date` | datetime(3) |  | 'The end date of the problem' |  | problem_end_date |
-| `observation_raw_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the observation' |  | non_core_concept_id |
-| `observation_core_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the observation' |  | core_concept_id |
+| `observation_source_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the observation provide by the supplier' |  | non_core_concept_id |
 | `age_at_event` | int |  | 'The age of the patient at the time of the observation' |  | age_at_event |
 | `age_at_event_baby` | int |  | 'The age of the patient at the time of the observation' |  | age_at_event |
 | `age_at_event_neonate` | int |  | 'The age of the patient at the time of the observation' |  | age_at_event |
@@ -655,7 +652,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `requesting_patient_record_id` | uniqueidentifier | the record identifier for the patient information that was used to trace the patient |  |  |
 | `unique_reference` | uniqueidentifier | the unique identifier for the tracing request | |  |
 | `requesting_nhs_number_hash` |  binary(32) | the hash of the requesting NHS number for tracing | |  |
-| `sensivitiy_flag` | char(1) | the returned value of the sensitivity of the patient |  |  |
+| `sensivity_flag` | char(1) | the returned value of the sensitivity of the patient |  |  |
 | `matched_algorithm_indicator` | char(1) | reference to the algorithm used to match the patient |  |  |
 | `requesting_patient_id` | uniqueidentifier | reference to the patient that holds the details used in the trace |  |  |
 
@@ -725,7 +722,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `date_precision_concept_id` | int | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' |  | date_precision_concept_id |
 | `date_recorded` | datetime(3) | 'The date the procedure was recorded in the source system' |  | date_recorded |
 | `description` | varchar(255) | procedure request description |  |  |
-| `procedure_core_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the procedure' |  | non_core_concept_id |
+| `procedure_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the procedure' |  | non_core_concept_id |
 | `status_concept_id` | uniqueidentifier | 'Reference to the status of the procedure' |  | status_concept_id |
 | `age_at_event` | int | 'The age of the patient at the time of the procedure' |  | age_at_event |
 | `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
@@ -767,8 +764,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `mode` | varchar(50) | 'The mode of the referral' |  | mode |
 | `is_outgoing_referral` | bit | 'Whether this is an outgoing referral' |  | outgoing_referral |
 | `is_review` | bit | 'Whether this referral is a review' |  | is_review |
-| `referral_request_raw_concept_id` | bigint | The raw clinical coding of primary diagnosis |  | non_core_concept_id |
-| `referral_request_core_concept_id` | bigint | The SNOMED clinical coding of primary diagnosis |  | core_concept_id |
+| `referral_request_source_concept_id` | bigint | The source clinical coding of primary diagnosis provided by the supplier |  | raw_concept_id |
 | `age_at_event` | int | 'The age of the patient at the time of the referral' |  | age_at_event |
 | `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
@@ -927,7 +923,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `post_code_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |  |
 | `matched_with_assign` | varchar(255) | True/false - was a match possible |  |  |
 | `qualifier` | varchar(255) | type of matched address (residential, child) |  |  |
-| `classification` | varchar(255) | <to be confirmed> |  |  |
+| `uprn_property_classification` | varchar(255) | <to be confirmed> |  |  |
 | `algorithm` | varchar(255) | <to be confirmed> |  |  |
 | `match_pattern` | varchar(255) | <to be confirmed> |  |  |
 | `unstructured_postal_address` | varchar(255) | The full input address as a string |  |  |
@@ -984,7 +980,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `mobile_number` | varchar(8000) | Person's mobile number. |  |  |
 | `email_address` | varchar(8000) | Person's email address. |  |  |
 | `mps_id` | varchar(10) | Ignore this field. |  |  |
-| `error/success_code` | varchar(2) | The code corresponding to this record. <br>See the person level response code table for details.  |  |  |
+| `error_success_code` | varchar(2) | The code corresponding to this record. <br>See the person level response code table for details.  |  |  |
 | `matched__nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
 | `matched_algorithm_indicator` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
 
