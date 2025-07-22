@@ -1,7 +1,7 @@
 # Release 168 - Release date: 2025-07-18
 
 > [!NOTE]
-> The below is a summary of the changes from release 156 (previous pre-production release)
+> The below is a summary of the changes from [release 167](Release-167.md) (previous pre-production release)
 
 ## ✨ New Features
 
