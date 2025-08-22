@@ -33,5 +33,6 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.MEDICATION_STATEME
 	"date_recorded" TIMESTAMP_NTZ(9),
 	"is_active" BOOLEAN,
 	"is_confidential" BOOLEAN,
+	"expiry_date" TIMESTAMP_NTZ(9),
 	"lds_start_date_time" TIMESTAMP_NTZ(9)
 );

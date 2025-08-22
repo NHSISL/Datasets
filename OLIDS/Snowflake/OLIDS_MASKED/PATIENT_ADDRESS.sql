@@ -11,5 +11,6 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.PATIENT_ADDRESS (
 	"post_code_hash" BINARY(8388608),
 	"start_date" TIMESTAMP_NTZ(9),
 	"end_date" TIMESTAMP_NTZ(9),
-	"lds_end_date_time" TIMESTAMP_NTZ(9)
+	"lds_end_date_time" TIMESTAMP_NTZ(9),
+	"person_id" VARCHAR(16777216)
 );

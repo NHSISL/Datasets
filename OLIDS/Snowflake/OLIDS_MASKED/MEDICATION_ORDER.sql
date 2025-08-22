@@ -24,7 +24,7 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.MEDICATION_ORDER (
 	"duration_days" NUMBER(38,0),
 	"estimated_cost" FLOAT,
 	"medication_name" VARCHAR(16777216),
-	"medication_order_core_concept_id" VARCHAR(16777216),
+	"medication_order_source_concept_id" VARCHAR(16777216),
 	"bnf_reference" VARCHAR(16777216),
 	"age_at_event" NUMBER(38,0),
 	"age_at_event_baby" NUMBER(38,0),
@@ -32,6 +32,7 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.MEDICATION_ORDER (
 	"issue_method" VARCHAR(16777216),
 	"date_recorded" TIMESTAMP_NTZ(9),
 	"is_confidential" BOOLEAN,
+	"issue_method_description" VARCHAR(16777216),
 	"lds_start_date_time" TIMESTAMP_NTZ(9),
 	"lds_end_date_time" TIMESTAMP_NTZ(9)
 );

@@ -7,7 +7,6 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.ALLERGY_INTOLERANC
 	"lds_datetime_data_acquired" TIMESTAMP_NTZ(9),
 	"lds_initial_data_received_date" TIMESTAMP_NTZ(9),
 	"lds_start_date_time" TIMESTAMP_NTZ(9),
-	"person_id" VARCHAR(16777216),
 	"patient_id" VARCHAR(16777216),
 	"practitioner_id" VARCHAR(16777216),
 	"encounter_id" VARCHAR(16777216),
@@ -19,11 +18,11 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.ALLERGY_INTOLERANC
 	"is_review" BOOLEAN,
 	"medication_name" VARCHAR(16777216),
 	"multi_lex_action" VARCHAR(16777216),
-	"allergy_intolerance_core_concept_id" VARCHAR(16777216),
-	"allergy_intolerance_raw_concept_id" VARCHAR(16777216),
+	"allergy_intolerance_source_concept_id" VARCHAR(16777216),
 	"age_at_event" NUMBER(38,0),
 	"age_at_event_baby" NUMBER(38,0),
 	"age_at_event_neonate" NUMBER(38,0),
 	"date_recorded" TIMESTAMP_NTZ(9),
-	"is_confidential" BOOLEAN
+	"is_confidential" BOOLEAN,
+	"person_id" VARCHAR(16777216)
 );

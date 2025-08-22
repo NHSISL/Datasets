@@ -8,7 +8,6 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.APPOINTMENT (
 	"lds_initial_data_received_date" TIMESTAMP_NTZ(9),
 	"lds_start_date_time" TIMESTAMP_NTZ(9),
 	"organisation_id" VARCHAR(16777216),
-	"person_id" VARCHAR(16777216),
 	"patient_id" VARCHAR(16777216),
 	"practitioner_in_role_id" VARCHAR(16777216),
 	"schedule_id" VARCHAR(16777216),
@@ -27,5 +26,12 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.APPOINTMENT (
 	"age_at_event_baby" NUMBER(38,0),
 	"age_at_event_neonate" NUMBER(38,0),
 	"booking_method_concept_id" VARCHAR(16777216),
-	"contact_mode_concept_id" VARCHAR(16777216)
+	"contact_mode_concept_id" VARCHAR(16777216),
+	"is_blocked" BOOLEAN,
+	"national_slot_category_name" VARCHAR(16777216),
+	"context_type" VARCHAR(16777216),
+	"service_setting" VARCHAR(16777216),
+	"national_slot_category_description" VARCHAR(16777216),
+	"csds_care_contact_identifier" VARCHAR(16777216),
+	"person_id" VARCHAR(16777216)
 );
