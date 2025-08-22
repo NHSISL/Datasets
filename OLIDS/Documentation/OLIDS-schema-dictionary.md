@@ -47,7 +47,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### allergy_intolerance
 
-> [!NOTE] Allergy Intolerance
+> [!NOTE]
 >
 > Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance. A record of a clinical assessment of an allergy or intolerance; a propensity, or a potential risk to an individual, to have an adverse reaction on future exposure to the specified substance, or class of substance.
 > 
@@ -87,7 +87,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### appointment
 
-> [!NOTE] Appointment
+> [!NOTE]
 > A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
 > Appointment resources are used to provide information about a planned meeting that may be in the future or past. The resource only describes a single meeting, a series of repeating visits would require multiple appointment resources to be created for each instance. Examples include a scheduled surgery, a follow-up for a clinical visit, a scheduled conference call between clinicians to discuss a case (where the patient is a subject, but not a participant), the reservation of a piece of diagnostic equipment for a particular use, etc. The visit scheduled by an appointment may be in person or remote (by phone, video conference, etc.) All that matters is that the time and usage of one or more individuals, locations and/or pieces of equipment is being fully or partially reserved for a designated period of time.
 > This definition takes the concepts of appointments in a clinical setting and also extends them to be relevant in the community healthcare space, and to ease exposure to other appointment / calendar standards widely used outside of healthcare.
@@ -133,7 +133,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### appointment_practitioner
 
-> [!NOTE] Appointment practitioner
+> [!NOTE]
 > 
 > List of practitioner participants involved in the appointment
 
@@ -154,7 +154,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### diagnostic_order
 
-> [!NOTE] diagnostic order
+> [!NOTE]
 > A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
 >
 > This represents an order or proposal or plan to perform a diagnostic or other service on or for a patient. It represents a proposal or plan or order for a service to be performed that would result in a Procedure or Diagnostic Report, which in turn may reference one or more Observations, which summarize the performance of the procedures and associated documentation such as observations, images, findings that are relevant to the treatment/management of the subject. This resource may be used to share relevant information required to support a referral or a transfer of care request from one practitioner or organization to another when a patient is required to be referred to another provider for a consultation /second opinion and/or for short term or longer term management of one or more health issues or problems.
@@ -195,7 +195,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### encounter
 
-> [!NOTE] encounter
+> [!NOTE]
 > An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.
 > 
 > A patient encounter is further characterized by the setting in which it takes place. Amongst them are ambulatory, emergency, home health, inpatient and virtual encounters. An Encounter encompasses the lifecycle from pre-admission, the actual encounter (for ambulatory encounters), and admission, stay and discharge (for inpatient encounters). During the encounter the patient may move from practitioner to practitioner and location to location.
@@ -233,7 +233,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### episode_of_care
 
-> [!NOTE] episode of care
+> [!NOTE]
 > An association between a patient and an organisation / healthcare provider(s) during which time encounters may occur. The managing organisation assumes a level of responsibility for the patient during this time.
 
 | Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
@@ -257,7 +257,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### flag
 
-> [!NOTE] flag
+> [!NOTE]
 > prospective warnings of potential issues when providing care to the patient
 >
 > A flag is a warning or notification of some sort presented to the user - who may be a clinician or some other person involved in patient care. It usually represents something of sufficient significance to warrant a special display of some sort - rather than just a note in the resource
@@ -281,7 +281,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### location
 
->[!NOTE] location
+>[!NOTE]
 > Details and position information for a place where services are provided and resources and participants may be stored, found, contained, or accommodated.
 >
 > A Location includes both incidental locations (a place which is used for healthcare without prior designation or authorization) and dedicated, formally appointed locations. Locations may be private, public, mobile or fixed and scale from small freezers to full hospital buildings or parking garages.
@@ -315,7 +315,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### location_contact
 
-> [!NOTE] location contact
+> [!NOTE]
 > The contact details of communication devices available at the location. This can include addresses, phone numbers, fax numbers, mobile numbers, email addresses and web sites.
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
@@ -336,7 +336,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### medication_order
 
-> [!NOTE] medication order
+> [!NOTE]
 > An order or request for both supply of the medication and the instructions for administration of the medication to a patient
 >
 > This resource covers all type of orders for medications for a patient. This includes inpatient medication orders as well as community orders (whether filled by the prescriber or by a pharmacy). It also includes orders for over-the-counter medications (e.g. Aspirin), total parenteral nutrition and diet/ vitamin supplements. It may be used to support the order of medication-related devices e.g., prefilled syringes such as patient-controlled analgesia (PCA) syringes, or syringes used to administer other types of medications. e.g., insulin, narcotics.
@@ -384,7 +384,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### medication_statement
 
-> [!NOTE] medication statement
+> [!NOTE]
 > A record of a medication that is being consumed by a patient. A Medication Statement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future. The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician. A common scenario where this information is captured is during the history taking process during a patient visit or stay. The medication information may come from sources such as the patient's memory, from a prescription bottle, or from a list of medications the patient, clinician or other party maintains.
 
 | Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
@@ -429,7 +429,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### observation
 
-> [!NOTE] observation
+> [!NOTE]
 > Measurements and simple assertions made about a patient, device or other subject
 >
 > Observations are a central element in healthcare, used to support diagnosis, monitor progress, determine baselines and patterns and even capture demographic characteristics, as well as capture results of tests performed on products and substances. Most observations are simple name/value pair assertions with some metadata, but some observations group other observations together logically, or even are multi-component observations.
@@ -470,7 +470,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### organisation
 
-> [!NOTE] organisation
+> [!NOTE]
 > A formally or informally recognized grouping of people or organisations formed for the purpose of achieving some form of collective action. Includes companies, institutions, corporations, departments, community groups, healthcare practice groups etc.
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
@@ -496,7 +496,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient (masked)
 
-> [!NOTE] patient (masked)
+> [!NOTE]
 > Demographics and other administrative information about an individual or animal receiving care or other health-related services.
 >
 > note that this encompasses an anonymous in context (pseudonymised) representation of patients. Additionally, a single person can exist as many patients undergoing separate episodes of care at differing healthcare provider services. A patient represents a single person undergoing care at one or more specific healthcare providers, typically assigned a local system patient identifier or patient administration system number.
@@ -526,7 +526,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_address (masked)
 
-> [!NOTE] patient address (masked)
+> [!NOTE]
 > An address for the individual patient
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -548,7 +548,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_contact (masked)
 
-> [!NOTE] patient contact (masked)
+> [!NOTE]
 > telecommunication contact details for the patient.
 > 
 > note that this is the anonymous in context (pseudonymised) edition of the contact information and as a result will merely show the presence of a communication method with no details of the contact itself.
@@ -571,7 +571,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_person
 
-> [!NOTE] patient person
+> [!NOTE]
 > relationship bridging table between patient and person
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -588,7 +588,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_registered_practitioner_in_role
 
-> [!NOTE] patient registered practitioner in role
+> [!NOTE]
 > Denotes the patients registered healthcare professional responsible for their care.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -611,7 +611,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_uprn (masked)
 
-> [!NOTE] patient unique property reference number (masked)
+> [!NOTE]
 > unique property reference details from address matching of the supplied patient address details
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -636,7 +636,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### person (masked)
 
-> [!NOTE] person
+> [!NOTE]
 > harmonised person details extracted from person demographics services (PDS), or presented as a stub of known details where no PDS entry is found.
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
@@ -658,7 +658,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### practitioner
 
-> [!NOTE] practitioner
+> [!NOTE]
 > A person who is directly or indirectly involved in the provisioning of healthcare or related services. Practitioner covers all individuals who are engaged in the healthcare process and healthcare-related services as part of their formal responsibilities and this Resource is used for attribution of activities and responsibilities to these individuals
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -680,7 +680,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### practitioner_in_role
 
-> [!NOTE] practitioner in role
+> [!NOTE]
 > A specific set of Roles/Locations/specialties/services that a practitioner may perform at an organization for a period of time.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -701,7 +701,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### procedure_request
 
-> [!NOTE] procedure request
+> [!NOTE]
 > A record of a request for diagnostic investigations, treatments, or operations to be performed.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -733,7 +733,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### referral_request
 
-> [!NOTE] referral request
+> [!NOTE]
 > Used to record and send details about a request for referral service or transfer of a patient to the care of another provider or provider organisation
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -772,7 +772,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### schedule
 
-> [!NOTE] schedule
+> [!NOTE]
 > A container for slots of time that may be available for booking appointments.
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
@@ -795,7 +795,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### schedule_practitioner
 
-> [!NOTE] schedule practitioner
+> [!NOTE]
 > The relationship between a schedule and the practitioner(s) involved on the schedule.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -814,7 +814,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient
 
-> [!NOTE] patient
+> [!NOTE]
 > Demographics and other administrative information about an individual or animal receiving care or other health-related services.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -845,7 +845,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_address
 
-> [!NOTE] patient address
+> [!NOTE]
 > An address for the individual patient
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -872,7 +872,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_contact
 
-> [!NOTE] patient contact (masked)
+> [!NOTE]
 > telecommunication contact details for the patient.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -895,7 +895,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### patient_uprn
 
-> [!NOTE] patient unique property reference number
+> [!NOTE]
 > unique property reference details from address matching of the supplied patient address details
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
@@ -931,7 +931,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### person
 
-> [!NOTE] person
+> [!NOTE]
 > harmonised person details extracted from person demographics services (PDS), or presented as a stub of known details where no PDS entry is found.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
@@ -988,7 +988,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### concept
 
-> [!NOTE] concept
+> [!NOTE]
 > Used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
 >
 > Code systems define which codes (symbols and/or expressions) exist, and how they are understood. Value sets select a set of codes from one or more code systems to specify which codes can be used in a particular context
@@ -1008,7 +1008,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 ### concept_map
 
-> [!NOTE] concept map
+> [!NOTE]
 > A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
