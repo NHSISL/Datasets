@@ -8,7 +8,7 @@ create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.LOCATION_CONTACT (
 	"lds_start_date_time" TIMESTAMP_NTZ(9),
 	"location_id" VARCHAR(16777216),
 	"is_primary_contact" BOOLEAN,
-	"ldsbusinessid_contacttype" VARCHAR(16777216),
+	"contact_type" VARCHAR(16777216),
 	"contact_type_concept_id" VARCHAR(16777216),
 	"value" VARCHAR(16777216),
 	"lds_end_date_time" TIMESTAMP_NTZ(9)

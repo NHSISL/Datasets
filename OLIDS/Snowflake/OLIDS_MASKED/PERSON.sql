@@ -1,10 +1,18 @@
 create or replace TABLE "Data_Store_OLIDS_Dummy".OLIDS_MASKED.PERSON (
 	"lds_id" VARCHAR(16777216),
 	"id" VARCHAR(16777216),
-	"lds_business_key" VARCHAR(16777216),
-	"primary_patient_id" VARCHAR(16777216),
+	"lds_dataset_id" VARCHAR(16777216),
 	"lds_datetime_data_acquired" TIMESTAMP_NTZ(9),
 	"lds_start_date_time" TIMESTAMP_NTZ(9),
 	"lds_end_date_time" TIMESTAMP_NTZ(9),
-	"lds_dataset_id" VARCHAR(16777216)
+	"requesting_patient_record_id" VARCHAR(16777216),
+	"unique_reference" VARCHAR(16777216),
+	"requesting_nhs_number_hash" BINARY(8388608),
+	"sk_patient_id_request" NUMBER(38,0),
+	"error_success_code" VARCHAR(16777216),
+	"matched_nhs_numberhash" BINARY(8388608),
+	"sk_patient_id_matched" NUMBER(38,0),
+	"sensitivity_flag" VARCHAR(16777216),
+	"matched_algorithm_indicator" VARCHAR(16777216),
+	"requesting_patient_id" VARCHAR(16777216)
 );
