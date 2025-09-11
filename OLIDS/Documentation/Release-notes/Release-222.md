@@ -1,4 +1,4 @@
-# [Release-219] - 2025-09-08
+# [Release-222] - 2025-09-08
 
 ### Summary
 
@@ -11,6 +11,8 @@
 **199 to 209:** This release delivers several improvements and fixes across the platform, including enhanced mapping and debugging views, improved allocation and deallocation processes, spelling corrections for greater data accuracy, and updates to pipelines and notebooks for more robust and streamlined operations. No changes affect the data leaving the service, but internal processes and developer tooling have been significantly refined.
 
 **209 to 219:** This release delivers several improvements to data processing, reliability, and control within the One London Data Platform. Highlights include enhanced batch processing for Registrar Address Response, new configuration for extract groups, optimised pipelines and notebook activities, improved error handling, and fixes for concurrency and specification issues. End users and data subscribers will benefit from increased throughput, better control over data ingress, and more robust processing.
+
+**219 to 222** This release introduces enhanced configuration and tagging capabilities for the Delta Lakehouse, improvements to GP Register data management, more robust handling of large data transmissions, and several bug fixes and refinements to data processing pipelines. These changes collectively improve data accuracy, reliability, and flexibility for users of the One London Data Platform.
 
 ---
 
@@ -64,6 +66,17 @@
 - Added a notebook to generate all OLIDS views, including fixes for invalid SQL in terminology views. *[SynapseWorkspace, [PR 2491](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2491), [WI 24260](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24260)]*
     > ✨ **Feature**: Simplifies and automates the creation of OLIDS views.
 
+- Added new configuration and event tables to metadata to support processing of valueset tags in the Delta Lakehouse, enabling more granular control over which tables and columns are tagged. *[SQL, [PR 2552](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2552)]*
+    > ✨ **Feature**: Enables incremental creation of valueset tags, enhancing data governance and traceability.
+
+- Added a set of notebooks under DeltaLakehouse for incremental creation of valueset tags across all CDM tables. *[SynapseWorkspace, [PR 2553](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2553)]*
+    > ✨ **Feature**: Improves metadata tagging, supporting better data lineage and compliance.
+
+- Introduced fileCombiner configuration objects, allowing dynamic adjustment of file combining processes via metadata. *[SQL, [PR 2513](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2513), [WI 24606](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24606)]*
+    > ✨ **Feature**: Provides flexibility for file combining operations, reducing manual intervention.
+
+- Created pipeline to ingest and merge LDS GP Register records from SharePoint, supporting improved data integration. *[SynapseWorkspace, [PR 2535](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2535), [WI 23435](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/23435)]*
+    > ✨ **Feature**: Ensures GP Register data is always up-to-date with the latest SharePoint entries.
 ---
 
 ### Improvements
@@ -251,6 +264,29 @@
 - Removed FileWarden config that disabled it on PreProd, ensuring correct configuration on new deployments. *[SQL, [PR 2503](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2503), [WI 19935](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/19935), [WI 24310](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24310)]*
     > 🎯 **Impact**: Ensures FileWarden is enabled as intended on PreProd environments.
 
+- Changed Episodicity code system for identifying unmapped codes, removed unnecessary semicolons in metadata procedures, and added a configuration view to show code system usage. *[SQL, [PR 2509](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2509), [WI 21798](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/21798)]*
+    > 🎯 **Impact**: Increases transparency and reduces errors in code mapping.
+
+- Updated GP Register merge procedure to support insert, update, and delete operations, rather than just insert. *[SQL, [PR 2561](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2561)]*
+    > 🎯 **Impact**: Ensures SharePoint updates and deletions are accurately reflected in the GP Register.
+
+- Enabled merging LDS GP Register from SharePoint data, ensuring allocations are based on the latest DSA/DPA agreements. *[SQL, [PR 2534](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2534), [WI 23435](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/23435)]*
+    > 🎯 **Impact**: Improves accuracy of practice allocations and agreement tracking.
+
+- Populated LDSDataSetId in all Registrar requests and responses, removing hardcoded references and supporting multiple datasets. *[SQL, [PR 2560](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2560), SynapseWorkspace, [PR 2559](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2559), [WI 24527](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24527)]*
+    > 🎯 **Impact**: Increases flexibility for processing different datasets.
+
+- Updated transmitter event table and pipelines to use bigint/int64 for row counts, preventing overflow during large transmissions. *[SQL, [PR 2547](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2547), [WI 24437](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24437)], SynapseWorkspace, [PR 2548](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2548), [WI 24437](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24437)]*
+    > 🎯 **Impact**: Ensures reliable logging and processing of large data volumes.
+
+- Updated Preprocessor Master pipeline to integrate GPRegister SharePoint import, improving automation of data updates. *[SynapseWorkspace, [PR 2562](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2562)]*
+    > 🎯 **Impact**: Streamlines data ingestion and reduces manual steps.
+
+- Changed lds_batch_id and id to uppercase in relevant notebooks for consistency. *[SynapseWorkspace, [PR 2557](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2557)]*
+    > 🎯 **Impact**: Standardizes data formats for downstream processing.
+
+- Generate 'LDSRecordId' in uppercase and optimized related tests for better case handling. *[SynapseWorkspace, [PR 2550](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2550), [WI 24436](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24436)]*
+    > 🎯 **Impact**: Reduces case sensitivity errors in record identification.
 ---
 
 ### Bug Fixes
@@ -357,6 +393,22 @@
 - Fixed syntax issue with GROUP BY in notebook: olids_terminology by using column names instead of aliases. *[SynapseWorkspace, [PR 2545](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2545), [WI 24428](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24428)]*
     > 🐞 **Fix**: Ensures correct SQL execution in OLIDS terminology notebook
 
+- Excluded agreements with no start date and/or DPA version from publisher tables, preventing erroneous data transmission. *[SQL, [PR 2563](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2563), [WI 23435](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/23435)]*
+    > 🐞 **Fix**: Ensures only valid agreements are processed, reducing risk of data errors.
+
+- Removed commas from family and given names in Patient.Select_Request_Rows to prevent column shift errors in CSV files. *[SQL, [PR 2556](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2556), [WI 24596](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24596)]*
+    > 🐞 **Fix**: Prevents data misalignment in exported files.
+
+- Fixed incorrect join in OLIDS episode of care view, ensuring practitioner roles are matched using the correct column. *[SynapseWorkspace, [PR 2549](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2549), [WI 24444](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24444)]*
+    > 🐞 **Fix**: Improves accuracy of episode of care reporting.
+
+- Fixed missing variable `allocation_delta_lake_table_path` in transmitter notebook, restoring correct file path handling. *[SynapseWorkspace, [PR 2558](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2558), [WI 24602](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24602)]*
+    > 🐞 **Fix**: Ensures transmitter notebooks run successfully.
+
+- Fixed error handling bug in file_warden_functions by correcting variable name, restoring backoff retry logic. *[SynapseWorkspace, [PR 2546](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2546), [WI 24438](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24438)]*
+    > 🐞 **Fix**: Improves reliability of file warden processing.
+
+
 ---
 
 ### Refactoring
@@ -378,6 +430,8 @@
 - Simplified the [LDSDateTimeSupplied] function in FileRegister pipeline to use MIN instead of windowed function for performance optimisation. *[SQL, [PR 2537](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2537)]*
 - Added try-catch blocks to Continuum_masked AppointmentPractitioner for improved error handling. *[SQL, [PR 2524](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/2524)]*
 - Removed lds_record_id and certain internal lakehouse columns from the exclusion list in OLIDS views and transmitter module, allowing these columns to flow through to subscribers. Also added lds_record_id to all relevant views. *[SynapseWorkspace, [PR 2532](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2532), [WI 24412](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24412)]*
+- Refactored transmitter logic to insert records marked as deleted instead of deleting them, and added new metadata columns for better event tracking. *[SynapseWorkspace, [PR 2555](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2555), [WI 24598](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24598)]*
+- Improved add_row_register_columns_to_dataframe function and its unit test for case sensitivity and performance. *[SynapseWorkspace, [PR 2550](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/2550), [WI 24436](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/24436)]*
 
 ---
 
@@ -385,6 +439,6 @@
 
 This change note was automatically produced from:
 
-- **43 + 32 + 28 + 21 + 36 = 160** Pull Requests
-- **36 + 37 + 19 + 17 + 22 = 131** Work Items
-- **185 + 503 + 181 + 134 + 146 = 1,149** Commits
+- **43 + 32 + 28 + 21 + 36 + 21 = 181** Pull Requests
+- **36 + 37 + 19 + 17 + 22 + 15 = 146** Work Items
+- **185 + 503 + 181 + 134 + 146 + 181 = 1,330** Commits
