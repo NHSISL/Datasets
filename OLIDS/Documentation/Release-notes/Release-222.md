@@ -1,5 +1,8 @@
 # [Release-222] - 2025-09-08
 
+> [!NOTE]
+> The below is a summary of the changes from [release 169](Release-169.md) (previous pre-production release)
+
 ### Summary
 
 **169 to 179:** This release delivers several improvements to performance, reliability, and data accuracy across the One London Data Platform. Key highlights include enhanced pipeline configurations for better throughput and error handling, expanded support for data monitoring and statistics, adjustments to data models for improved compatibility and correctness, and multiple bug fixes to ensure robust operation. Notable changes include optimisations to the Delta Lake SQL importer, new features for data allocation and transmission, and updates to address data truncation and confidentiality handling.
