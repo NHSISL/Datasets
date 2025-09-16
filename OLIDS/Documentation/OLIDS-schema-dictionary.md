@@ -42,6 +42,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
   - [`[OLIDS_TERMINOLOGY]` Schema](#%60%5Bolids_terminology%5D%60-schema)
     - [concept](#concept)
     - [concept\_map](#concept_map)
+  - [Ages](#ages)
 
 ## `[OLIDS_MASKED]` Schema
 
@@ -55,35 +56,51 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 > 
 > Substances include, but are not limited to: a therapeutic substance administered correctly at an appropriate dosage for the individual; food; material derived from plants or animals; or venom from insect stings.
 
-| Column Name | Data Type | Description | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) |  | `id` |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `record_owner_organisation_code` | varchar(50) | 'Owning organisation (i.e. publisher)' |  | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) | datetime that the business id value was first witnessed |  |  |
-| `lds_is_deleted` | bit | LDS flag standardising presentation of deleted state of the record | |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times |  | patient_id |
-| `practitioner_id` | uniqueidentifier | The clinician in role that the activity is recorded against' |  | `practitioner_id` |
-| `encounter_id` | uniqueidentifier | Reference to the encounter this allergy was record in |  | `encounter_id` |
-| `clinical_status` | varchar(20) | unmapped - prepared to match FHIR |  | `clinical_status` |
-| `verification_status` | varchar(20) | unmapped - prepared to match FHIR' |  |  |
-| `category` | varchar(20) | unmapped - prepared to match FHIR' |  |  |
-| `clinical_effective_date` | datetime(3) | The date the clinical code is recorded for |  | `clinical_effective_date` |
-| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date' |  | `date_precision_concept_id` |
-| `is_review` | bit | Is this instance of the code a review of a previous encounter |  | `is_review` |
-| `medication_name` | varchar(255) | Reference to the clinical name of the medication the patient has an allergy to |  |  |
-| `multi_lex_action` | varchar(25) |  |  | |
-| `allergy_intolerance_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier |  |  |
-| `age_at_event` | int | The age the patient was at the time of this event |  | |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
-| `age_at_event_neonate` | int |The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
-| `date_recorded` | datetime(3) |  The date the allergy was recorded |  |  |
-| `is_confidential` | bit | True/False - is this allergy flagged as a confidential observation' |  |  |
-| `person_id` | uniqueidentifier |  Unique individual across all organisation |  | `person_id` |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version |  `none` |
+| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `practitioner_id` | uniqueidentifier | The clinician in role that the activity is recorded against' | `practitioner_id` |
+| `encounter_id` | uniqueidentifier | Reference to the encounter this allergy was record in | `encounter_id` |
+| `clinical_status` | varchar(20) | unmapped - prepared to match FHIR |  `clinical_status` |
+| `verification_status` | varchar(20) | unmapped - prepared to match FHIR' |  |
+| `category` | varchar(20) | unmapped - prepared to match FHIR' |  |
+| `clinical_effective_date` | datetime(3) | The date the clinical code is recorded for | `clinical_effective_date` |
+| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date' | `date_precision_concept_id` |
+| `is_review` | bit | Is this instance of the code a review of a previous encounter | `is_review` |
+| `medication_name` | varchar(255) | Reference to the clinical name of the medication the patient has an allergy to |  |
+| `multi_lex_action` | varchar(25) |  | |
+| `allergy_intolerance_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier | `non_core_concept_id` |
+| `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category. See [Ages](#ages) |  |
+| `age_at_event_neonate` | int |The age the patient was at the time of this event if less than 28 days. Null where patient is older than 27 days. See [Ages](#ages) |  |
+| `date_recorded` | datetime(3) |  The date the allergy was recorded |  | `date_recorded` |
+| `is_confidential` | bit | True/False - is this allergy flagged as a confidential observation |  |
+| `person_id` | uniqueidentifier |  Unique individual across all organisation |  `person_id` |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | 'Owning organisation (i.e. publisher)' | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
+| `lds_initial_data_received_date` | datetime(3) | datetime that the business id value was first witnessed |  |
+| `lds_is_deleted` | bit | LDS flag standardising presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `lds_record_id` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
+| `patient_id` | `patient.id` | one `patient` can have none to many `allergy_intolerance` items |
+| `practitioner_id` | `practitioner.id` | one `practitioner` can have none to many `allergy_intolerance` items |
+| `encounter_id` | `encounter.id` | one `encounter` can have none to many `allergy_intolerance` items |
+| `allergy_intolerance_source_concept_id` | `concept.id` | one `concept` can appear in one or many `allergy_intolerance` items |
+| `person_id` | `person.id` | one `person` can have none to many `allergy_intolerance` items |
 
 ### appointment
 
@@ -92,65 +109,99 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 > Appointment resources are used to provide information about a planned meeting that may be in the future or past. The resource only describes a single meeting, a series of repeating visits would require multiple appointment resources to be created for each instance. Examples include a scheduled surgery, a follow-up for a clinical visit, a scheduled conference call between clinicians to discuss a case (where the patient is a subject, but not a participant), the reservation of a piece of diagnostic equipment for a particular use, etc. The visit scheduled by an appointment may be in person or remote (by phone, video conference, etc.) All that matters is that the time and usage of one or more individuals, locations and/or pieces of equipment is being fully or partially reserved for a designated period of time.
 > This definition takes the concepts of appointments in a clinical setting and also extends them to be relevant in the community healthcare space, and to ease exposure to other appointment / calendar standards widely used outside of healthcare.
 
-| Column Name | Data Type | Status | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | organization_id |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_is_deleted` | bit |  | LDS flag standardising presentation of deleted state of the record | |  |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
-| `organisation_id` | uniqueidentifier |  | 'Owning organisation (i.e. publisher)' |  | organization_id |
-| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `practitioner_in_role_id` | uniqueidentifier |  | 'The clinician the activity is recorded against' |  | practitioner_id |
-| `schedule_id` | uniqueidentifier |  | 'The schedule the patient was put on to book multiple appointments. ID unique to the applied schedule' |  | schedule_id |
-| `start_date` | datetime(3) |  | 'The start date of the appointment' |  | start_date |
-| `planned_duration` | int |  | 'The time allocated for the appointment, not necessarily the actual duration always in minutes' |  | planned_duration |
-| `actual_duration` | int |  | 'Time between sent in and left always in minutes' |  | actual_duration |
-| `appointment_status_concept_id` | uniqueidentifier |  | 'The status of the appointment e.g. arrived/sent in/left/DNA' |  | appointment_status_concept_id |
-| `patient_wait` | int |  | 'How long the patient waited from being marked as arrived to being sent in' |  | patient_wait |
-| `patient_delay` | int |  | 'How long the patient was delayed for' |  | patient_delay |
-| `date_time_booked` | datetime(3) |  | Date and time the appointment booking was made' |  |  |
-| `date_time_sent_in` | datetime(3) |  | 'Date and time the patient was sent into the practitioner' |  | date_time_sent_in |
-| `date_time_left` | datetime(3) |  | Date and time the patient left the practitioner' |  | date_time_left |
-| `cancelled_date` | datetime(3) | TPP ONLY | Date and time the appointment was cancelled' |  | cancelled_date |
-| `type` | varchar(100) |  | Description of the slot type' |  |  |
-| `age_at_event` | int |  | 'The age the patient was at the time of this event' |  |  |
-| `age_at_event_baby` | int |  | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
-| `age_at_event_neonate` | int |  | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
-| `booking_method_concept_id` | uniqueidentifier |  | Method used to book the appointment |  |  |
-| `contact_mode_concept_id` | uniqueidentifier |  | Appointment mode of contact - e.g. telephone |  |  |
-| `is_blocked` | bit | | Indicates whether the appointment slot is blocked |  |  |
-| `national_slot_category_name` | varchar(900) |  | The name of the national slot category |  |  |
-| `context_type` | varchar(100) |  | The national slot category context type | |  |
-| `service_setting` | varchar(100) |  | The national slot category service setting |  |  |
-| `national_slot_category_description` | varchar(900) |  | The description of the national slot category | |  |
-| `csds_care_contact_identifier` | varchar(17) |  | **TO BE ADDED** |  |  |
-| `person_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | person_id |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times |  `patient_id` |
+| `practitioner_in_role_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `schedule_id` | uniqueidentifier | The schedule the patient was put on to book multiple appointments. ID unique to the applied schedule | `schedule_id` |
+| `start_date` | datetime(3) | The start date of the appointment | `start_date` |
+| `planned_duration` | int | The time allocated for the appointment, not necessarily the actual duration always in minutes | `planned_duration` |
+| `actual_duration` | int | Time between sent in and left always in minutes | `actual_duration` |
+| `appointment_status_concept_id` | uniqueidentifier | The status of the appointment e.g. arrived/sent in/left/DNA | `appointment_status_concept_id` |
+| `patient_wait` | int | How long the patient waited from being marked as arrived to being sent in | `patient_wait` |
+| `patient_delay` | int | How long the patient was delayed for | `patient_delay` |
+| `date_time_booked` | datetime(3) | Date and time the appointment booking was made |  |
+| `date_time_sent_in` | datetime(3) | Date and time the patient was sent into the practitioner | `date_time_sent_in` |
+| `date_time_left` | datetime(3) | Date and time the patient left the practitioner | `date_time_left` |
+| `cancelled_date` | datetime(3) | Date and time the appointment was cancelled (TPP only) | `cancelled_date` |
+| `type` | varchar(100) | Description of the slot type |  |
+| `age_at_event` | int |  The age the patient was at the time of this event |  |
+| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
+| `booking_method_concept_id` | uniqueidentifier | Method used to book the appointment |  |
+| `contact_mode_concept_id` | uniqueidentifier | Appointment mode of contact - e.g. telephone | |
+| `is_blocked` | bit | Indicates whether the appointment slot is blocked |  | 
+| `national_slot_category_name` | varchar(900) | The name of the national slot category |  |
+| `context_type` | varchar(100) | The national slot category context type | |
+| `service_setting` | varchar(100) | The national slot category service setting |  |
+| `national_slot_category_description` | varchar(900) | The description of the national slot category | |
+| `csds_care_contact_identifier` | varchar(17) |  A link to the commissioning dataset care contact identifier for community services | |
+| `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier |  LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) |  Date the data was extracted by, received by or supplied to LDS |  |
+| `lds_initial_data_received_date` | datetime(3)  | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardising presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `lds_record_id` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
+| `patient_id` | `patient.id` | one `patient` can have none to many `allergy_intolerance` items |
+| `practitioner_in_role_id` | `practitioner_in_role.id` | one `practitioner_in_role` can have none to many `appointment` items |
+| `schedule_id` | `schedule.id` | one `schedule` can have none to many `appointment` items |
+| `appointment_status_concept_id` | `concept.id` | each `concept` can appear in none to many `appointment` items |
+| `booking_method_concept_id` | `concept.id` | each `concept` can appear in none to many `appointment` items |
+| `contact_mode_concept_id` | `concept.id` | each `concept` can appear in none to many `appointment` items |
+| `person_id` | `person.id` | each `person` can have none to many `appointment` items |
 
 ### appointment_practitioner
 
 > [!NOTE]
-> 
 > List of practitioner participants involved in the appointment
 
-| Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_record_id_user` | uniqueidentifier | <to be confirmed> |  |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  | organization_id |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `appointment_id` | uniqueidentifier | Unique identifier for the appointment |  | organization_id |
-| `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' |  | practitioner_id |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+> [!TIP]
+> This table has been added to OLIDS to allow for one-to-many cardinality between appointments and practitioners which was permitted in some source datasets.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table | `id` |
+| `appointment_id` | uniqueidentifier | Unique identifier for the appointment | `organization_id` |
+| `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' | `practitioner_id` |
+| `lds_end_date_time` | datetime(3) | **TO BE REMOVED** |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier |  LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `lds_record_id_user` | uniqueidentifier | **TO BE REMOVED** |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) |  Date the data was extracted by, received by or supplied to LDS |  |
+| `lds_initial_data_received_date` | datetime(3)  | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `lds_record_id` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
+| `appointment_id` | `appointment.id` | one `appointment` can have one to many `appointment_practitioner` items |
+| `practitioner_id` | `practitioner.id` | one `practitioner` can have none to many `appointment_practitioner` items |
 
 ### diagnostic_order
 
@@ -161,37 +212,57 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 >
 > The resource allows requesting only a single procedure. If a workflow requires requesting multiple procedures simultaneously, this is done using multiple instances of this resource.
 
-| Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | 
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  | organization_id |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `encounter_id` | uniqueidentifier | 'Reference to the encounter the observation was recorded at' |  | encounter_id |
-| `practitioner_id` | uniqueidentifier | Reference to the practitioner that recorded the order' |  | practitioner_id |
-| `parent_observation_id` | uniqueidentifier | 'Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure' |  | parent_observation_id |
-| `clinical_effective_date` | datetime(3) |  The date the diagnostic order was identified by a clinician |  | clinical_effective_date |
-| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date |  | date_precision_concept_id |
-| `result_value` | float | The value of the result of the observation |  | result_value |
-| `result_value_units` | uniqueidentifier | Concept ID for the units of the result of the observation |  | result_value_units |
-| `result_date` | date(0) | The date of the result |  | result_date |
-| `result_text` | varchar(8000) | Any text associated with the result |  | result_text |
-| `is_problem` | bit | Whether the observation is marked as a problem |  | is_problem |
-| `is_review` | bit | Whether the observation is a review of an existing problem |  | is_review |
-| `problem_end_date` | datetime(3) | 'The end date of the problem' |  | problem_end_date |
-| `diagnostic_order_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the result provided by the supplier' |  | raw_concept_id |
-| `age_at_event` | int | 'The age of the patient at the time of the observation' |  | age_at_event |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
-| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
-| `episodicity_concept_id` | uniqueidentifier | Indicates the episodicity of the observation |  |  |
-| `is_primary` | bit | will be false if the observation has a parent observation  |  |  |
-| `date_recorded` | datetime(3) |  **TO ADD** |  |  |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  | person_id |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
+| `encounter_id` | uniqueidentifier | 'Reference to the encounter the observation was recorded at' |  `encounter_id` |
+| `practitioner_id` | uniqueidentifier | Reference to the practitioner that recorded the order' | `practitioner_id` |
+| `parent_observation_id` | uniqueidentifier | 'Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure' | `parent_observation_id` |
+| `clinical_effective_date` | datetime(3) |  The date the diagnostic order was identified by a clinician |  `clinical_effective_date` |
+| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date | `date_precision_concept_id` |
+| `result_value` | float | The value of the result of the observation | result_value |
+| `result_value_units` | uniqueidentifier | Concept ID for the units of the result of the observation. *Should this be `result_value_units_concept_id`* | `result_value_units` |
+| `result_date` | date(0) | The date of the result | `result_date` |
+| `result_text` | varchar(8000) | Any text associated with the result | `result_text` |
+| `is_problem` | bit | Whether the observation is marked as a problem | `is_problem` |
+| `is_review` | bit | Whether the observation is a review of an existing problem | `is_review` |
+| `problem_end_date` | datetime(3) | 'The end date of the problem' | `problem_end_date` |
+| `diagnostic_order_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the result provided by the supplier' | `raw_concept_id` |
+| `age_at_event` | int | The age of the patient at the time of the observation' | age_at_event |
+| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days. Null where the patient is over 27 days old. |  |
+| `episodicity_concept_id` | uniqueidentifier | Indicates the episodicity of the observation |  |
+| `is_primary` | bit | will be false if the observation has a parent observation  |  |
+| `date_recorded` | datetime(3) | date the diagnostic order was recorded in the clinical system. |  |
+| `is_deleted` | bit | true/false - is the record in a deleted state. | |
+| `person_id` | uniqueidentifier | Unique individual across all organisations' | person_id |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | organization_id |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `lds_record_id` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
+| `patient_id` | `patient.id` | one `patient` can have none to many `diagnostic_order` items |
+| `encounter_id` | `encounter.id` | one `encounter` can have none to many `diagnostic_order` items |
+| `practitioner_id` | `practitioner.id` | one `practitioner` can have none to many `diagnostic_order` items |
+| `parent_observation_id` | `observation.id` | one `observation` can be a parent to none to many `diagnostic_order` items |
+| `date_precision_concept_id` | `concept.id` | one `concept` can be referred to by none to many `diagnostic_order` items |
+| `episodicity_concept_id` | `concept.id` | one `concept` can be referred to by none to many `diagnostic_order` items |
+| `person_id` | `person.id` | one `person` can have none to many `diagnostic_order` items |
 
 ### encounter
 
@@ -200,60 +271,96 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 > 
 > A patient encounter is further characterized by the setting in which it takes place. Amongst them are ambulatory, emergency, home health, inpatient and virtual encounters. An Encounter encompasses the lifecycle from pre-admission, the actual encounter (for ambulatory encounters), and admission, stay and discharge (for inpatient encounters). During the encounter the patient may move from practitioner to practitioner and location to location.
 
-| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | 'Unique Id of the encounter' |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | organization_id |
-| `person_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | person_id |
-| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `practitioner_id` | uniqueidentifier |  | 'The clinician the activity is recorded against' |  | practitioner_id |
-| `appointment_id` | uniqueidentifier |  | 'Reference to the appointment this encounter took part on' |  | appointment_id |
-| `episode_of_care_id` | uniqueidentifier |  | The episode of care under which this encounter occurred |  | episode_of_care_id |
-| `service_provider_organisation_id` | uniqueidentifier |  | 'Reference to the service provider organisation' |  | service_provider_organisation_id |
-| `clinical_effective_date` | datetime(3) |  | 'The date the clinical code is recorded for' |  | clinical_effective_date |
-| `date_precision_concept_id` | int |  | 'Reference to the precision of the date of the encounter' |  | date_precision_concept_id |
-| `location` | varchar(200) |  | Reference to the location that the encounter took place at' |  | institution_location_id |
-| `encounter_source_concept_id` | uniqueidentifier |  | 'Reference to the type of encounter' |  | non_core_concept_id |
-| `age_at_event` | int |  | 'The age the patient was when this encounter took place' |  | age_at_event |
-| `age_at_event_baby` | int |  | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
-| `age_at_event_neonate` | int |  | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
-| `type` | varchar(50) |  | 'Reference to the type of encounter' |  | type |
-| `sub_type` | varchar(50) |  | 'Reference to the type of encounter' |  | sub_type |
-| `admission_method` | varchar(40) |  | 'The admission method of the encounter' |  | admission_method |
-| `end_date` | datetime(3) |  | 'The end date of the encounter' |  | end_date |
-| `is_deleted` | bit |  |  true/false is the record deleted |  |  |
-| `date_recorded` | datetime(3) |  | 'The date the encounter was recorded' |  | date_recorded |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
-| `lds_end_date_time` | datetime(3) |  | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique Id of the encounter' | `id` |
+| `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
+| `patient_id` | uniqueidentifier  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
+| `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' | `practitioner_id` |
+| `appointment_id` | uniqueidentifier | Reference to the appointment this encounter took part on' | `appointment_id` |
+| `episode_of_care_id` | uniqueidentifier | The episode of care under which this encounter occurred | `episode_of_care_id` |
+| `service_provider_organisation_id` | uniqueidentifier | 'Reference to the service provider organisation' | `service_provider_organisation_id` |
+| `clinical_effective_date` | datetime(3) | The date the clinical code is recorded for' | `clinical_effective_date` |
+| `date_precision_concept_id` | int | Reference to the precision of the date of the encounter' | `date_precision_concept_id` |
+| `location` | varchar(200) | Reference to the location that the encounter took place at | `institution_location_id` |
+| `encounter_source_concept_id` | uniqueidentifier | Reference to the type of encounter | `non_core_concept_id` |
+| `age_at_event` | int | The age the patient was when this encounter took place | `age_at_event` |
+| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category | |
+| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days. Null where the patient is over 27 days old. | |
+| `type` | varchar(50) | 'Reference to the type of encounter' | `type` |
+| `sub_type` | varchar(50) | 'Reference to the type of encounter' | `sub_type` |
+| `admission_method` | varchar(40) | 'The admission method of the encounter' | `admission_method` |
+| `end_date` | datetime(3) | The end date of the encounter | `end_date` |
+| `date_recorded` | datetime(3) | The date the encounter was recorded | `date_recorded` |
+| `is_deleted` | bit | true/false is the record deleted | |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `lds_record_id` | `allocation.lds_record_id` | each `encounter` can have one to many `allocation` instructions (administrative object only) |
+| `person_id` | `person.id` | one `person` can have none to many `encounter` items |
+| `patient_id` | `patient.id` | one `patient` can have none to many `encounter` items |
+| `practitioner_id` | `practitioner.id` | one `practitioner` can have none to many `encounter` items |
+| `appointment_id` | `appointment.id` | one `appointment` can have none to many `encounter` items |
+| `episode_of_care_id` |  `episode_of_care.id` | one `episode_of_care` can have none to many `encounter` items |
+| `service_provider_organisation_id` | `organisation.id` | one `organisation` can have none to many `encounter` items |
+| `date_precision_concept_id` | `concept.id` | one `concept` can be referenced by none to many `encounter` items |
+| `encounter_source_concept_id` | `concept.id` | one `concept` can be referenced by none to many `encounter` items |
 
 ### episode_of_care
 
 > [!NOTE]
 > An association between a patient and an organisation / healthcare provider(s) during which time encounters may occur. The managing organisation assumes a level of responsibility for the patient during this time.
 
-| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | 'Unique Id of the encounter event' |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | organization_id |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
-| `organisation_id` | uniqueidentifier |  | 'Owning organisation (i.e. publisher)' |  | organization_id |
-| `patient_id` | uniqueidentifier |  | 'The patient this event belongs to' |  | patient_id |
-| `person_id` | uniqueidentifier |  | 'The person this event belongs to' |  | person_id |
-| `episode_type_source_concept_id` | uniqueidentifier |  | 'Reference to the registration type of the patient' |  | registration_type_concept_id |
-| `episode_status_source_concept_id` | uniqueidentifier |  | 'Reference to the registration status of the patient' |  | registration_status_concept_id |
-| `episode_of_care_start_date` | datetime(3) |  | The date the episode of care started' |  | date_registered |
-| `episode_of_care_end_date` | datetime(3) |  | The date the episode of care ended' |  | date_registered_end |
-| `care_manager_practitioner_id` | uniqueidentifier |  | 'Reference to the usual GP for this episode of care' |  | usual_gp_practitioner_id |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique Id of the encounter event' | `id` |
+| `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | `organization_id` |
+| `patient_id` | uniqueidentifier | The patient this event belongs to | `patient_id` |
+| `person_id` | uniqueidentifier | The person this event belongs to | `person_id` |
+| `episode_type_source_concept_id` | uniqueidentifier | Reference to the registration type of the patient | `registration_type_concept_id` |
+| `episode_status_source_concept_id` | uniqueidentifier | Reference to the registration status of the patient | `registration_status_concept_id` |
+| `episode_of_care_start_date` | datetime(3) | The date the episode of care started | `date_registered` |
+| `episode_of_care_end_date` | datetime(3) | The date the episode of care ended | `date_registered_end` |
+| `care_manager_practitioner_id` | uniqueidentifier | Reference to the usual GP for this episode of care | `usual_gp_practitioner_id` |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `lds_record_id` | `allocation.lds_record_id` | each `encounter` can have one to many `allocation` instructions (administrative object only) |
+| `patient_id` | `patient.id` | one `patient` can have none to many `episode_of_care` items |
+| `person_id` | `person.id` | one `person` can have none to many `episode_of_care` items |
+| `episode_type_source_concept_id` | `concept.id` | one `concept` can be referenced by none to many `episode_of_care` items |
+| `episode_status_source_concept_id` | `concept.id` |  one `concept` can be referenced by none to many `episode_of_care` items |
+| `care_manager_practitioner_id` | `concept.id` | one `practitioner` can be a care manager in none to many `episode_of_care` items |
 
 ### flag
 
@@ -262,22 +369,28 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 >
 > A flag is a warning or notification of some sort presented to the user - who may be a clinician or some other person involved in patient care. It usually represents something of sufficient significance to warrant a special display of some sort - rather than just a note in the resource
 
-| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | 'Unique Id of the flag' |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  | organization_id |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
-| `person_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | person_id |
-| `patient_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | patient_id |
-| `effective_date` | datetime(3) |  | 'The date the flag was entered onto the patients record' |  | effective_date |
-| `expired_date` | datetime(3) |  | The expiry date of the flag |  |  |
-| `is_active` | bit |  | 'Whether the flag is active or not' |  | is_active |
-| `flag_text` | varchar(8000) |  | This is a warning set by the publisher regarding the patient' |  | flag_text |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | Unique Id of the flag | `id` |
+| `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
+| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `effective_date` | datetime(3) | The date the flag was effective from onto the patients record | `effective_date` |
+| `expired_date` | datetime(3) | The expiry date of the flag |  |
+| `is_active` | bit | Whether the flag is active or not | `is_active` |
+| `flag_text` | varchar(8000) | This is a warning set by the publisher regarding the patient' | `flag_text` |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### location
 
@@ -286,53 +399,65 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 >
 > A Location includes both incidental locations (a place which is used for healthcare without prior designation or authorization) and dedicated, formally appointed locations. Locations may be private, public, mobile or fixed and scale from small freezers to full hospital buildings or parking garages.
 
-| Column Name | Data Type | Status | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | 'Unique Id of the location' |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
-| `name` | varchar(100) |  | 'The name of a location set by the publisher. E.g. ward, clinic, domiciliary' |  | name |
-| `type_code` | uniqueidentifier |  | 'The type of location' |  | type_code |
-| `type_desc` | varchar(50) |  | 'Textual description of the type of location eg GP Practice' |  | type_desc |
-| `is_primary_location` | bit |  | true/false - is this the primary location of the parent organisation |  |  |
-| `house_name` | nvarchar |  | location property name |  |  |
-| `house_number` | nvarchar |  | location property number |  |  |
-| `house_name_flat_number` | nvarchar |  | location property number |  |  |
-| `street` | nvarchar |  | location street/road name |  |  |
-| `address_line_1` | nvarchar |  | location address line 1 |  |  |
-| `address_line_2` | nvarchar |  | location address line 2 |  |  |
-| `address_line_3` | nvarchar |  | location address line 3 |  |  |
-| `address_line_4` | nvarchar |  | location address line 4 |  |  |
-| `postcode` | varchar(200) |  | location postcode |  | postcode |
-| `managing_organisation_id` | uniqueidentifier |  | reference to the parent organisation of the location |  | managing_organization_id |
-| `open_date` | date(0) |  | location opening date |  |  |
-| `close_date` | date(0) |  | location closing date (if applicable) |  |  |
-| `is_obsolete` | bit |  | true/false - is the location closed |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version |
+| `id` | uniqueidentifier | Unique Id of the location | `id` |
+| `name` | varchar(100) | The name of a location set by the publisher. E.g. ward, clinic, domiciliary | `name` |
+| `type_code` | uniqueidentifier | The type of location | `type_code` |
+| `type_desc` | varchar(50) | Textual description of the type of location eg GP Practice | `type_desc` |
+| `is_primary_location` | bit | true/false - is this the primary location of the parent organisation |  |
+| `house_name` | nvarchar | location property name |  |
+| `house_number` | nvarchar | location property number |  |
+| `house_name_flat_number` | nvarchar | location property number |  |
+| `street` | nvarchar | location street/road name |  |
+| `address_line_1` | nvarchar | location address line 1 |  |
+| `address_line_2` | nvarchar | location address line 2 |  |
+| `address_line_3` | nvarchar | location address line 3 |  |
+| `address_line_4` | nvarchar | location address line 4 |  |
+| `postcode` | varchar(200) | location postcode | `postcode` |
+| `managing_organisation_id` | uniqueidentifier | reference to the parent organisation of the location | `managing_organization_id` |
+| `open_date` | date(0) | location opening date |  |
+| `close_date` | date(0) | location closing date (if applicable) |  |
+| `is_obsolete` | bit | true/false - is the location closed |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### location_contact
 
 > [!NOTE]
 > The contact details of communication devices available at the location. This can include addresses, phone numbers, fax numbers, mobile numbers, email addresses and web sites.
 
-| Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier | Unique identifier for this location contact |  |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `location_id` | uniqueidentifier | reference to the location |  |  |
-| `is_primary_contact` | bit | true/false - is this the primary contact for the location |  |  |
-| `contact_type` | varchar(50) | type of contact (Telephone, Fax, Email) |  |  |
-| `contact_type_concept_id` | uniqueidentifier | type of contact (Telephone, Fax, Email) |  |  |
-| `value` | nvarchar | 'The value of the contact information eg phone number, email address' |  |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | Unique identifier for this location contact |  |
+| `location_id` | uniqueidentifier | reference to the location |  |
+| `is_primary_contact` | bit | true/false - is this the primary contact for the location |  |
+| `contact_type` | varchar(50) | type of contact (Telephone, Fax, Email) |  |
+| `contact_type_concept_id` | uniqueidentifier | type of contact (Telephone, Fax, Email) |  |
+| `value` | nvarchar | 'The value of the contact information eg phone number, email address' |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### medication_order
 
@@ -343,89 +468,100 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 >
 >It is not intended for use in prescribing particular diets, or for ordering non-medication-related items (eyeglasses, supplies, etc.). In addition, the MedicationRequest may be used to report orders/request from external systems that have been reported for informational purposes and are not authoritative and are not expected to be acted upon (e.g. dispensed or administered)
 
-| Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- |  ---- |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier | 'Unique Id of the medication order' |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  | organization_id |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' |  | organization_id |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  | person_id |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `medication_statement_id` | uniqueidentifier | 'Reference to the medication statement.  A medication statement can have many medication orders' |  | medication_statement_id |
-| `encounter_id` | uniqueidentifier | 'Reference to the encounter the medication order was issued in' |  |  |
-| `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' |  | practitioner_id |
-| `observation_id` | uniqueidentifier | Reference to the observation that required the medication order |  |  |
-| `allergy_intolerance_id` | uniqueidentifier | Reference to allergy intolerance observations attached to this medication order |  |  |
-| `diagnostic_order_id` | uniqueidentifier | Reference to diagnostic order observations attached to this medication order |  |  |
-| `referral_request_id` | uniqueidentifier | Reference to referral requests attached to this medication order |  |  |
-| `clinical_effective_date` | datetime(3) | 'The date the medication order was issued' |  | clinical_effective_date |
-| `date_precision_concept_id` | uniqueidentifier | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' |  | date_precision_concept_id |
-| `dose` | varchar(1000) | 'Textual description of the dose' |  | dose |
-| `quantity_value` | float | 'The value of the medication that was prescribed eg 50' |  | quantity_value |
-| `quantity_unit` | varchar(255) | 'The unit of the medication that was prescribed eg tablets' |  | quantity_unit |
-| `duration_days` | int | 'How many days the medication is prescribed for' |  | duration_days |
-| `estimated_cost` | float | 'The estimated cost of the medication' |  | estimated_cost |
-| `medication_name` | varchar(500) | The name of the medication in the order |  |  |
-| `medication_order_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the medication provided by the supplier' |  | non_core_concept_id |
-| `bnf_reference` | varchar(10) | 'Reference to the clinical coding of the medication' |  | bnf_reference |
-| `age_at_event` | int | 'The age the patient was at the time of this event' |  | age_at_event |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
-| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
-| `issue_method` | varchar(8000) | 'The issue method of the medication eg hand written' |  | issue_method |
-| `date_recorded` | datetime(3) | No comment yet added |  | date_recorded |
-| `is_confidential` | bit | true/false - is the medication order flagged as confidential/closed |  |  |
-| `is_deleted` | bit | true/false - is the record deleted |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | Unique Id of the medication order | `id` |
+| `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
+| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `medication_statement_id` | uniqueidentifier | Reference to the medication statement.  A medication statement can have many medication orders | `medication_statement_id` |
+| `encounter_id` | uniqueidentifier | Reference to the encounter the medication order was issued in |  |
+| `practitioner_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `observation_id` | uniqueidentifier | Reference to the observation that required the medication order |  |
+| `allergy_intolerance_id` | uniqueidentifier | Reference to allergy intolerance observations attached to this medication order |  |
+| `diagnostic_order_id` | uniqueidentifier | Reference to diagnostic order observations attached to this medication order |  |
+| `referral_request_id` | uniqueidentifier | Reference to referral requests attached to this medication order |  |
+| `clinical_effective_date` | datetime(3) | The date the medication order was issued | `clinical_effective_date` |
+| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `dose` | varchar(1000) | Textual description of the dose | `dose` |
+| `quantity_value` | float | The value of the medication that was prescribed eg 50 | `quantity_value` |
+| `quantity_unit` | varchar(255) | The unit of the medication that was prescribed eg tablets | `quantity_unit` |
+| `duration_days` | int | How many days the medication is prescribed for | `duration_days` |
+| `estimated_cost` | float | The estimated cost of the medication | `estimated_cost` |
+| `medication_name` | varchar(500) | The name of the medication in the order |  |
+| `medication_order_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
+| `bnf_reference` | varchar(10) | Reference to the clinical coding of the medication | `bnf_reference` |
+| `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
+| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category | |
+| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
+| `issue_method` | varchar(8000) | The issue method of the medication eg hand written | `issue_method` |
+| `date_recorded` | datetime(3) | No comment yet added | `date_recorded` |
+| `is_confidential` | bit | true/false - is the medication order flagged as confidential/closed |  |
+| `is_deleted` | bit | true/false - is the record deleted |  |
+| `issue_method_description` | varchar | description of the issue method  |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### medication_statement
 
 > [!NOTE]
 > A record of a medication that is being consumed by a patient. A Medication Statement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future. The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician. A common scenario where this information is captured is during the history taking process during a patient visit or stay. The medication information may come from sources such as the patient's memory, from a prescription bottle, or from a list of medications the patient, clinician or other party maintains.
 
-| Column Name | Data Type | STATUS | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | 'Unique Id of the medication' |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_is_deleted` | bit |  | supplier agnostic representation of whether the record is deleted |  |  |
-| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  |  |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `organisation_id` | uniqueidentifier |  | 'Owning organisation (i.e. publisher)' |  | organization_id |
-| `person_id` | uniqueidentifier |  | 'Unique individual across all organisations' |  | person_id |
-| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `encounter_id` | uniqueidentifier |  | 'Reference to the encounter this medication was recorded in' |  | encounter_id |
-| `practitioner_id` | uniqueidentifier |  | 'The clinician the activity is recorded against' |  | practitioner_id |
-| `observation_id` | uniqueidentifier |  | Reference to the observation that required the medication order |  |  |
-| `allergy_intolerance_id` | uniqueidentifier |  | Reference to allergy intolerance observations attached to this medication order |  |  |
-| `diagnostic_order_id` | uniqueidentifier |  | Reference to diagnostic order observations attached to this medication order |  |  |
-| `referral_request_id` | uniqueidentifier |  | Reference to referral requests attached to this medication order |  |  |
-| `authorisation_type_concept_id` | int |  | 'Reference to the authorisation type' |  | authorisation_type_concept_id |
-| `date_precision_concept_id` | int |  | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' |  | date_precision_concept_id |
-| `medication_statement_source_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the medication provided by the supplier' |  | non_core_concept_id |
-| `clinical_effective_date` | datetime(3) |  | 'The date the medication was clinical relevant' |  | clinical_effective_date |
-| `cancellation_date` | datetime(3) |  | 'The date the medication was cancelled' |  | cancellation_date |
-| `dose` | varchar(1000) |  | 'Textual description of the dose of the medication' |  | dose |
-| `quantity_value_description` | varchar(500) |  | 'The value of the medication that was prescribed eg 50' |  |  |
-| `quantity_value` | float |  | 'The value of the medication that was prescribed eg 50' |  | quantity_value |
-| `quantity_unit` | varchar(255) |  | 'The unit of the medication that was prescribed eg tablets' |  | quantity_unit |
-| `medication_name` | varchar(500) |  | The name of the medication attached to the statement |  |  |
-| `bnf_reference` | varchar(10) |  | 'A reference to the drug in the BNF dictionary' |  | bnf_reference |
-| `age_at_event` | int |  | 'The age the patient was at the time of this event' |  | age_at_event |
-| `age_at_event_baby` | int |  | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |  |
-| `age_at_event_neonate` | int |  | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |  |
-| `issue_method` | varchar(8000) |  | 'The issue method of the medication eg hand written' |  | issue_method |
-| `date_recorded` | datetime(3) |  | date the medication statement was recorded |  | date_recorded |
-| `is_active` | bit |  | is the record active |  |  |
-| `is_confidential` | bit |  | true/false - is the statement marked as confidential/sensitive |  |  |
-| `is_deleted` | bit | | true/false - is the record in a deleted state |  |  |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | Unique Id of the medication | `id` |
+| `organisation_id` | uniqueidentifier |  | 'Owning organisation (i.e. publisher)' | `organization_id` |
+| `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
+| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `encounter_id` | uniqueidentifier | Reference to the encounter this medication was recorded in | `encounter_id` |
+| `practitioner_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `observation_id` | uniqueidentifier | Reference to the observation that required the medication order | |
+| `allergy_intolerance_id` | uniqueidentifier | Reference to allergy intolerance observations attached to this medication order |  |
+| `diagnostic_order_id` | uniqueidentifier | Reference to diagnostic order observations attached to this medication order |  |
+| `referral_request_id` | uniqueidentifier | Reference to referral requests attached to this medication order |  |
+| `authorisation_type_concept_id` | int | 'Reference to the authorisation type' | `authorisation_type_concept_id` |
+| `date_precision_concept_id` | int | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `medication_statement_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
+| `clinical_effective_date` | datetime(3) | The date the medication was clinical relevant | `clinical_effective_date` |
+| `cancellation_date` | datetime(3) | The date the medication was cancelled | `cancellation_date` |
+| `dose` | varchar(1000) | Textual description of the dose of the medication | `dose` |
+| `quantity_value_description` | varchar(500) | The value of the medication that was prescribed eg 50 |  |
+| `quantity_value` | float | The value of the medication that was prescribed eg 50 | `quantity_value` |
+| `quantity_unit` | varchar(255) | The unit of the medication that was prescribed eg tablets | `quantity_unit` |
+| `medication_name` | varchar(500) | The name of the medication attached to the statement |  |
+| `bnf_reference` | varchar(10) | A reference to the drug in the BNF dictionary | `bnf_reference` |
+| `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
+| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
+| `issue_method` | varchar(8000) | The issue method of the medication eg hand written | `issue_method` |
+| `date_recorded` | datetime(3) | date the medication statement was recorded | `date_recorded` |
+| `is_active` | bit | is the record active |  |
+| `is_confidential` | bit | true/false - is the statement marked as confidential/sensitive |  |
+| `is_deleted` | bit | true/false - is the record in a deleted state |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### observation
 
@@ -434,65 +570,78 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 >
 > Observations are a central element in healthcare, used to support diagnosis, monitor progress, determine baselines and patterns and even capture demographic characteristics, as well as capture results of tests performed on products and substances. Most observations are simple name/value pair assertions with some metadata, but some observations group other observations together logically, or even are multi-component observations.
 
-| Column Name | Data Type | Status | Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier |  | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier |  | 'Unique Id of the observation' |  | id |
-| `lds_business_key` | varchar(8000) |  | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier |  | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) |  | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) |  | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) |  | LDS datetime stamp from which the record version was correct |  |  |
-| `record_owner_organisation_code` | varchar(50) |  | Organisation code for the organisation that owns the record |  |  |
-| `patient_id` | uniqueidentifier |  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `person_id` | uniqueidentifier |  | The unique reference for the person |  | person_id |
-| `encounter_id` | uniqueidentifier |  | 'Reference to the encounter the observation was recorded at' |  | encounter_id |
-| `practitioner_id` | uniqueidentifier |  | 'The clinician the activity is recorded against' |  | practitioner_id |
-| `parent_observation_id` | uniqueidentifier |  | 'Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure' |  | parent_observation_id |
-| `clinical_effective_date` | datetime(3) |  | 'The date the observation was identified by a clinician' |  | clinical_effective_date |
-| `date_precision_concept_id` | uniqueidentifier |  | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' |  | date_precision_concept_id |
-| `result_value` | float |  | 'The value of the result of the observation' |  | result_value |
-| `result_value_unit_concept_id` | uniqueidentifier |  | 'The units of the result of the observation' |  |  |
-| `result_date` | date(0) |  | 'The date of the result' |  | result_date |
-| `result_text` | varchar(8000) |  | 'Any text associated with the result' |  | result_text |
-| `is_problem` | bit |  | 'Whether the observation is marked as a problem' |  | is_problem |
-| `is_review` | bit |  | 'Whether the observation is a review of an existing problem' |  | is_review |
-| `problem_end_date` | datetime(3) |  | 'The end date of the problem' |  | problem_end_date |
-| `observation_source_concept_id` | uniqueidentifier |  | 'Reference to the clinical coding of the observation provide by the supplier' |  | non_core_concept_id |
-| `age_at_event` | int |  | 'The age of the patient at the time of the observation' |  | age_at_event |
-| `age_at_event_baby` | int |  | 'The age of the patient at the time of the observation' |  | age_at_event |
-| `age_at_event_neonate` | int |  | 'The age of the patient at the time of the observation' |  | age_at_event |
-| `episodicity_concept_id` | bigint |  | 'Reference to the episodicity of the problem eg First, review, flare' |  | episodicity_concept_id |
-| `is_primary` | bit |  | 'Whether the observation is a primary observation' |  | is_primary |
-| `date_recorded` | datetime(3) |  | 'The date the observation was recorded in the system' |  | date_recorded |
-| `is_problem_deleted` | bit |  | true/false - whether the problem relating to the observation is deleted |  |  |
-| `is_confidential` | bit |  | true/false - is the observation marked as confidential/sensitive |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | Unique Id of the observation | `id` |
+| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `person_id` | uniqueidentifier | The unique reference for the person | `person_id` |
+| `encounter_id` | uniqueidentifier | Reference to the encounter the observation was recorded at | `encounter_id` |
+| `practitioner_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `parent_observation_id` | uniqueidentifier | Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure | `parent_observation_id` |
+| `clinical_effective_date` | datetime(3) | The date the observation was identified by a clinician | `clinical_effective_date` |
+| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `result_value` | float | The value of the result of the observation | `result_value` |
+| `result_value_unit_concept_id` | uniqueidentifier |  The units of the result of the observation' |  |
+| `result_date` | date(0) | 'The date of the result' | `result_date` |
+| `result_text` | varchar(8000) | 'Any text associated with the result' | `result_text` |
+| `is_problem` | bit | Whether the observation is marked as a problem | `is_problem` |
+| `is_review` | bit | Whether the observation is a review of an existing problem | `is_review` |
+| `problem_end_date` | datetime(3) | The end date of the problem | `problem_end_date` |
+| `observation_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the observation provide by the supplier' |  `non_core_concept_id` |
+| `age_at_event` | int | The age of the patient at the time of the observation in whole integer years | `age_at_event` |
+| `age_at_event_baby` | int | The age of the patient at the time of the observation. In whole years for patients aged 1 years or more, and in age brackets for patients under 1 year old. | `age_at_event` |
+| `age_at_event_neonate` | int | The age of the patient at the time of the observation | `age_at_event` |
+| `episodicity_concept_id` | bigint | Reference to the episodicity of the problem eg First, review, flare | `episodicity_concept_id` |
+| `is_primary` | bit | Whether the observation is a primary observation | `is_primary` |
+| `date_recorded` | datetime(3) | The date the observation was recorded in the system | `date_recorded` |
+| `is_deleted` | bit | true/false - is the problem record deleted (**to be removed**) |  |
+| `is_problem_deleted` | bit | true/false - whether the problem relating to the observation is deleted |  |
+| `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record <br>***THIS FIELD IS CURRENTLY ABSENT** | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### organisation
 
 > [!NOTE]
 > A formally or informally recognized grouping of people or organisations formed for the purpose of achieving some form of collective action. Includes companies, institutions, corporations, departments, community groups, healthcare practice groups etc.
 
-| Column Name | Data Type |  Comment | Foreign Key Reference | Compass Equivalent |
-| --- | --- | ---- | ---- | ---- | 
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
-| `id` | uniqueidentifier | 'Unique Id of the organisation' |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_is_deleted` | bit | data source agnostic deletion indicator |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `organisation_code` | varchar(255) | Organisation Code |  | ods_code |
-| `assigning_authority_code` | varchar(255) | The assigning authority of the organisation code |  |  |
-| `name` | varchar(255) | 'Name of the organisation' |  | name |
-| `type_code` | int | 'The type of organisation' |  | type_code |
-| `type_desc` | varchar(255) | 'The type of organisation' |  | type_desc |
-| `postcode` | varchar(200) | 'The postcode of the organisation' |  | postcode |
-| `parent_organisation_id` | uniqueidentifier | 'The id of the parent organisation' |  | parent_organization_id |
-| `open_date` | date(0) | Date the organisation opened (minimum of operational or legal dates) |  |  |
-| `close_date` | date(0) | Date the organisation closed (maximum of operational or legal dates) |  |  |
-| `is_obsolete` | bit | Is the organisation closed |  |  |
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique Id of the organisation' | `id` |
+| `organisation_code` | varchar(255) | Organisation Code | `ods_code` |
+| `assigning_authority_code` | varchar(255) | The assigning authority of the organisation code |  |
+| `name` | varchar(255) | 'Name of the organisation' | `name` |
+| `type_code` | int | 'The type of organisation' | `type_code` |
+| `type_desc` | varchar(255) | 'The type of organisation' | `type_desc` |
+| `postcode` | varchar(200) | 'The postcode of the organisation' | `postcode` |
+| `parent_organisation_id` | uniqueidentifier | The id of the parent organisation | `parent_organization_id` |
+| `open_date` | date(0) | Date the organisation opened (minimum of operational or legal dates) |  |
+| `close_date` | date(0) | Date the organisation closed (maximum of operational or legal dates) |  |
+| `is_obsolete` | bit | Is the organisation closed |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record.<br>_This will be null for this table, as this table contains shared reference data only_. | `organization_id` |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient (masked)
 
@@ -1023,3 +1172,19 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_primary` | bit | True/false is this the primary mapping for the code |  |  |
 | `equivalence` | varchar(255) | type of mapping equivalence, values include 'equivalent', 'wider', 'narrower', 'subsumes', 'inexact', 'unmatched', 'specializes', 'relatedto', 'unmatched' |  | |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
+
+## Ages
+
+Ages shown in the OLIDS dataset for de-identified (also known as "masked" or "pseudonymised") data are shown in:
+
+- whole integer years
+- age brackets aligned to HES child ages
+- days since birth up to 27 days for neonates
+
+This is aligned with the Hospital Episode Statistics age categorisation as below:
+
+| OLIDS Column | HES column | Definitions | Values |
+| :--- | :--- | :--- | :--- |
+| `age_at_event` | `age` | **HES:** <br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. <br><br>**OLIDS:**<br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. | nnn = Age in years |
+| `age_at_event_baby` | `ENDAGE` and `STARTAGE` (APC) <br> `APPTAGE` (OP) <br> `ARRIVALAGE` (AE) | **HES:**<br>The patient's age, in completed years, at the end of a finished episode. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply.<br><br>**OLIDS:**<br>The patient's age, in completed years, at the end of an event. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply. | nnn = Age in years<br> 120 = 120 years or more<br> 7001 = Less than 1 day  <br> 7002 = 1 to 6 days  <br> 7003 = 7 to 28 days  <br> 7004 = 29 to 90 days (under 3 months)  <br> 7005 = 91 to 181 days (approximately 3 months to under 6  months)  <br> 7006 = 182 to 272 days (approximately 6 months to under 9 months)  <br> 7007 = 273 to <1 year (approximately 9 months to under 1 year)  <br> Null = Not applicable (other maternity event) or not known <br> |
+| `age_at_event_neonate` | `NEODUR` (APC) | **HES:** <br>The age in days of a baby admitted as a patient. It is derived from the Admission Date (ADMIDATE) and Date of Birth (DOB). <br>If the baby is older than 27 days, NEODUR is not calculated. <br><br>**OLIDS:** <br>The age of a patient at the end of an event where the patient is under 28 days old.<br> If the baby is older than 27 days, no age in days is given. | 2n = Age of patient in days from 0 to 27. <br> `NULL` = Not applicable. Patient is older than 27 days. |
