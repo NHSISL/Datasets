@@ -96,7 +96,7 @@ The below is a report of the currently known issues within the One London Integr
 
 ### person (pcd)
 
-- The fields “telephone_number”, “mobile_number”, “email_address”, “sensitivity_flag” and “mps_id” are set to null to mitigate a formatting error in the source data. Contact information in patient_contact is unaffected. Sensitive patient filtering is based on error_success_code so is unaffected.
+The fields “telephone_number”, “mobile_number”, “email_address”, “sensitivity_flag” and “mps_id” are set to null to mitigate a formatting error in the source data which would otherwise risk the leaking of identifying data. Contact information in patient_contact is unaffected. Sensitive patient filtering is based on error_success_code so is unaffected.
 - the birth date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar) is applied.
 - the birth week (iso) is not currently derived.
 - the death date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar)is applied.
