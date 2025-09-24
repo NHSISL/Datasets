@@ -1060,11 +1060,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 | `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  |  |
-| `nhs_number` | char | 'The NHS number of the patient' |  | nhs_number |
-| `title` | varchar(50) | 'The title of the patient' |  |  |
-| `first_name` | nvarchar | 'The first names of the patient' |  | first_names |
-| `middle_name` | nvarchar | The middle names of the patient' |  |  |
-| `last_name` | nvarchar | 'The last name of the patient' |  | last_name |
+| `nhs_number` | char(10) | 'The NHS number of the patient' |  | nhs_number |
+| `title` | varchar(50) | 'The title of the patient' |  | title |
+| `first_name` | nvarchar(50) | 'The first names of the patient' |  | first_names |
+| `middle_name` | nvarchar(256) | The middle names of the patient' |  |  |
+| `last_name` | nvarchar(100) | 'The last name of the patient' |  | last_name |
 | `birth_date` | date(0) | 'The date of birth of the patient' |  | date_of_birth |
 | `birth_year` | smallint | Birth year of the patient |  | birth_year |
 | `birth_month` | smallint | Birth month of the patient |  | birth_month |
@@ -1092,13 +1092,13 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 | `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  | organization_id |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `address_type_concept_id` | bigint | Type of address (i.e. Temporary, Correspondence only, Home) |  | use_concept_id |
+| `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) |  | use_concept_id |
 | `is_home_address` | bit |  |  |  |
-| `address_line_1` | nvarchar | 'The first line of the address' |  | address_line_1 |
-| `address_line_2` | nvarchar | 'The second line of the address' |  | address_line_2 |
-| `address_line_3` | nvarchar | 'The third line of the address' |  | address_line_3 |
-| `address_line_4` | nvarchar | 'The fourth line of the address' |  | address_line_4 |
-| `city` | nvarchar | 'The city' |  | city |
+| `address_line_1` | nvarchar(255) | 'The first line of the address' |  | address_line_1 |
+| `address_line_2` | nvarchar(255) | 'The second line of the address' |  | address_line_2 |
+| `address_line_3` | nvarchar(255) | 'The third line of the address' |  | address_line_3 |
+| `address_line_4` | nvarchar(255) | 'The fourth line of the address' |  | address_line_4 |
+| `city` | nvarchar(255) | 'The city' |  | city |
 | `post_code` | varchar(255) | The postcode of the address |  | postcode |
 | `start_date` | datetime(3) | 'The start date of this address being relevant' |  | start_date |
 | `end_date` | datetime(3) | 'The end date of this address being relevant' |  | end_date |
@@ -1121,7 +1121,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 | `description` | varchar(255) | <to be confirmed> |  |  |
-| `contact_type_concept_id` | uniqueidentifier | use of contact (e.g. mobile, home,work' (Combines type into single concept) |  | use_concept_id |
+| `contact_type_concept_id` | uniqueidentifier | use of contact (e.g. mobile, home,work' (Combines type into single concept) |  | type_concept_id |
 | `start_date` | varchar(255) | 'The start date of the contact being valid' |  | start_date |
 | `end_date` | varchar(255) | 'The end date of the contact being valid' |  | end_date |
 | `value` | varchar(255) | 'The value of the contact information eg phone number, email address' |  | value |
@@ -1140,27 +1140,31 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 | `registrar_event_id` | uniqueidentifier | LDS processing event identifier for the processing of the uprn match |  |  |
 | `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `uprn` | varchar(255) | the matched unique property reference number |  |  |
-| `upsn` | varchar(255) | the matched unique street reference number |  |  |
-| `organisation_name` | varchar(255) | the organisation name of the address of the UPRN |  |  |
+| `uprn` | varchar(255) | the matched unique property reference number |  | uprn |
+| `usrn` | varchar(255) | the matched unique street reference number |  |  |
+| `organisation_name` | varchar(255) | the organisation name of the address of the UPRN |  | abp_address_organisation |
 | `department_name` | varchar(255) | the department name of the address of the UPRN |  |  |
 | `sub_building_name` | varchar(255) | the sub-building name of the address of the UPRN |  |  |
 | `building_name` | varchar(255) | the building name of the address of the UPRN |  |  |
-| `building_number` | varchar(255) | the building number of the address of the UPRN |  |  |
+| `building_number` | varchar(255) | the building number of the address of the UPRN |  | abp_address_number |
 | `dependent_thoroughfare` | varchar(255) | Added to uniquely distinguish addresses where the same thoroughfare exists twice in the same district |  |  |
-| `thoroughfare` | varchar(255) | road or street name |  |  |
+| `thoroughfare` | varchar(255) | road or street name |  | abp_address_street |
 | `double_dependent_locality` | varchar(255) | A business park, industrial estate or hamlet which is smaller than a Dependent Locality |  |  |
-| `dependent_locality` | varchar(255) | A small town or village name sometimes included in an address when the Delivery Point is outside the boundary of the main Post Town that serves it |  |  |
-| `post_town` | varchar(255) | Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre |  |  |
-| `post_code` | varchar(255) | The postal code used for the Unique Property |  |  |
+| `dependent_locality` | varchar(255) | A small town or village name sometimes included in an address when the Delivery Point is outside the boundary of the main Post Town that serves it |  | abp_address_locality |
+| `post_town` | varchar(255) | Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre |  | abp_address_town |
+| `post_code` | varchar(255) | The postal code used for the Unique Property |  | abp_address_postcode |
 | `address_format_quality` | varchar(255) | The quality of the input address (i.e. 'good') |  |  |
 | `post_code_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |  |
 | `matched_with_assign` | varchar(255) | True/false - was a match possible |  |  |
-| `qualifier` | varchar(255) | type of matched address (residential, child) |  |  |
-| `uprn_property_classification` | varchar(255) | <to be confirmed> |  |  |
-| `algorithm` | varchar(255) | <to be confirmed> |  |  |
-| `match_pattern` | varchar(255) | <to be confirmed> |  |  |
+| `qualifier` | varchar(255) | type of matched address (residential, child) |  | qualifier |
+| `uprn_property_classification` | varchar(255) |  |  | uprn_property_classification |
+| `algorithm` | varchar(255) | <to be confirmed> |  | match_rule |
+| `match_pattern` | varchar(255) | <to be confirmed> |  | Concatenates match_pattern_flat, building, number and postcode fields|
 | `unstructured_postal_address` | varchar(255) | The full input address as a string |  |  |
+| `x_coordinate` | float(53) | The Ordnance Survey X co-ordinate of the address |  | uprn_xcoordinate |
+| `y_coordinate` | float(53) | The Ordnance Survey Y co-ordinate of the address |  | uprn_ycoordinate |
+| `latitude` | float(53) | The latitude of the address |  | latitude |
+| `longitude` | float(53) | The longitude of the address |  | longitude |
 | `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
 
 ### person
