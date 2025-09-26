@@ -1053,17 +1053,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
-| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
-| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
-| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the patient' |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  |  |
 | `nhs_number` | char(10) | 'The NHS number of the patient' |  | nhs_number |
 | `title` | varchar(50) | 'The title of the patient' |  | title |
 | `first_name` | nvarchar(50) | 'The first names of the patient' |  | first_names |
@@ -1079,7 +1070,18 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `death_month` | smallint | Death month of the patient |  |  |
 | `death_week_iso` | smallint | Death week of the patient (iso standard) |  |  |
 | `death_day` | smallint | Death day of the patient |  |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_address
 
@@ -1088,17 +1090,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
-| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
-| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
-| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the address' |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  | organization_id |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
 | `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) |  | use_concept_id |
 | `is_home_address` | bit |  |  |  |
@@ -1110,7 +1103,19 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `postcode` | varchar(255) | The postcode of the address |  | postcode |
 | `start_date` | datetime(3) | 'The start date of this address being relevant' |  | start_date |
 | `end_date` | datetime(3) | 'The end date of this address being relevant' |  | end_date |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_end_date_time` | datetime(3) | LDS datetime stamp from when the record was replaced or deleted |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_contact
 
@@ -1119,16 +1124,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
-| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
-| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
-| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the patient contact' |  | id |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record |  | organization_id |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  | person_id |
 | `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
@@ -1138,6 +1135,19 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `end_date` | varchar(255) | 'The end date of the contact being valid' |  | end_date |
 | `value` | varchar(255) | 'The value of the contact information eg phone number, email address' |  | value |
 | `lds_is_deleted` | bit | LDS flag standardising presentation of deleted state of the record | |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_end_date_time` | datetime(3) | LDS datetime stamp from when the record was replaced or deleted |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_uprn
 
@@ -1146,16 +1156,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
-| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
-| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
-| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
 | `id` | uniqueidentifier | Unique Id of the patient uprn match' |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `registrar_event_id` | uniqueidentifier | LDS processing event identifier for the processing of the uprn match |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
 | `uprn` | varchar(255) | the matched unique property reference number |  | uprn |
 | `usrn` | varchar(255) | the matched unique street reference number |  |  |
 | `organisation_name` | varchar(255) | the organisation name of the address of the UPRN |  | abp_address_organisation |
@@ -1181,7 +1183,18 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `y_coordinate` | float(53) | The Ordnance Survey Y co-ordinate of the address |  | uprn_ycoordinate |
 | `latitude` | float(53) | The latitude of the address |  | latitude |
 | `longitude` | float(53) | The longitude of the address |  | longitude |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### person
 
@@ -1190,16 +1203,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
-| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
-| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
-| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
 | `requesting_record_id` | uniqueidentifier | The unique record id for the item that acted as the basis for the PDS trace request |  |  |
 | `unique_reference` | uniqueidentifer | The unique reference for the PDS trace request | |  |
 | `requesting_nhs_number` | varchar(10) | Requested NHS number. Populated with the value provided in the request file. The matched NHS number is provided in the column MATCHED _NHS_NO. |  |  |
@@ -1242,6 +1247,18 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `matched__nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
 | `matched_algorithm_indicator` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
 | `requesting_patient_id` | uniqueidentifier | The patient_id for the patient record used to create the PDS trace request | | |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
+| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ## `[OLIDS_TERMINOLOGY]` Schema
 
