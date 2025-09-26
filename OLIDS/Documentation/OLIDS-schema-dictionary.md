@@ -1053,6 +1053,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
+| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
+| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
+| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
+| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the patient' |  | id |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
@@ -1084,6 +1088,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
+| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
+| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
+| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
+| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the address' |  | id |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
@@ -1099,7 +1107,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `address_line_3` | nvarchar(255) | 'The third line of the address' |  | address_line_3 |
 | `address_line_4` | nvarchar(255) | 'The fourth line of the address' |  | address_line_4 |
 | `city` | nvarchar(255) | 'The city' |  | city |
-| `post_code` | varchar(255) | The postcode of the address |  | postcode |
+| `postcode` | varchar(255) | The postcode of the address |  | postcode |
 | `start_date` | datetime(3) | 'The start date of this address being relevant' |  | start_date |
 | `end_date` | datetime(3) | 'The end date of this address being relevant' |  | end_date |
 | `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest |  |  |
@@ -1111,6 +1119,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
+| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
+| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
+| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
+| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the patient contact' |  | id |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |  |
@@ -1134,6 +1146,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
+| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
+| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
+| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
+| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | Unique Id of the patient uprn match' |  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
@@ -1174,6 +1190,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- |  ---- |
+| `LakehouseDateProcessed` | date | Date when the record was first transmitted to the lakehouse |  |  |
+| `LakehouseDateTimeUpdated` | datetime | Date and time when the record was updated on the lakehouse |  |  |
+| `LDSIsDeleted` | bit | Flag for deletion of the record in the source system |  |  |
+| `LDSRecordId` | uniqueidentifier | Unique identifier for the record |  |  |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
@@ -1221,6 +1241,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `error_success_code` | varchar(2) | The code corresponding to this record. <br>See the person level response code table for details.  |  |  |
 | `matched__nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
 | `matched_algorithm_indicator` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
+| `requesting_patient_id` | uniqueidentifier | The patient_id for the patient record used to create the PDS trace request | | |
 
 ## `[OLIDS_TERMINOLOGY]` Schema
 
