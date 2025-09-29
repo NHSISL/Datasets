@@ -690,7 +690,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `id` | uniqueidentifier | 'Unique Id of the address' | `id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
 | `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) | `use_concept_id` |
-| `post_code_hash` | binary(32) | The postcode of the address - hashed | `postcode` |
+| `postcode_hash` | binary(32) | The postcode of the address - hashed | `postcode` |
 | `start_date` | datetime(3) | The start date of this address being relevant | `start_date` |
 | `end_date` | datetime(3) | The end date of this address being relevant | `end_date` |
 | `person_id` | uniqueidentifier | the unique identifier for the person | `person_id` |
@@ -734,6 +734,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
 | `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record. | |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
 | `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
 | `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
@@ -801,7 +802,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `masked_upsn` | varchar(255) | the matched unique street reference number, with hashing applied |  |
 | `masked_postcode` | varchar(255) | the masked input postcode |  |
 | `address_format_quality` | varchar(255) | The quality of the input address (i.e. 'good') |  |
-| `post_code_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |
+| `postcode_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |
 | `matched_with_assign` | varchar(255) | True/false - was a match possible |  |
 | `qualifier` | varchar(255) | type of matched address (residential, child) |  |
 | `uprn_property_classification` | varchar(255) | <to be confirmed> |  |
