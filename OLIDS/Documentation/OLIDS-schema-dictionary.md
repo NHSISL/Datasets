@@ -1065,11 +1065,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `birth_month` | smallint | Birth month of the patient |  | birth_month |
 | `birth_week_iso` | smallint | Birth week of the patient (iso standard) |  | birth_week |
 | `birth_day` | smallint | Birth day of the patient |  |  |
-| `death_date` | date(0) | 'The date of death of the patient' |  | date_of_death |
 | `death_year` | smallint | Death year of the patient |  |  |
 | `death_month` | smallint | Death month of the patient |  |  |
 | `death_week_iso` | smallint | Death week of the patient (iso standard) |  |  |
 | `death_day` | smallint | Death day of the patient |  |  |
+| `death_date` | date(0) | 'The date of death of the patient' |  | date_of_death |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
@@ -1128,13 +1128,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `id` | uniqueidentifier | 'Unique Id of the patient contact' |  | id |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  | person_id |
 | `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 | `description` | varchar(255) | <to be confirmed> |  |  |
 | `contact_type_concept_id` | uniqueidentifier | use of contact (e.g. mobile, home,work' (Combines type into single concept) |  | type_concept_id |
 | `start_date` | varchar(255) | 'The start date of the contact being valid' |  | start_date |
 | `end_date` | varchar(255) | 'The end date of the contact being valid' |  | end_date |
 | `value` | varchar(255) | 'The value of the contact information eg phone number, email address' |  | value |
-| `lds_is_deleted` | bit | LDS flag standardising presentation of deleted state of the record | |  |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
@@ -1145,7 +1143,6 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from when the record was replaced or deleted |  |
 | `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
 | `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
@@ -1170,9 +1167,9 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `double_dependent_locality` | varchar(255) | A business park, industrial estate or hamlet which is smaller than a Dependent Locality |  |  |
 | `dependent_locality` | varchar(255) | A small town or village name sometimes included in an address when the Delivery Point is outside the boundary of the main Post Town that serves it |  | abp_address_locality |
 | `post_town` | varchar(255) | Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre |  | abp_address_town |
-| `post_code` | varchar(255) | The postal code used for the Unique Property |  | abp_address_postcode |
+| `postcode` | varchar(255) | The postal code used for the Unique Property |  | abp_address_postcode |
 | `address_format_quality` | varchar(255) | The quality of the input address (i.e. 'good') |  |  |
-| `post_code_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |  |
+| `postcode_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |  |
 | `matched_with_assign` | varchar(255) | True/false - was a match possible |  |  |
 | `qualifier` | varchar(255) | type of matched address (residential, child) |  | qualifier |
 | `uprn_property_classification` | varchar(255) |  |  | uprn_property_classification |
@@ -1186,7 +1183,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `lds_registrar_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
 | `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
 | `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
@@ -1212,23 +1209,23 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `first_name` | varchar(40) | Forename, or given name. |  |  |
 | `middle_name` | varchar(100) | Other given, or middle, name. |  |  |
 | `gender` | varchar(1) | Gender (sex) of the person, values:<br>0 = Not Known<br>1 = Male<br>2 = Female<br>9 = Not Specified |  |  |
-| `date_of_birth` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
+| `birth_date` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
 | `birth_year` | smallint | Birth year of the patient |  | birth_year |
 | `birth_month` | tinyint | Birth month of the patient |  | birth_month |
 | `birth_day` | smallint | Birth day of the patient |  |  |
 | `birth_time` | time(0) | Birth time of the patient | |  |
-| `date_of_death` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
+| `death_date` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
 | `death_year` | smallint | Death year of the patient |  |  |
 | `death_month` | tinyint | Death month of the patient |  |  |
 | `death_day` | smallint | Death day of the patient |  |  |
 | `death_time` | time(0) | Death time of the patient | |  |
 | `death_notification_status` | varchar(1) | Single digit number code, 1 or 2. 1 is Informal death status where death is reported, but unconfirmed. 2 is formal death status, death has been confirmed officially. |  |  |
-| `address_line1` | varchar(4000) | First line of a person’s usual address. |  |  |
-| `address_line2` | varchar(4000) | Second line of a person’s usual address. |  |  |
-| `address_line3` | varchar(4000) | Third line of a person’s usual address. |  |  |
-| `address_line4` | varchar(4000) | Fourth line of a person’s usual address. |  |  |
-| `address_line5` | varchar(4000) | Fifth line of a person’s usual address. |  |  |
-| `post_code` | varchar(8) | Postcode of the person’s usual address. |  |  |
+| `address_line_1` | varchar(4000) | First line of a person’s usual address. |  |  |
+| `address_line_2` | varchar(4000) | Second line of a person’s usual address. |  |  |
+| `address_line_3` | varchar(4000) | Third line of a person’s usual address. |  |  |
+| `address_line_4` | varchar(4000) | Fourth line of a person’s usual address. |  |  |
+| `address_line_5` | varchar(4000) | Fifth line of a person’s usual address. |  |  |
+| `postcode` | varchar(8) | Postcode of the person’s usual address. |  |  |
 | `preferred_contact_method` | varchar(1) | Single digit number code as follows: 1=Letter, 2=Visit, 3=Phone, 4=Email, 5=TextPhone, 6=TextPhoneProxy, 7=Sign language, 8=NoPhone |  |  |
 | `nominated_pharmacy` | varchar(5) | Code to designate which community pharmacy is used for patient. Composed of double capital letters then 3 numbers, for example FC890 |  |  |
 | `dispensing_doctor` | varchar(6) | Code to designate which dispensing doctor is used for patient. Composed of first character is a capital letter followed by 5 numbers, for example N85004 |  |  |
@@ -1244,15 +1241,15 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `email_address` | varchar(8000) | Person's email address. |  |  |
 | `mps_id` | varchar(10) | Ignore this field. |  |  |
 | `error_success_code` | varchar(2) | The code corresponding to this record. <br>See the person level response code table for details.  |  |  |
-| `matched__nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
+| `matched_nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
 | `matched_algorithm_indicator` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
 | `requesting_patient_id` | uniqueidentifier | The patient_id for the patient record used to create the PDS trace request | | |
 | `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
+| `lds_registrar_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record; this is null as the record owner is the Personal Demographic Service | |
 | `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
@@ -1271,8 +1268,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
 | `system` | varchar(255) | The code system reference |  |  |
@@ -1289,8 +1286,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- |  ---- | ---- |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
+| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
 | `concept_map_id` | uniqueidentifier | The unique identifier for the mapping group |  |  |
