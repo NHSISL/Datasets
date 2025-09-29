@@ -167,7 +167,7 @@ The below is a report of the currently known issues within the One London Integr
   
 - The birth date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar) is applied.
 - the birth week (iso) is not currently derived.
-- the death date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar)is applied.
+- the death date of the patient is presented as returned by PDS, however no determination of date precision not conversion to date (from varchar) is applied.
 - the death week (iso) is not currently derived.
 - the following fields are labelled by PDS as to be ignored, but are still currently displayed in the person object, these will be removed in a subsequent release:
   - `as_at_date`
