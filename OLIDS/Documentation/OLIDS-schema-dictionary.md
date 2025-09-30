@@ -58,8 +58,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version |  `none` |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version |  `none` |
+| `id` | uniqueidentifier | LDS assigned Unique IDentifier for the business key of this table (unique allergy intolerance record) | `id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
 | `practitioner_id` | uniqueidentifier | The clinician in role that the activity is recorded against' | `practitioner_id` |
 | `encounter_id` | uniqueidentifier | Reference to the encounter this allergy was record in | `encounter_id` |
@@ -78,7 +78,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `date_recorded` | datetime(3) |  The date the allergy was recorded | `date_recorded` |
 | `is_confidential` | bit | True/False - is this allergy flagged as a confidential observation |  |
 | `person_id` | uniqueidentifier |  Unique individual across all organisation |  `person_id` |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -111,8 +111,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | LDS assigned Unique IDentifier for the business key of this table (unique allergy intolerance record) | `id` |
 | `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times |  `patient_id` |
 | `practitioner_in_role_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
@@ -140,7 +140,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `national_slot_category_description` | varchar(900) | The description of the national slot category | |
 | `csds_care_contact_identifier` | varchar(17) |  A link to the commissioning dataset care contact identifier for community services | |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier |  LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -176,12 +176,12 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table | `id` |
-| `appointment_id` | uniqueidentifier | Unique identifier for the appointment | `organization_id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | LDS assigned Unique IDentifier for the business key of this table | `id` |
+| `appointment_id` | uniqueidentifier | Unique IDentifier for the appointment | `organization_id` |
 | `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' | `practitioner_id` |
 | `lds_end_date_time` | datetime(3) | **TO BE REMOVED** |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier |  LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -214,8 +214,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | LDS assigned unique identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | LDS assigned Unique IDentifier for the business key of this table (unique allergy intolerance record) | `id` |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
 | `encounter_id` | uniqueidentifier | 'Reference to the encounter the observation was recorded at' |  `encounter_id` |
 | `practitioner_id` | uniqueidentifier | Reference to the practitioner that recorded the order' | `practitioner_id` |
@@ -238,7 +238,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `date_recorded` | datetime(3) | date the diagnostic order was recorded in the clinical system. |  |
 | `is_deleted` | bit | true/false - is the record in a deleted state. | |
 | `person_id` | uniqueidentifier | Unique individual across all organisations' | person_id |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -273,8 +273,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the encounter' | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the encounter' | `id` |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
 | `patient_id` | uniqueidentifier  | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
 | `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' | `practitioner_id` |
@@ -294,7 +294,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `end_date` | datetime(3) | The end date of the encounter | `end_date` |
 | `date_recorded` | datetime(3) | The date the encounter was recorded | `date_recorded` |
 | `is_deleted` | bit | true/false is the record deleted | |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset | |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -328,8 +328,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the encounter event' | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the encounter event' | `id` |
 | `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | `organization_id` |
 | `patient_id` | uniqueidentifier | The patient this event belongs to | `patient_id` |
 | `person_id` | uniqueidentifier | The person this event belongs to | `person_id` |
@@ -338,7 +338,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `episode_of_care_start_date` | datetime(3) | The date the episode of care started | `date_registered` |
 | `episode_of_care_end_date` | datetime(3) | The date the episode of care ended | `date_registered_end` |
 | `care_manager_practitioner_id` | uniqueidentifier | Reference to the usual GP for this episode of care | `usual_gp_practitioner_id` |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -371,15 +371,15 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the flag | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the flag | `id` |
 | `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
 | `effective_date` | datetime(3) | The date the flag was effective from onto the patients record | `effective_date` |
 | `expired_date` | datetime(3) | The expiry date of the flag |  |
 | `is_active` | bit | Whether the flag is active or not | `is_active` |
 | `flag_text` | varchar(8000) | This is a warning set by the publisher regarding the patient' | `flag_text` |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -401,8 +401,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the location | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the location | `id` |
 | `name` | varchar(100) | The name of a location set by the publisher. E.g. ward, clinic, domiciliary | `name` |
 | `type_code` | uniqueidentifier | The type of location | `type_code` |
 | `type_desc` | varchar(50) | Textual description of the type of location eg GP Practice | `type_desc` |
@@ -420,7 +420,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `open_date` | date(0) | location opening date |  |
 | `close_date` | date(0) | location closing date (if applicable) |  |
 | `is_obsolete` | bit | true/false - is the location closed |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -440,14 +440,14 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique identifier for this location contact |  |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique IDentifier for this location contact |  |
 | `location_id` | uniqueidentifier | reference to the location |  |
 | `is_primary_contact` | bit | true/false - is this the primary contact for the location |  |
 | `contact_type` | varchar(50) | type of contact (Telephone, Fax, Email) |  |
 | `contact_type_concept_id` | uniqueidentifier | type of contact (Telephone, Fax, Email) |  |
 | `value` | nvarchar | 'The value of the contact information eg phone number, email address' |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -470,8 +470,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the medication order | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the medication order | `id` |
 | `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
 | `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
@@ -500,7 +500,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_confidential` | bit | true/false - is the medication order flagged as confidential/closed |  |
 | `is_deleted` | bit | true/false - is the record deleted |  |
 | `issue_method_description` | varchar | description of the issue method  |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -520,8 +520,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the medication | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the medication | `id` |
 | `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
 | `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
@@ -550,7 +550,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_active` | bit | is the record active |  |
 | `is_confidential` | bit | true/false - is the statement marked as confidential/sensitive |  |
 | `is_deleted` | bit | true/false - is the record in a deleted state |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -572,8 +572,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the observation | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the observation | `id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
 | `person_id` | uniqueidentifier | The unique reference for the person | `person_id` |
 | `encounter_id` | uniqueidentifier | Reference to the encounter the observation was recorded at | `encounter_id` |
@@ -598,7 +598,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_deleted` | bit | true/false - is the problem record deleted (**to be removed**) |  |
 | `is_problem_deleted` | bit | true/false - whether the problem relating to the observation is deleted |  |
 | `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -618,8 +618,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the organisation' | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the organisation' | `id` |
 | `organisation_code` | varchar(255) | Organisation Code | `ods_code` |
 | `assigning_authority_code` | varchar(255) | The assigning authority of the organisation code |  |
 | `name` | varchar(255) | 'Name of the organisation' | `name` |
@@ -630,7 +630,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `open_date` | date(0) | Date the organisation opened (minimum of operational or legal dates) |  |
 | `close_date` | date(0) | Date the organisation closed (maximum of operational or legal dates) |  |
 | `is_obsolete` | bit | Is the organisation closed |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -652,8 +652,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the patient | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the patient | `id` |
 | `nhs_number_hash` | binary(32) | internal irreversible hash of the patient NHS number |  |
 | `sk_patient_id` | int | Consistent LDS pseudonym for secondary care planning purposes |  |
 | `title` | varchar(50) | 'The title of the patient' |  |
@@ -666,7 +666,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
 | `is_dummy_patient` | bit | true/false - is the patient flagged or denoted as a test patient in the source system |  |
 | `is_spine_sensitive` | bit | true/false - is the patient marked as spine sensitive within the source syste. **Important note: This column is sourced from local practice systems, and may not reflect values held within the PDS spine service. It is not advised to use this column to inform sensitivity filtering policies.** |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -686,15 +686,15 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the address' | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the address' | `id` |
 | `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
 | `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) | `use_concept_id` |
 | `postcode_hash` | binary(32) | The postcode of the address - hashed | `postcode` |
 | `start_date` | datetime(3) | The start date of this address being relevant | `start_date` |
 | `end_date` | datetime(3) | The end date of this address being relevant | `end_date` |
-| `person_id` | uniqueidentifier | the unique identifier for the person | `person_id` |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `person_id` | uniqueidentifier | the Unique IDentifier for the person | `person_id` |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -716,15 +716,15 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the patient contact' | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the patient contact' | `id` |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
 | `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
 | `description` | varchar(255) | <to be confirmed> |  |
 | `contact_type_concept_id` | varchar(255) | use of contact (e.g. mobile, home,work' (Combines type into single concept) | `use_concept_id` |
 | `start_date` | varchar(255) | 'The start date of the contact being valid' | `start_date` |
 | `end_date` | varchar(255) | 'The end date of the contact being valid' | `end_date` |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -745,11 +745,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique identifier for the patient to practitioner relationship |  |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique IDentifier for the patient to practitioner relationship |  |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -766,8 +766,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique identifier for the patient to practitioner relationship |  |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique IDentifier for the patient to practitioner relationship |  |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  |
 | `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' |  |
@@ -775,7 +775,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `episode_of_care_id` | uniqueidentifier | The episode of care (registration to service provider) that the patient is recorded under with this practitioner/clinician |  |
 | `start_date` | datetime(3) | start date of the relationship between patient and practitioner |  |
 | `end_date` | datetime(3) | end date of the relationship between patient and practitioner |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -795,8 +795,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Id of the patient uprn match' |  |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique ID of the patient uprn match' |  |
 | `registrar_event_id` | uniqueidentifier | LDS processing event identifier for the processing of the uprn match. (*this is now duplicated by an audit column below and will be removed*) |  |
 | `masked_uprn` | varchar(255) | the matched unique property reference number, with hashing applied |  |
 | `masked_upsn` | varchar(255) | the matched unique street reference number, with hashing applied |  |
@@ -808,7 +808,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `uprn_property_classification` | varchar(255) | <to be confirmed> |  |
 | `algorithm` | varchar(255) | <to be confirmed> | <to be confirmed> |
 | `match_pattern` | varchar(255) | <to be confirmed> | <to be confirmed> |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -828,7 +828,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
 | `id` | uniqueidentifier | reference to the patient identifier |  |
 | `requesting_patient_record_id` | uniqueidentifier | reference to the patient record that was used to trace the patient details | |
 | `unique_reference` | uniqueidentifier | unique request reference of the submission made to PDS | |
@@ -839,7 +839,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `sensivity_flag` | char(1) | the returned value of the sensitivity of the patient. _Note that emerging feedback from PDS indicates that this value is never populated to flag whether the patient is or is not sensitive_. |  |
 | `matched_algorithm_indicator` | char(1) | reference to the algorithm used to match the patient |  |
 | `requesting_patient_id` | uniqueidentifier | reference to the patient that holds the details used in the trace |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -859,8 +859,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the practitioner' | `id` |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the practitioner' | `id` |
 | `gmc_code` | varchar(255) | 'The GMC code of the practitioner' | `gmc_code` |
 | `title` | varchar(50) | The title of the practitioner |  |
 | `first_name` | nvarchar | the first name of the practitioner | `name` |
@@ -868,7 +868,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `name` | nvarchar | 'Name of the practitioner' |  |
 | `is_obsolete` | bit | true/false - is the practitioner no longer active |  |
 | `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest. **this column is obsolete and will be removed** |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -888,15 +888,15 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the practitioner' |  |
-| `practitioner_id` | uniqueidentifier | 'Unique Id of the practitioner' |  |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the practitioner' |  |
+| `practitioner_id` | uniqueidentifier | 'Unique ID of the practitioner' |  |
 | `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' |  |
 | `role_code` | varchar(5) | the role code for the practitioners role |  |
 | `role` | varchar(200) | the role description for the practitioners role |  |
 | `date_employment_start` | datetime(3) | date from which this role was applicable to the practitioner |  |
 | `date_employment_end` | datetime(3) | date from which this role was no longer applicable to the practitioner |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -916,12 +916,12 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the procedure' | id |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the procedure request' | id |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' | patient_id |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | person_id |
 | `encounter_id` | uniqueidentifier | 'Reference to the encounter the procedure was administered at' | encounter_id |
-| `practitioner_id` | uniqueidentifier | 'Unique Id of the practitioner' | practitioner_id |
+| `practitioner_id` | uniqueidentifier | 'Unique ID of the practitioner' | practitioner_id |
 | `clinical_effective_date` | datetime(3) | 'The date the procedure was administered by a clinician' | clinical_effective_date |
 | `date_precision_concept_id` | int | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' | date_precision_concept_id |
 | `date_recorded` | datetime(3) | 'The date the procedure was recorded in the source system' | date_recorded |
@@ -934,7 +934,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
 | `is_deleted` | bit | source data deletion indicator |  |
 | `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest.<br>**this column is obsolete and will be removed** |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -954,8 +954,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the referral' | id |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the referral request' | id |
 | `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | organization_id |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' | person_id |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | patient_id |
@@ -977,7 +977,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
 | `date_recorded` | datetime(3) | 'The date the referral request was added to the source system' | date_recorded |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -997,8 +997,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique Id of the schedule' | id |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | 'Unique ID of the schedule' | id |
 | `location_id` | uniqueidentifier | Reference to the location of the schedule | |
 | `location` | varchar(100) | 'Textual description of the location the schedule was held at' | location |
 | `practitioner_id` | uniqueidentifier | 'Reference to the practitioner who owns the schedule' | practitioner_id |
@@ -1008,7 +1008,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `name` | varchar(150) | 'The name of the schedule' | name |
 | `is_private` | bit | true/false - is the schedule marked as private |  |
 | `is_deleted` | bit | true/false - is the schedule marked as deleted |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1028,11 +1028,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned unique identifier for the source record version | |
-| `id` | uniqueidentifier | Unique identifier for this practitioner to schedule relation |  |
+| `lds_record_id` | uniqueidentifier | LDS assigned Unique IDentifier for the source record version | |
+| `id` | uniqueidentifier | Unique IDentifier for this practitioner to schedule relation |  |
 | `schedule_id` | uniqueidentifier | Reference to the schedule |  |
 | `practitioner_id` | uniqueidentifier | Reference to the practitioner |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1054,8 +1054,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique Id of the patient' |  | id |
+| `lds_record_id` | uniqueidentifier | Unique IDentifier for the record |  |  |
+| `id` | uniqueidentifier | 'Unique ID of the patient' |  | id |
 | `nhs_number` | char(10) | 'The NHS number of the patient' |  | nhs_number |
 | `title` | varchar(50) | 'The title of the patient' |  | title |
 | `first_name` | nvarchar(50) | 'The first names of the patient' |  | first_names |
@@ -1071,7 +1071,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `death_week_iso` | smallint | Death week of the patient (iso standard) |  |  |
 | `death_day` | smallint | Death day of the patient |  |  |
 | `death_date` | date(0) | 'The date of death of the patient' |  | date_of_death |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1091,8 +1091,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique Id of the address' |  | id |
+| `lds_record_id` | uniqueidentifier | Unique IDentifier for the record |  |  |
+| `id` | uniqueidentifier | 'Unique ID of the address' |  | id |
 | `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
 | `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) |  | use_concept_id |
 | `is_home_address` | bit |  |  |  |
@@ -1104,7 +1104,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `postcode` | varchar(255) | The postcode of the address |  | postcode |
 | `start_date` | datetime(3) | 'The start date of this address being relevant' |  | start_date |
 | `end_date` | datetime(3) | 'The end date of this address being relevant' |  | end_date |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1125,8 +1125,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique Id of the patient contact' |  | id |
+| `lds_record_id` | uniqueidentifier | Unique IDentifier for the record |  |  |
+| `id` | uniqueidentifier | 'Unique ID of the patient contact' |  | id |
 | `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  | person_id |
 | `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
 | `description` | varchar(255) | <to be confirmed> |  |  |
@@ -1134,7 +1134,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `start_date` | varchar(255) | 'The start date of the contact being valid' |  | start_date |
 | `end_date` | varchar(255) | 'The end date of the contact being valid' |  | end_date |
 | `value` | varchar(255) | 'The value of the contact information eg phone number, email address' |  | value |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1154,8 +1154,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
-| `id` | uniqueidentifier | Unique Id of the patient uprn match' |  |  |
+| `lds_record_id` | uniqueidentifier | Unique IDentifier for the record |  |  |
+| `id` | uniqueidentifier | Unique ID of the patient uprn match' |  |  |
 | `uprn` | varchar(255) | the matched unique property reference number |  | uprn |
 | `usrn` | varchar(255) | the matched unique street reference number |  |  |
 | `organisation_name` | varchar(255) | the organisation name of the address of the UPRN |  | abp_address_organisation |
@@ -1181,7 +1181,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `y_coordinate` | float(53) | The Ordnance Survey Y co-ordinate of the address |  | uprn_ycoordinate |
 | `latitude` | float(53) | The latitude of the address |  | latitude |
 | `longitude` | float(53) | The longitude of the address |  | longitude |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_registrar_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1201,8 +1201,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `lds_record_id` | uniqueidentifier | Unique identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
+| `lds_record_id` | uniqueidentifier | Unique IDentifier for the record |  |  |
+| `id` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
 | `requesting_record_id` | uniqueidentifier | The unique record id for the item that acted as the basis for the PDS trace request |  |  |
 | `unique_reference` | uniqueidentifer | The unique reference for the PDS trace request | |  |
 | `requesting_nhs_number` | varchar(10) | Requested NHS number. Populated with the value provided in the request file. The matched NHS number is provided in the column MATCHED _NHS_NO. |  |  |
@@ -1245,7 +1245,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `matched_nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
 | `matched_algorithm_indicator` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
 | `requesting_patient_id` | uniqueidentifier | The patient_id for the patient record used to create the PDS trace request | | |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
@@ -1269,8 +1269,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `id` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
 | `system` | varchar(255) | The code system reference |  |  |
@@ -1287,13 +1287,13 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- |  ---- | ---- |
-| `id` | uniqueidentifier | 'Unique Id of the person' | No Foreign Key reference |  |
-| `lds_id` | uniqueidentifier | LDS assigned unique identifier for this common modelled record version |  |  |
+| `id` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
+| `lds_id` | uniqueidentifier | LDS assigned Unique IDentifier for this common modelled record version |  |  |
 | `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
 | `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `concept_map_id` | uniqueidentifier | The unique identifier for the mapping group |  |  |
-| `source_code_id` | uniqueidentifier | The unique identifier for the source concept_id  |  |  |
-| `target_code_id` | uniqueidentifier | The unique identifier for the target concept_id  |  |  |
+| `concept_map_id` | uniqueidentifier | The Unique IDentifier for the mapping group |  |  |
+| `source_code_id` | uniqueidentifier | The Unique IDentifier for the source concept_id  |  |  |
+| `target_code_id` | uniqueidentifier | The Unique IDentifier for the target concept_id  |  |  |
 | `is_primary` | bit | True/false is this the primary mapping for the code |  |  |
 | `equivalence` | varchar(255) | type of mapping equivalence, values include 'equivalent', 'wider', 'narrower', 'subsumes', 'inexact', 'unmatched', 'specializes', 'relatedto', 'unmatched' |  | |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
