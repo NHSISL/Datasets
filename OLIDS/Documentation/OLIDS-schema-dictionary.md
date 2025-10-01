@@ -559,6 +559,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
+| `expiry_date` | datetime  | Expiry date of drug | |
 | `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
 | `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
 | `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
@@ -967,7 +968,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `requester_organisation_id` | uniqueidentifier | 'Reference to the organisation that made the refereral request' | requester_organization_id |
 | `recipient_organisation_id` | uniqueidentifier | Organisation identifier of the recipient of the referral request | recipient_organization_id |
 | `referral_request_priority_concept_id` | int | 'Reference to the priority of the referral' | referral_request_priority_concept_id |
-| `referal_request_type_concept_id` | int | 'Reference to the type of referral request' | referral_request_type_concept_id |
+| `referral_request_type_concept_id` | int | 'Reference to the type of referral request' | referral_request_type_concept_id |
 | `referral_request_specialty_concept_id` | int | Reference to the specialty of the referral' | referral_request_type_concept_id |
 | `mode` | varchar(50) | 'The mode of the referral' | mode |
 | `is_outgoing_referral` | bit | 'Whether this is an outgoing referral' | outgoing_referral |
