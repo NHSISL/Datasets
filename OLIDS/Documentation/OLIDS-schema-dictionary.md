@@ -223,7 +223,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `clinical_effective_date` | datetime(3) |  The date the diagnostic order was identified by a clinician |  `clinical_effective_date` |
 | `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date | `date_precision_concept_id` |
 | `result_value` | float | The value of the result of the observation | result_value |
-| `result_value_units` | uniqueidentifier | Concept ID for the units of the result of the observation. *Should this be `result_value_units_concept_id`* | `result_value_units` |
+| `result_value_units_concept_id` | uniqueidentifier | Concept ID for the units of the result of the observation | `result_value_units` |
 | `result_date` | date(0) | The date of the result | `result_date` |
 | `result_text` | varchar(8000) | Any text associated with the result | `result_text` |
 | `is_problem` | bit | Whether the observation is marked as a problem | `is_problem` |
@@ -583,7 +583,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `clinical_effective_date` | datetime(3) | The date the observation was identified by a clinician | `clinical_effective_date` |
 | `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
 | `result_value` | float | The value of the result of the observation | `result_value` |
-| `result_value_unit_concept_id` | uniqueidentifier |  The units of the result of the observation' |  |
+| `result_value_units_concept_id` | uniqueidentifier |  The units of the result of the observation' | `result value units` |
 | `result_date` | date(0) | 'The date of the result' | `result_date` |
 | `result_text` | varchar(8000) | 'Any text associated with the result' | `result_text` |
 | `is_problem` | bit | Whether the observation is marked as a problem | `is_problem` |
