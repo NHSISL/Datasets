@@ -6,7 +6,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 - [OLIDS data dictionary](#olids-data-dictionary)
   - [Contents](#contents)
-  - [`[OLIDS_MASKED]` Schema](#%60%5Bolids_masked%5D%60-schema)
+  - [`[OLIDS_MASKED]` Schema](#olids_masked-schema)
     - [allergy\_intolerance](#allergy_intolerance)
     - [appointment](#appointment)
     - [appointment\_practitioner](#appointment_practitioner)
@@ -20,26 +20,26 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
     - [medication\_statement](#medication_statement)
     - [observation](#observation)
     - [organisation](#organisation)
-    - [patient (masked)](#patient-(masked))
-    - [patient\_address (masked)](#patient_address-(masked))
-    - [patient\_contact (masked)](#patient_contact-(masked))
+    - [patient (masked)](#patient-masked)
+    - [patient\_address (masked)](#patient_address-masked)
+    - [patient\_contact (masked)](#patient_contact-masked)
     - [patient\_person](#patient_person)
     - [patient\_registered\_practitioner\_in\_role](#patient_registered_practitioner_in_role)
-    - [patient\_uprn (masked)](#patient_uprn-(masked))
-    - [person (masked)](#person-(masked))
+    - [patient\_uprn (masked)](#patient_uprn-masked)
+    - [person (masked)](#person-masked)
     - [practitioner](#practitioner)
     - [practitioner\_in\_role](#practitioner_in_role)
     - [procedure\_request](#procedure_request)
     - [referral\_request](#referral_request)
     - [schedule](#schedule)
     - [schedule\_practitioner](#schedule_practitioner)
-  - [`[OLIDS_PCD]` Schema](#%60%5Bolids_pcd%5D%60-schema)
+  - [`[OLIDS_PCD]` Schema](#olids_pcd-schema)
     - [patient](#patient)
     - [patient\_address](#patient_address)
     - [patient\_contact](#patient_contact)
     - [patient\_uprn](#patient_uprn)
     - [person](#person)
-  - [`[OLIDS_TERMINOLOGY]` Schema](#%60%5Bolids_terminology%5D%60-schema)
+  - [`[OLIDS_TERMINOLOGY]` Schema](#olids_terminology-schema)
     - [concept](#concept)
     - [concept\_map](#concept_map)
   - [Ages](#ages)
@@ -966,7 +966,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `requester_organisation_id` | uniqueidentifier | 'Reference to the organisation that made the refereral request' | requester_organization_id |
 | `recipient_organisation_id` | uniqueidentifier | Organisation identifier of the recipient of the referral request | recipient_organization_id |
 | `referral_request_priority_concept_id` | int | 'Reference to the priority of the referral' | referral_request_priority_concept_id |
-| `referal_request_type_concept_id` | int | 'Reference to the type of referral request' | referral_request_type_concept_id |
+| `referral_request_type_concept_id` | int | 'Reference to the type of referral request' | referral_request_type_concept_id |
 | `referral_request_specialty_concept_id` | int | Reference to the specialty of the referral' | referral_request_type_concept_id |
 | `mode` | varchar(50) | 'The mode of the referral' | mode |
 | `is_outgoing_referral` | bit | 'Whether this is an outgoing referral' | outgoing_referral |
