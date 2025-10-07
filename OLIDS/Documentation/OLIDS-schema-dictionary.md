@@ -73,7 +73,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `multi_lex_action` | varchar(25) |  | |
 | `allergy_intolerance_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier | `non_core_concept_id` |
 | `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category. Note that this might show an adult age. [HES Definition](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/hospital-episode-statistics/hospital-episode-statistics-data-dictionary). See [Ages](#ages) |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
 | `age_at_event_neonate` | int |The age the patient was at the time of this event if less than 28 days. Null where patient is older than 27 days. See [Ages](#ages) |  |
 | `date_recorded` | datetime(3) |  The date the allergy was recorded | `date_recorded` |
 | `is_confidential` | bit | True/False - is this allergy flagged as a confidential observation |  |
