@@ -73,7 +73,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `multi_lex_action` | varchar(25) |  | |
 | `allergy_intolerance_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier | `non_core_concept_id` |
 | `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category. See [Ages](#ages) |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
 | `age_at_event_neonate` | int |The age the patient was at the time of this event if less than 28 days. Null where patient is older than 27 days. See [Ages](#ages) |  |
 | `date_recorded` | datetime(3) |  The date the allergy was recorded | `date_recorded` |
 | `is_confidential` | bit | True/False - is this allergy flagged as a confidential observation |  |
@@ -129,7 +129,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `cancelled_date` | datetime(3) | Date and time the appointment was cancelled (TPP only) | `cancelled_date` |
 | `type` | varchar(100) | Description of the slot type |  |
 | `age_at_event` | int |  The age the patient was at the time of this event |  |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
 | `booking_method_concept_id` | uniqueidentifier | Method used to book the appointment |  |
 | `contact_mode_concept_id` | uniqueidentifier | Appointment mode of contact - e.g. telephone | |
@@ -231,7 +231,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `problem_end_date` | datetime(3) | 'The end date of the problem' | `problem_end_date` |
 | `diagnostic_order_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the result provided by the supplier' | `raw_concept_id` |
 | `age_at_event` | int | The age of the patient at the time of the observation' | age_at_event |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days. Null where the patient is over 27 days old. |  |
 | `episodicity_concept_id` | uniqueidentifier | Indicates the episodicity of the observation |  |
 | `is_primary` | bit | will be false if the observation has a parent observation  |  |
@@ -286,7 +286,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `location` | varchar(200) | Reference to the location that the encounter took place at | `institution_location_id` |
 | `encounter_source_concept_id` | uniqueidentifier | Reference to the type of encounter | `non_core_concept_id` |
 | `age_at_event` | int | The age the patient was when this encounter took place | `age_at_event` |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category | |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days. Null where the patient is over 27 days old. | |
 | `type` | varchar(50) | 'Reference to the type of encounter' | `type` |
 | `sub_type` | varchar(50) | 'Reference to the type of encounter' | `sub_type` |
@@ -493,7 +493,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `medication_order_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
 | `bnf_reference` | varchar(10) | Reference to the clinical coding of the medication | `bnf_reference` |
 | `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category | |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
 | `issue_method` | varchar(8000) | The issue method of the medication eg hand written | `issue_method` |
 | `date_recorded` | datetime(3) | No comment yet added | `date_recorded` |
@@ -543,7 +543,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `medication_name` | varchar(500) | The name of the medication attached to the statement |  |
 | `bnf_reference` | varchar(10) | A reference to the drug in the BNF dictionary | `bnf_reference` |
 | `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
 | `issue_method` | varchar(8000) | The issue method of the medication eg hand written | `issue_method` |
 | `date_recorded` | datetime(3) | date the medication statement was recorded | `date_recorded` |
@@ -591,7 +591,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `problem_end_date` | datetime(3) | The end date of the problem | `problem_end_date` |
 | `observation_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the observation provide by the supplier' |  `non_core_concept_id` |
 | `age_at_event` | int | The age of the patient at the time of the observation in whole integer years | `age_at_event` |
-| `age_at_event_baby` | int | The age of the patient at the time of the observation. In whole years for patients aged 1 years or more, and in age brackets for patients under 1 year old. | `age_at_event` |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
 | `age_at_event_neonate` | int | The age of the patient at the time of the observation | `age_at_event` |
 | `episodicity_concept_id` | bigint | Reference to the episodicity of the problem eg First, review, flare | `episodicity_concept_id` |
 | `is_primary` | bit | Whether the observation is a primary observation | `is_primary` |
@@ -930,7 +930,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `procedure_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the procedure' | non_core_concept_id |
 | `status_concept_id` | uniqueidentifier | 'Reference to the status of the procedure' | status_concept_id |
 | `age_at_event` | int | 'The age of the patient at the time of the procedure' | age_at_event |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
 | `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
 | `is_deleted` | bit | source data deletion indicator |  |
@@ -975,7 +975,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `is_review` | bit | 'Whether this referral is a review' | is_review |
 | `referral_request_source_concept_id` | bigint | The source clinical coding of primary diagnosis provided by the supplier | raw_concept_id |
 | `age_at_event` | int | 'The age of the patient at the time of the referral' | age_at_event |
-| `age_at_event_baby` | int | The age the patient was at the time of this event if less than one year old, else a calculated value representing an age category |  |
+| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
 | `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
 | `date_recorded` | datetime(3) | 'The date the referral request was added to the source system' | date_recorded |
 | `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
@@ -1312,5 +1312,5 @@ This is aligned with the Hospital Episode Statistics age categorisation as below
 | OLIDS Column | HES column | Definitions | Values |
 | :--- | :--- | :--- | :--- |
 | `age_at_event` | `age` | **HES:** <br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. <br><br>**OLIDS:**<br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. | nnn = Age in years |
-| `age_at_event_baby` | `ENDAGE` and `STARTAGE` (APC) <br> `APPTAGE` (OP) <br> `ARRIVALAGE` (AE) | **HES:**<br>The patient's age, in completed years, at the end of a finished episode. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply.<br><br>**OLIDS:**<br>The patient's age, in completed years, at the end of an event. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply. | nnn = Age in years<br> 120 = 120 years or more<br> 7001 = Less than 1 day  <br> 7002 = 1 to 6 days  <br> 7003 = 7 to 28 days  <br> 7004 = 29 to 90 days (under 3 months)  <br> 7005 = 91 to 181 days (approximately 3 months to under 6  months)  <br> 7006 = 182 to 272 days (approximately 6 months to under 9 months)  <br> 7007 = 273 to <1 year (approximately 9 months to under 1 year)  <br> Null = Not applicable (other maternity event) or not known <br> |
+| `age_at_event_baby` | `ENDAGE` and `STARTAGE` (APC) <br> `APPTAGE` (OP) <br> `ARRIVALAGE` (AE) | **HES:**<br>The patient's age, in completed years, at the end of a finished episode. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply.<br><br>**OLIDS:**<br>The patient's age, in completed years, at the end of an event. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply. | nnn = Age in years<br> 120 = 120 years or more<br> 7001 = Less than 1 day  <br> 7002 = 1 to 6 days  <br> 7003 = 7 to 28 days  <br> 7004 = 29 to 90 days (under 3 months)  <br> 7005 = 91 to 181 days (approximately 3 months to under 6  months)  <br> 7006 = 182 to 272 days (approximately 6 months to under 9 months)  <br> 7007 = 273 to <1 year (approximately 9 months to under 1 year)  <br> Null = Not applicable (other maternity event) or not known <br> [See HES Data Dictionary](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/hospital-episode-statistics/hospital-episode-statistics-data-dictionary)|
 | `age_at_event_neonate` | `NEODUR` (APC) | **HES:** <br>The age in days of a baby admitted as a patient. It is derived from the Admission Date (ADMIDATE) and Date of Birth (DOB). <br>If the baby is older than 27 days, NEODUR is not calculated. <br><br>**OLIDS:** <br>The age of a patient at the end of an event where the patient is under 28 days old.<br> If the baby is older than 27 days, no age in days is given. | 2n = Age of patient in days from 0 to 27. <br> `NULL` = Not applicable. Patient is older than 27 days. |
