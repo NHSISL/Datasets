@@ -1,4 +1,4 @@
-# [Release-222] - 2025-09-12
+# [Release-237] - 2025-10-13
 
 > [!NOTE]
 > The below is a summary of the changes from [release 223](Release-223.md) (previous pre-production release)
