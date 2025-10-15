@@ -6,6 +6,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 - [OLIDS data dictionary](#olids-data-dictionary)
   - [Contents](#contents)
+  - [LDS_dataset_id](#lds_dataset_id)
   - [`[OLIDS_MASKED]` Schema](#olids_masked-schema)
     - [allergy\_intolerance](#allergy_intolerance)
     - [appointment](#appointment)
@@ -43,6 +44,22 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
     - [concept](#concept)
     - [concept\_map](#concept_map)
   - [Ages](#ages)
+
+## LDS_dataset_id
+
+>[!NOTE]
+>LDS assigned identifier for the source dataset
+
+| LDS_dataset_id                          | dataset_name              |
+|---------------------------------------|---------------------------|
+| 07F337BD-E189-484A-9350-D9C6442AA829  |PrimaryCareTPP             |
+| 6A62313A-7442-462E-B6E8-DEC541DDD0BA  | PrimaryCareEMIS           |
+| 87C94392-B46F-484D-BF01-09E97EB9E506  | RegistrarPatientRequest   |
+| E5F50BA6-32C8-482E-87D3-8EA629FACEAC  | RegistrarNDOORequest      |
+| 39188746-F9CD-4246-9799-FAF6D3895B2E  | RegistrarAddressRequest   |
+| 424ECE83-CA5E-4DFE-BB94-50F1A3BB1121  | RegistrarPatientResponse  |
+| C26B7031-750D-4B75-A048-87A722F3F712  | RegistrarNDOOResponse     |
+| 72AE46CB-F09E-4395-A977-F37EEC37916C  | RegistrarAddressResponse  |
 
 ## `[OLIDS_MASKED]` Schema
 
