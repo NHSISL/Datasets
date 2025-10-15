@@ -1,0 +1,1 @@
+NDRS includes the National Cancer Registration and Analysis Service (NCRAS) and the National Congenital Anomaly and Rare Disease Registration Service (NCARDRS) population-based registers, with strong clinical engagement and subject matter expertise with significant skills in data science, public health analytics and complex data processing systems.
