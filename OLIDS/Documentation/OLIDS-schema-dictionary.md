@@ -9,7 +9,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
   - [LDS_dataset_id](#lds_dataset_id)
   - [`[OLIDS_MASKED]` Schema](#olids_masked-schema)
     - [allergy\_intolerance](#allergy_intolerance)
-    - [appointment](#appointment)
+    - [APPOINTMENT](#appointment)
     - [appointment\_practitioner](#appointment_practitioner)
     - [diagnostic\_order](#diagnostic_order)
     - [encounter](#encounter)
