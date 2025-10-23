@@ -535,49 +535,49 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique ID of the medication | `id` |
-| `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
-| `person_id` | uniqueidentifier | Unique individual across all organisations | `person_id` |
-| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
-| `encounter_id` | uniqueidentifier | Reference to the encounter this medication was recorded in | `encounter_id` |
-| `practitioner_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
-| `observation_id` | uniqueidentifier | Reference to the observation that required the medication order | |
-| `allergy_intolerance_id` | uniqueidentifier | Reference to allergy intolerance observations attached to this medication order |  |
-| `diagnostic_order_id` | uniqueidentifier | Reference to diagnostic order observations attached to this medication order |  |
-| `referral_request_id` | uniqueidentifier | Reference to referral requests attached to this medication order |  |
-| `authorisation_type_concept_id` | int | 'Reference to the authorisation type' | `authorisation_type_concept_id` |
-| `date_precision_concept_id` | int | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
-| `medication_statement_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
-| `clinical_effective_date` | datetime(3) | The date the medication was clinical relevant | `clinical_effective_date` |
-| `cancellation_date` | datetime(3) | The date the medication was cancelled | `cancellation_date` |
-| `dose` | varchar(1000) | Textual description of the dose of the medication | `dose` |
-| `quantity_value_description` | varchar(500) | The value of the medication that was prescribed eg 50 |  |
-| `quantity_value` | float | The value of the medication that was prescribed eg 50 | `quantity_value` |
-| `quantity_unit` | varchar(255) | The unit of the medication that was prescribed eg tablets | `quantity_unit` |
-| `medication_name` | varchar(500) | The name of the medication attached to the statement |  |
-| `bnf_reference` | varchar(10) | A reference to the drug in the BNF dictionary | `bnf_reference` |
-| `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
-| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
-| `issue_method` | varchar(8000) | The issue method of the medication eg hand written | `issue_method` |
-| `date_recorded` | datetime(3) | date the medication statement was recorded | `date_recorded` |
-| `is_active` | bit | is the record active |  |
-| `is_confidential` | bit | true/false - is the statement marked as confidential/sensitive |  |
-| `is_deleted` | bit | true/false - is the record in a deleted state |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit  | LDS flag standardised presentation of deleted state of the record | |
-| `expiry_date` | datetime  | Expiry date of drug | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the medication | `id` |
+| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `PERSON_ID` | uniqueidentifier | Unique individual across all organisations | `person_id` |
+| `PATIENT_ID` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `ENCOUNTER_ID` | uniqueidentifier | Reference to the encounter this medication was recorded in | `encounter_id` |
+| `PRACTITIONER_ID` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `OBSERVATION_ID` | uniqueidentifier | Reference to the observation that required the medication order | |
+| `ALLERGY_INTOLERANCE_ID` | uniqueidentifier | Reference to allergy intolerance observations attached to this medication order |  |
+| `DIAGNOSTIC_ORDER_ID` | uniqueidentifier | Reference to diagnostic order observations attached to this medication order |  |
+| `REFERRAL_REQUEST_ID` | uniqueidentifier | Reference to referral requests attached to this medication order |  |
+| `AUTHORISATION_TYPE_CONCEPT_ID` | int | Reference to the authorisation type | `authorisation_type_concept_id` |
+| `DATE_PRECISION_CONCEPT_ID` | int | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `MEDICATION_STATEMENT_SOURCE_CONCEPT_ID` | uniqueidentifier | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
+| `CLINICAL_EFFECTIVE_DATE` | datetime(3) | The date the medication was clinical relevant | `clinical_effective_date` |
+| `CANCELLATION_DATE` | datetime(3) | The date the medication was cancelled | `cancellation_date` |
+| `DOSE` | varchar(1000) | Textual description of the dose of the medication | `dose` |
+| `QUANTITY_VALUE_DESCRIPTION` | varchar(500) | The value of the medication that was prescribed eg 50 |  |
+| `QUANTITY_VALUE` | float | The value of the medication that was prescribed eg 50 | `quantity_value` |
+| `QUANTITY_UNIT` | varchar(255) | The unit of the medication that was prescribed eg tablets | `quantity_unit` |
+| `MEDICATION_NAME` | varchar(500) | The name of the medication attached to the statement |  |
+| `BNF_REFERENCE` | varchar(10) | A reference to the drug in the BNF dictionary | `bnf_reference` |
+| `AGE_AT_EVENT` | int | The age the patient was at the time of this event | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | int | The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old | |
+| `AGE_AT_EVENT_NEONATE` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
+| `ISSUE_METHOD` | varchar(8000) | The issue method of the medication eg hand written | `issue_method` |
+| `DATE_RECORDED` | datetime(3) | Date the medication statement was recorded | `date_recorded` |
+| `IS_ACTIVE` | bit | Is the record active |  |
+| `IS_CONFIDENTIAL` | bit | True/false - is the statement marked as confidential/sensitive |  |
+| `IS_DELETED` | bit | True/false - is the record in a deleted state |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `EXPIRY_DATE` | datetime | Expiry date of drug | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### observation
 
@@ -588,44 +588,43 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique ID of the observation | `id` |
-| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
-| `person_id` | uniqueidentifier | The unique reference for the person | `person_id` |
-| `encounter_id` | uniqueidentifier | Reference to the encounter the observation was recorded at | `encounter_id` |
-| `practitioner_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
-| `parent_observation_id` | uniqueidentifier | Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure | `parent_observation_id` |
-| `clinical_effective_date` | datetime(3) | The date the observation was identified by a clinician | `clinical_effective_date` |
-| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
-| `result_value` | float | The value of the result of the observation | `result_value` |
-| `result_value_units_concept_id` | uniqueidentifier |  The units of the result of the observation' | `result value units` |
-| `result_date` | date(0) | 'The date of the result' | `result_date` |
-| `result_text` | varchar(8000) | 'Any text associated with the result' | `result_text` |
-| `is_problem` | bit | Whether the observation is marked as a problem | `is_problem` |
-| `is_review` | bit | Whether the observation is a review of an existing problem | `is_review` |
-| `problem_end_date` | datetime(3) | The end date of the problem | `problem_end_date` |
-| `observation_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the observation provide by the supplier' |  `non_core_concept_id` |
-| `age_at_event` | int | The age of the patient at the time of the observation in whole integer years | `age_at_event` |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
-| `age_at_event_neonate` | int | The age of the patient at the time of the observation | `age_at_event` |
-| `episodicity_concept_id` | bigint | Reference to the episodicity of the problem eg First, review, flare | `episodicity_concept_id` |
-| `is_primary` | bit | Whether the observation is a primary observation | `is_primary` |
-| `date_recorded` | datetime(3) | The date the observation was recorded in the system | `date_recorded` |
-| `is_deleted` | bit | true/false - is the problem record deleted (**to be removed**) |  |
-| `is_problem_deleted` | bit | true/false - whether the problem relating to the observation is deleted |  |
-| `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record <br>***THIS FIELD IS CURRENTLY ABSENT** | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the observation | `id` |
+| `PATIENT_ID` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PERSON_ID` | uniqueidentifier | The unique reference for the person | `person_id` |
+| `ENCOUNTER_ID` | uniqueidentifier | Reference to the encounter the observation was recorded at | `encounter_id` |
+| `PRACTITIONER_ID` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `PARENT_OBSERVATION_ID` | uniqueidentifier | Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure | `parent_observation_id` |
+| `CLINICAL_EFFECTIVE_DATE` | datetime(3) | The date the observation was identified by a clinician | `clinical_effective_date` |
+| `DATE_PRECISION_CONCEPT_ID` | uniqueidentifier | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `RESULT_VALUE` | float | The value of the result of the observation | `result_value` |
+| `RESULT_VALUE_UNITS_CONCEPT_ID` | uniqueidentifier | The units of the result of the observation | `result value units` |
+| `RESULT_DATE` | date(0) | The date of the result | `result_date` |
+| `RESULT_TEXT` | varchar(8000) | Any text associated with the result | `result_text` |
+| `IS_PROBLEM` | bit | Whether the observation is marked as a problem | `is_problem` |
+| `IS_REVIEW` | bit | Whether the observation is a review of an existing problem | `is_review` |
+| `PROBLEM_END_DATE` | datetime(3) | The end date of the problem | `problem_end_date` |
+| `OBSERVATION_SOURCE_CONCEPT_ID` | uniqueidentifier | Reference to the clinical coding of the observation provided by the supplier | `non_core_concept_id` |
+| `AGE_AT_EVENT` | int | The age of the patient at the time of the observation in whole integer years | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | int | The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old | |
+| `AGE_AT_EVENT_NEONATE` | int | The age of the patient at the time of the observation | `age_at_event` |
+| `EPISODICITY_CONCEPT_ID` | bigint | Reference to the episodicity of the problem eg First, review, flare | `episodicity_concept_id` |
+| `IS_PRIMARY` | bit | Whether the observation is a primary observation | `is_primary` |
+| `DATE_RECORDED` | datetime(3) | The date the observation was recorded in the system | `date_recorded` |
+| `IS_PROBLEM_DELETED` | bit | true/false - whether the problem relating to the observation is deleted |  |
+| `IS_CONFIDENTIAL` | bit | true/false - is the observation marked as confidential/sensitive |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### organisation
 
@@ -634,30 +633,30 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the organisation' | `id` |
-| `organisation_code` | varchar(255) | Organisation Code | `ods_code` |
-| `assigning_authority_code` | varchar(255) | The assigning authority of the organisation code |  |
-| `name` | varchar(255) | 'Name of the organisation' | `name` |
-| `type_code` | int | 'The type of organisation' | `type_code` |
-| `type_desc` | varchar(255) | 'The type of organisation' | `type_desc` |
-| `postcode` | varchar(200) | 'The postcode of the organisation' | `postcode` |
-| `parent_organisation_id` | uniqueidentifier | The id of the parent organisation | `parent_organization_id` |
-| `open_date` | date(0) | Date the organisation opened (minimum of operational or legal dates) |  |
-| `close_date` | date(0) | Date the organisation closed (maximum of operational or legal dates) |  |
-| `is_obsolete` | bit | Is the organisation closed |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record.<br>*This will be null for this table, as this table contains shared reference data only*. | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | 'Unique ID of the organisation' | `id` |
+| `ORGANISATION_CODE` | varchar(255) | Organisation Code | `ods_code` |
+| `ASSIGNING_AUTHORITY_CODE` | varchar(255) | The assigning authority of the organisation code |  |
+| `NAME` | varchar(255) | 'Name of the organisation' | `name` |
+| `TYPE_CODE` | int | 'The type of organisation' | `type_code` |
+| `TYPE_DESC` | varchar(255) | 'The type of organisation' | `type_desc` |
+| `POSTCODE` | varchar(200) | 'The postcode of the organisation' | `postcode` |
+| `PARENT_ORGANISATION_ID` | uniqueidentifier | The id of the parent organisation | `parent_organization_id` |
+| `OPEN_DATE` | date(0) | Date the organisation opened (minimum of operational or legal dates) |  |
+| `CLOSE_DATE` | date(0) | Date the organisation closed (maximum of operational or legal dates) |  |
+| `IS_OBSOLETE` | bit | Is the organisation closed |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record.<br>*This will be null for this table, as this table contains shared reference data only*. | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient (masked)
 
@@ -668,32 +667,32 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique ID of the patient | `id` |
-| `nhs_number_hash` | binary(32) | internal irreversible hash of the patient NHS number |  |
-| `sk_patient_id` | int | Consistent LDS pseudonym for secondary care planning purposes |  |
-| `title` | varchar(50) | 'The title of the patient' |  |
-| `gender_concept_id` | uniqueidentifier | 'Reference to the gender of the patient' |  |
-| `registered_practice_id` | uniqueidentifier | LDS assigned identifier for patient's registered practice |  |
-| `birth_year` | int | year of the date of birth |  |
-| `birth_month` | int | month of the date of birth |  |
-| `death_year` | int | year of the date of death |  |
-| `death_month` | int | month of the date of death |  |
-| `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
-| `is_dummy_patient` | bit | true/false - is the patient flagged or denoted as a test patient in the source system |  |
-| `is_spine_sensitive` | bit | true/false - is the patient marked as spine sensitive within the source syste. **Important note: This column is sourced from local practice systems, and may not reflect values held within the PDS spine service. It is not advised to use this column to inform sensitivity filtering policies.** |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
-| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the patient | `id` |
+| `NHS_NUMBER_HASH` | binary(32) | internal irreversible hash of the patient NHS number |  |
+| `SK_PATIENT_ID` | int | Consistent LDS pseudonym for secondary care planning purposes |  |
+| `TITLE` | varchar(50) | 'The title of the patient' |  |
+| `GENDER_CONCEPT_ID` | uniqueidentifier | 'Reference to the gender of the patient' |  |
+| `REGISTERED_PRACTICE_ID` | uniqueidentifier | LDS assigned identifier for patient's registered practice |  |
+| `BIRTH_YEAR` | int | year of the date of birth |  |
+| `BIRTH_MONTH` | int | month of the date of birth |  |
+| `DEATH_YEAR` | int | year of the date of death |  |
+| `DEATH_MONTH` | int | month of the date of death |  |
+| `IS_CONFIDENTIAL` | bit | true/false - is the observation marked as confidential/sensitive |  |
+| `IS_DUMMY_PATIENT` | bit | true/false - is the patient flagged or denoted as a test patient in the source system |  |
+| `IS_SPINE_SENSITIVE` | bit | true/false - is the patient marked as spine sensitive within the source system. **Important note: This column is sourced from local practice systems, and may not reflect values held within the PDS spine service. It is not advised to use this column to inform sensitivity filtering policies.** |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_address (masked)
 
@@ -702,26 +701,26 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the address' | `id` |
-| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
-| `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) | `use_concept_id` |
-| `postcode_hash` | binary(32) | The postcode of the address - hashed | `postcode` |
-| `start_date` | datetime(3) | The start date of this address being relevant | `start_date` |
-| `end_date` | datetime(3) | The end date of this address being relevant | `end_date` |
-| `person_id` | uniqueidentifier | the Unique Identifier for the person | `person_id` |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
-| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record. **Note this column is currently absent, but will be added in a later release**. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | 'Unique ID of the address' | `id` |
+| `PATIENT_ID` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `ADDRESS_TYPE_CONCEPT_ID` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) | `use_concept_id` |
+| `POSTCODE_HASH` | binary(32) | The postcode of the address - hashed | `postcode` |
+| `START_DATE` | datetime(3) | The start date of this address being relevant | `start_date` |
+| `END_DATE` | datetime(3) | The end date of this address being relevant | `end_date` |
+| `PERSON_ID` | uniqueidentifier | The Unique Identifier for the person | `person_id` |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. **Note this column is currently absent, but will be added in a later release**. | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_contact (masked)
 
@@ -732,27 +731,27 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the patient contact' | `id` |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
-| `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
-| `description` | varchar(255) | <to be confirmed> |  |
-| `contact_type_concept_id` | varchar(255) | use of contact (e.g. mobile, home,work' (Combines type into single concept) | `use_concept_id` |
-| `start_date` | varchar(255) | 'The start date of the contact being valid' | `start_date` |
-| `end_date` | varchar(255) | 'The end date of the contact being valid' | `end_date` |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
-| `lds_is_deleted`* | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | 'Unique ID of the patient contact' | `id` |
+| `PERSON_ID` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
+| `PATIENT_ID` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | `patient_id` |
+| `DESCRIPTION` | varchar(255) | <to be confirmed> |  |
+| `CONTACT_TYPE_CONCEPT_ID` | varchar(255) | use of contact (e.g. mobile, home, work) (Combines type into single concept) | `use_concept_id` |
+| `START_DATE` | varchar(255) | 'The start date of the contact being valid' | `start_date` |
+| `END_DATE` | varchar(255) | 'The end date of the contact being valid' | `end_date` |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_END_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_person
 
@@ -761,19 +760,19 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Identifier for the patient to practitioner relationship |  |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique Identifier for the patient to practitioner relationship |  |
+| `PATIENT_ID` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  |
+| `PERSON_ID` | uniqueidentifier | 'Unique individual across all organisations' |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ### patient_registered_practitioner_in_role
 
@@ -782,27 +781,27 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Identifier for the patient to practitioner relationship |  |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  |
-| `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' |  |
-| `practitioner_id` | uniqueidentifier | The clinician the episode of care is registered under' |  |
-| `episode_of_care_id` | uniqueidentifier | The episode of care (registration to service provider) that the patient is recorded under with this practitioner/clinician |  |
-| `start_date` | datetime(3) | start date of the relationship between patient and practitioner |  |
-| `end_date` | datetime(3) | end date of the relationship between patient and practitioner |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique Identifier for the patient to practitioner relationship | |
+| `PERSON_ID` | uniqueidentifier | 'Unique individual across all organisations' | |
+| `PATIENT_ID` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | |
+| `ORGANISATION_ID` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | |
+| `PRACTITIONER_ID` | uniqueidentifier | The clinician the episode of care is registered under | |
+| `EPISODE_OF_CARE_ID` | uniqueidentifier | The episode of care (registration to service provider) that the patient is recorded under with this practitioner/clinician | |
+| `START_DATE` | datetime(3) | Start date of the relationship between patient and practitioner | |
+| `END_DATE` | datetime(3) | End date of the relationship between patient and practitioner | |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
 
 ### patient_uprn (masked)
 
@@ -811,31 +810,31 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique ID of the patient uprn match' |  |
-| `registrar_event_id` | uniqueidentifier | LDS processing event identifier for the processing of the uprn match. (*this is now duplicated by an audit column below and will be removed*) |  |
-| `masked_uprn` | varchar(255) | the matched unique property reference number, with hashing applied |  |
-| `masked_upsn` | varchar(255) | the matched unique street reference number, with hashing applied |  |
-| `masked_postcode` | varchar(255) | the masked input postcode |  |
-| `address_format_quality` | varchar(255) | The quality of the input address (i.e. 'good') |  |
-| `postcode_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |
-| `matched_with_assign` | varchar(255) | True/false - was a match possible |  |
-| `qualifier` | varchar(255) | type of matched address (residential, child) |  |
-| `uprn_property_classification` | varchar(255) | <to be confirmed> |  |
-| `algorithm` | varchar(255) | <to be confirmed> | <to be confirmed> |
-| `match_pattern` | varchar(255) | <to be confirmed> | <to be confirmed> |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_registrar_event_id` | uniqueidentifier | LDS processing event identifier for the processing of the uprn match |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record.<br>*This will be null for this table*. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. *This will be null for this table.* |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the patient UPRN match | |
+| `REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for the processing of the UPRN match. (*this is now duplicated by an audit column below and will be removed*) | |
+| `MASKED_UPRN` | varchar(255) | The matched unique property reference number, with hashing applied | |
+| `MASKED_UPSN` | varchar(255) | The matched unique street reference number, with hashing applied | |
+| `MASKED_POSTCODE` | varchar(255) | The masked input postcode | |
+| `ADDRESS_FORMAT_QUALITY` | varchar(255) | The quality of the input address (i.e. 'good') | |
+| `POSTCODE_QUALITY` | varchar(255) | The quality of the input postcode (i.e. 'good') | |
+| `MATCHED_WITH_ASSIGN` | varchar(255) | True/false - was a match possible | |
+| `QUALIFIER` | varchar(255) | Type of matched address (residential, child) | |
+| `UPRN_PROPERTY_CLASSIFICATION` | varchar(255) | <to be confirmed> | |
+| `ALGORITHM` | varchar(255) | <to be confirmed> | <to be confirmed> |
+| `MATCH_PATTERN` | varchar(255) | <to be confirmed> | <to be confirmed> |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for the processing of the UPRN match | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record.<br>*This will be null for this table*. | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. *This will be null for this table.* | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
 
 ### person (masked)
 
@@ -844,29 +843,29 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | reference to the patient identifier |  |
-| `requesting_patient_record_id` | uniqueidentifier | reference to the patient record that was used to trace the patient details | |
-| `unique_reference` | uniqueidentifier | unique request reference of the submission made to PDS | |
-| `requesting_nhs_number_hash` |  binary(32) | the hash of the requesting NHS number for tracing | |
-| `error_success_code` | varchar | the PDS response success or error code | |
-| `matched_nhs_number_hash` | binary(32) | the PDS responded nhs number hashed | |
-| `sk_patient_id_matched` | bigint | the LDS standard pseudonym for the nhs number that was matched in PDS | |
-| `sensivity_flag` | char(1) | the returned value of the sensitivity of the patient. _Note that emerging feedback from PDS indicates that this value is never populated to flag whether the patient is or is not sensitive_. |  |
-| `matched_algorithm_indicator` | char(1) | reference to the algorithm used to match the patient |  |
-| `requesting_patient_id` | uniqueidentifier | reference to the patient that holds the details used in the trace |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_registrar_event_id` | uniqueidentifier | LDS processing event identifier for the processing of the uprn match |  |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. *This will be null for this table.* |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version was no longer the latest. **this column is obsolete and will be removed** |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Reference to the patient identifier | |
+| `REQUESTING_PATIENT_RECORD_ID` | uniqueidentifier | Reference to the patient record that was used to trace the patient details | |
+| `UNIQUE_REFERENCE` | uniqueidentifier | Unique request reference of the submission made to PDS | |
+| `REQUESTING_NHS_NUMBER_HASH` | binary(32) | The hash of the requesting NHS number for tracing | |
+| `ERROR_SUCCESS_CODE` | varchar | The PDS response success or error code | |
+| `MATCHED_NHS_NUMBER_HASH` | binary(32) | The PDS responded NHS number hashed | |
+| `SK_PATIENT_ID_MATCHED` | bigint | The LDS standard pseudonym for the NHS number that was matched in PDS | |
+| `SENSITIVITY_FLAG` | char(1) | The returned value of the sensitivity of the patient. Note: this value is rarely populated | |
+| `MATCHED_ALGORITHM_INDICATOR` | char(1) | Reference to the algorithm used to match the patient | |
+| `REQUESTING_PATIENT_ID` | uniqueidentifier | Reference to the patient that holds the details used in the trace | |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for the processing of the UPRN match | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. May be null | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `LDS_END_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was no longer the latest. Obsolete | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
 
 ### practitioner
 
@@ -875,27 +874,27 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the practitioner' | `id` |
-| `gmc_code` | varchar(255) | 'The GMC code of the practitioner' | `gmc_code` |
-| `title` | varchar(50) | The title of the practitioner |  |
-| `first_name` | nvarchar | the first name of the practitioner | `name` |
-| `last_name` | nvarchar | the last name of the practitioner | `name` |
-| `name` | nvarchar | 'Name of the practitioner' |  |
-| `is_obsolete` | bit | true/false - is the practitioner no longer active |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest. **this column is obsolete and will be removed** |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the practitioner | `id` |
+| `GMC_CODE` | varchar(255) | The GMC code of the practitioner | `gmc_code` |
+| `TITLE` | varchar(50) | The title of the practitioner | |
+| `FIRST_NAME` | nvarchar | The first name of the practitioner | `name` |
+| `LAST_NAME` | nvarchar | The last name of the practitioner | `name` |
+| `NAME` | nvarchar | Name of the practitioner | |
+| `IS_OBSOLETE` | bit | True/false - is the practitioner no longer active | |
+| `LDS_END_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version is no longer correct/latest. Obsolete | |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
 
 ### practitioner_in_role
 
@@ -904,26 +903,26 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the practitioner' |  |
-| `practitioner_id` | uniqueidentifier | 'Unique ID of the practitioner' |  |
-| `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' |  |
-| `role_code` | varchar(5) | the role code for the practitioners role |  |
-| `role` | varchar(200) | the role description for the practitioners role |  |
-| `date_employment_start` | datetime(3) | date from which this role was applicable to the practitioner |  |
-| `date_employment_end` | datetime(3) | date from which this role was no longer applicable to the practitioner |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the practitioner role record | |
+| `PRACTITIONER_ID` | uniqueidentifier | Unique ID of the practitioner | |
+| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | |
+| `ROLE_CODE` | varchar(5) | The role code for the practitioner’s role | |
+| `ROLE` | varchar(200) | The role description for the practitioner’s role | |
+| `DATE_EMPLOYMENT_START` | datetime(3) | Date from which this role was applicable to the practitioner | |
+| `DATE_EMPLOYMENT_END` | datetime(3) | Date from which this role was no longer applicable to the practitioner | |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
 
 ### procedure_request
 
@@ -932,37 +931,36 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the procedure request' | id |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' | patient_id |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | person_id |
-| `encounter_id` | uniqueidentifier | 'Reference to the encounter the procedure was administered at' | encounter_id |
-| `practitioner_id` | uniqueidentifier | 'Unique ID of the practitioner' | practitioner_id |
-| `clinical_effective_date` | datetime(3) | 'The date the procedure was administered by a clinician' | clinical_effective_date |
-| `date_precision_concept_id` | int | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' | date_precision_concept_id |
-| `date_recorded` | datetime(3) | 'The date the procedure was recorded in the source system' | date_recorded |
-| `description` | varchar(255) | procedure request description |  |
-| `procedure_source_concept_id` | uniqueidentifier | 'Reference to the clinical coding of the procedure' | non_core_concept_id |
-| `status_concept_id` | uniqueidentifier | 'Reference to the status of the procedure' | status_concept_id |
-| `age_at_event` | int | 'The age of the patient at the time of the procedure' | age_at_event |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
-| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
-| `is_confidential` | bit | true/false - is the observation marked as confidential/sensitive |  |
-| `is_deleted` | bit | source data deletion indicator |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from which the record version no longer correct/latest.<br>**this column is obsolete and will be removed** |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
-
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | Unique ID of the procedure request | id |
+| `PERSON_ID` | uniqueidentifier | Unique individual across all organisations | patient_id |
+| `PATIENT_ID` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | person_id |
+| `ENCOUNTER_ID` | uniqueidentifier | Reference to the encounter the procedure was administered at | encounter_id |
+| `PRACTITIONER_ID` | uniqueidentifier | Unique ID of the practitioner | practitioner_id |
+| `CLINICAL_EFFECTIVE_DATE` | datetime(3) | The date the procedure was administered by a clinician | clinical_effective_date |
+| `DATE_PRECISION_CONCEPT_ID` | int | Identifies the precision of the clinical effectiveness date to either year (1), month (2), day (5), minute (12), second (13), millisecond (14) | date_precision_concept_id |
+| `DATE_RECORDED` | datetime(3) | The date the procedure was recorded in the source system | date_recorded |
+| `DESCRIPTION` | varchar(255) | Procedure request description | |
+| `PROCEDURE_REQUEST_SOURCE_CONCEPT_ID` | uniqueidentifier | Reference to the clinical coding of the procedure | non_core_concept_id |
+| `STATUS_CONCEPT_ID` | uniqueidentifier | Reference to the status of the procedure | status_concept_id |
+| `AGE_AT_EVENT` | int | The age of the patient at the time of the procedure | age_at_event |
+| `AGE_AT_EVENT_BABY` | int | Age at the time of event; integer years if ≥1, else categorized 7001-7007 for babies under 1 year | |
+| `AGE_AT_EVENT_NEONATE` | int | Age at the time of event if less than 28 days, else categorized value | |
+| `IS_CONFIDENTIAL` | bit | True/false - is the observation marked as confidential/sensitive | |
+| `IS_DELETED` | bit | Source data deletion indicator | |
+| `LDS_END_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version is no longer correct/latest.<br>**this column is obsolete and will be removed** |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table | |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
 ### referral_request
 
 > [!NOTE]
@@ -970,41 +968,41 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the referral request' | id |
-| `organisation_id` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | organization_id |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' | person_id |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | patient_id |
-| `encounter_id` | uniqueidentifier | 'Reference to the encounter the referral was made in' | encounter_id |
-| `practitioner_id` | uniqueidentifier | 'The clinician the activity is recorded against' | practitioner_id |
-| `unique_booking_reference_number` | varchar(14) | unique booking reference number of the referral request |  |
-| `clinical_effective_date` | datetime(3) | 'The date the referral was made' | clinical_effective_date |
-| `date_precision_concept_id` | uniqueidentifier | 'Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14)' | date_precision_concept_id |
-| `requester_organisation_id` | uniqueidentifier | 'Reference to the organisation that made the refereral request' | requester_organization_id |
-| `recipient_organisation_id` | uniqueidentifier | Organisation identifier of the recipient of the referral request | recipient_organization_id |
-| `referral_request_priority_concept_id` | int | 'Reference to the priority of the referral' | referral_request_priority_concept_id |
-| `referral_request_type_concept_id` | int | 'Reference to the type of referral request' | referral_request_type_concept_id |
-| `referral_request_specialty_concept_id` | int | Reference to the specialty of the referral' | referral_request_type_concept_id |
-| `mode` | varchar(50) | 'The mode of the referral' | mode |
-| `is_outgoing_referral` | bit | 'Whether this is an outgoing referral' | outgoing_referral |
-| `is_review` | bit | 'Whether this referral is a review' | is_review |
-| `referral_request_source_concept_id` | bigint | The source clinical coding of primary diagnosis provided by the supplier | raw_concept_id |
-| `age_at_event` | int | 'The age of the patient at the time of the referral' | age_at_event |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
-| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
-| `date_recorded` | datetime(3) | 'The date the referral request was added to the source system' | date_recorded |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | 'Unique ID of the referral request' | id |
+| `ORGANISATION_ID` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | organization_id |
+| `PERSON_ID` | uniqueidentifier | 'Unique individual across all organisations' | person_id |
+| `PATIENT_ID` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | patient_id |
+| `ENCOUNTER_ID` | uniqueidentifier | 'Reference to the encounter the referral was made in' | encounter_id |
+| `PRACTITIONER_ID` | uniqueidentifier | 'The clinician the activity is recorded against' | practitioner_id |
+| `UNIQUE_BOOKING_REFERENCE_NUMBER` | varchar(14) | 'Unique booking reference number of the referral request' | |
+| `CLINICAL_EFFECTIVE_DATE` | datetime(3) | 'The date the referral was made' | clinical_effective_date |
+| `DATE_PRECISION_CONCEPT_ID` | uniqueidentifier | 'Identifies the precision of the clinical effectiveness date to either year (1), month (2), day (5), minute (12), second (13), millisecond (14)' | date_precision_concept_id |
+| `REQUESTER_ORGANISATION_ID` | uniqueidentifier | 'Reference to the organisation that made the referral request' | requester_organization_id |
+| `RECIPIENT_ORGANISATION_ID` | uniqueidentifier | 'Organisation identifier of the recipient of the referral request' | recipient_organization_id |
+| `REFERRAL_REQUEST_PRIORITY_CONCEPT_ID` | int | 'Reference to the priority of the referral' | referral_request_priority_concept_id |
+| `REFERRAL_REQUEST_TYPE_CONCEPT_ID` | int | 'Reference to the type of referral request' | referral_request_type_concept_id |
+| `REFERRAL_REQUEST_SPECIALTY_CONCEPT_ID` | int | 'Reference to the specialty of the referral' | referral_request_specialty_concept_id |
+| `MODE` | varchar(50) | 'The mode of the referral' | mode |
+| `IS_OUTGOING_REFERRAL` | bit | 'Whether this is an outgoing referral' | outgoing_referral |
+| `IS_REVIEW` | bit | 'Whether this referral is a review' | is_review |
+| `REFERRAL_REQUEST_SOURCE_CONCEPT_ID` | bigint | 'The source clinical coding of primary diagnosis provided by the supplier' | raw_concept_id |
+| `AGE_AT_EVENT` | int | 'The age of the patient at the time of the referral' | age_at_event |
+| `AGE_AT_EVENT_BABY` | int | 'The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details.' | |
+| `AGE_AT_EVENT_NEONATE` | int | 'The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category' | |
+| `DATE_RECORDED` | datetime(3) | 'The date the referral request was added to the source system' | date_recorded |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' | |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' | |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' | |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' | |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' | |
 
 ### schedule
 
@@ -1013,29 +1011,29 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | 'Unique ID of the schedule' | id |
-| `location_id` | uniqueidentifier | Reference to the location of the schedule | |
-| `location` | varchar(100) | 'Textual description of the location the schedule was held at' | location |
-| `practitioner_id` | uniqueidentifier | 'Reference to the practitioner who owns the schedule' | practitioner_id |
-| `start_date` | datetime(3) | 'The start date of the schedule' | start_date |
-| `end_date` | datetime(3) | The end date of the schedule' |   |
-| `type` | varchar(255) | 'The type of schedule eg Timed Appointments' | type |
-| `name` | varchar(150) | 'The name of the schedule' | name |
-| `is_private` | bit | true/false - is the schedule marked as private |  |
-| `is_deleted` | bit | true/false - is the schedule marked as deleted |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
+| `ID` | uniqueidentifier | 'Unique ID of the schedule' | id |
+| `LOCATION_ID` | uniqueidentifier | 'Reference to the location of the schedule' | |
+| `LOCATION` | varchar(100) | 'Textual description of the location the schedule was held at' | location |
+| `PRACTITIONER_ID` | uniqueidentifier | 'Reference to the practitioner who owns the schedule' | practitioner_id |
+| `START_DATE` | datetime(3) | 'The start date of the schedule' | start_date |
+| `END_DATE` | datetime(3) | 'The end date of the schedule' |  |
+| `TYPE` | varchar(255) | 'The type of schedule eg Timed Appointments' | type |
+| `NAME` | varchar(150) | 'The name of the schedule' | name |
+| `IS_PRIVATE` | bit | 'True/false - is the schedule marked as private' |  |
+| `IS_DELETED` | bit | 'True/false - is the schedule marked as deleted' |  |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' | |
 
 ### schedule_practitioner
 
@@ -1044,22 +1042,22 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | Unique Identifier for this practitioner to schedule relation |  |
-| `schedule_id` | uniqueidentifier | Reference to the schedule |  |
-| `practitioner_id` | uniqueidentifier | Reference to the practitioner |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for the source record version' | |
+| `ID` | uniqueidentifier | 'Unique Identifier for this practitioner to schedule relation' |  |
+| `SCHEDULE_ID` | uniqueidentifier | 'Reference to the schedule' |  |
+| `PRACTITIONER_ID` | uniqueidentifier | 'Reference to the practitioner' |  |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' | |
 
 ## `[OLIDS_PCD]` Schema
 
@@ -1070,35 +1068,35 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `lds_record_id` | uniqueidentifier | Unique Identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique ID of the patient' |  | id |
-| `nhs_number` | char(10) | 'The NHS number of the patient' |  | nhs_number |
-| `title` | varchar(50) | 'The title of the patient' |  | title |
-| `first_name` | nvarchar(50) | 'The first names of the patient' |  | first_names |
-| `middle_name` | nvarchar(256) | The middle names of the patient' |  |  |
-| `last_name` | nvarchar(100) | 'The last name of the patient' |  | last_name |
-| `birth_date` | date(0) | 'The date of birth of the patient' |  | date_of_birth |
-| `birth_year` | smallint | Birth year of the patient |  | birth_year |
-| `birth_month` | smallint | Birth month of the patient |  | birth_month |
-| `birth_week_iso` | smallint | Birth week of the patient (iso standard) |  | birth_week |
-| `birth_day` | smallint | Birth day of the patient |  |  |
-| `death_year` | smallint | Death year of the patient |  |  |
-| `death_month` | smallint | Death month of the patient |  |  |
-| `death_week_iso` | smallint | Death week of the patient (iso standard) |  |  |
-| `death_day` | smallint | Death day of the patient |  |  |
-| `death_date` | date(0) | 'The date of death of the patient' |  | date_of_death |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | 'Unique Identifier for the record' | |
+| `ID` | uniqueidentifier | 'Unique ID of the patient' | id |
+| `NHS_NUMBER` | char(10) | 'The NHS number of the patient' | nhs_number |
+| `TITLE` | varchar(50) | 'The title of the patient' | title |
+| `FIRST_NAME` | nvarchar(50) | 'The first names of the patient' | first_names |
+| `MIDDLE_NAME` | nvarchar(256) | 'The middle names of the patient' |  |
+| `LAST_NAME` | nvarchar(100) | 'The last name of the patient' | last_name |
+| `BIRTH_DATE` | date(0) | 'The date of birth of the patient' | date_of_birth |
+| `BIRTH_YEAR` | smallint | 'Birth year of the patient' | birth_year |
+| `BIRTH_MONTH` | smallint | 'Birth month of the patient' | birth_month |
+| `BIRTH_WEEK_ISO` | smallint | 'Birth week of the patient (iso standard)' | birth_week |
+| `BIRTH_DAY` | smallint | 'Birth day of the patient' |  |
+| `DEATH_YEAR` | smallint | 'Death year of the patient' |  |
+| `DEATH_MONTH` | smallint | 'Death month of the patient' |  |
+| `DEATH_WEEK_ISO` | smallint | 'Death week of the patient (iso standard)' |  |
+| `DEATH_DAY` | smallint | 'Death day of the patient' |  |
+| `DEATH_DATE` | date(0) | 'The date of death of the patient' | date_of_death |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' | |
 
 ### patient_address
 
@@ -1107,32 +1105,32 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | Unique Identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique ID of the address' |  | id |
-| `patient_id` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `address_type_concept_id` | uniqueidentifier | Type of address (i.e. Temporary, Correspondence only, Home) |  | use_concept_id |
-| `is_home_address` | bit |  |  |  |
-| `address_line_1` | nvarchar(255) | 'The first line of the address' |  | address_line_1 |
-| `address_line_2` | nvarchar(255) | 'The second line of the address' |  | address_line_2 |
-| `address_line_3` | nvarchar(255) | 'The third line of the address' |  | address_line_3 |
-| `address_line_4` | nvarchar(255) | 'The fourth line of the address' |  | address_line_4 |
-| `city` | nvarchar(255) | 'The city' |  | city |
-| `postcode` | varchar(255) | The postcode of the address |  | postcode |
-| `start_date` | datetime(3) | 'The start date of this address being relevant' |  | start_date |
-| `end_date` | datetime(3) | 'The end date of this address being relevant' |  | end_date |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_end_date_time` | datetime(3) | LDS datetime stamp from when the record was replaced or deleted |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | 'Unique Identifier for the record' | |
+| `ID` | uniqueidentifier | 'Unique ID of the address' | id |
+| `PATIENT_ID` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | patient_id |
+| `ADDRESS_TYPE_CONCEPT_ID` | uniqueidentifier | 'Type of address (i.e. Temporary, Correspondence only, Home)' | use_concept_id |
+| `IS_HOME_ADDRESS` | bit | 'Indicates whether this address is the patient’s home address' |  |
+| `ADDRESS_LINE_1` | nvarchar(255) | 'The first line of the address' | address_line_1 |
+| `ADDRESS_LINE_2` | nvarchar(255) | 'The second line of the address' | address_line_2 |
+| `ADDRESS_LINE_3` | nvarchar(255) | 'The third line of the address' | address_line_3 |
+| `ADDRESS_LINE_4` | nvarchar(255) | 'The fourth line of the address' | address_line_4 |
+| `CITY` | nvarchar(255) | 'The city' | city |
+| `POSTCODE` | varchar(255) | 'The postcode of the address' | postcode |
+| `START_DATE` | datetime(3) | 'The start date of this address being relevant' | start_date |
+| `END_DATE` | datetime(3) | 'The end date of this address being relevant' | end_date |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' |  |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' |  |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' |  |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_END_DATE_TIME` | datetime(3) | 'LDS datetime stamp from when the record was replaced or deleted' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' |  |
 
 ### patient_contact
 
@@ -1141,27 +1139,27 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `lds_record_id` | uniqueidentifier | Unique Identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique ID of the patient contact' |  | id |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' |  | person_id |
-| `patient_id` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' |  | patient_id |
-| `description` | varchar(255) | <to be confirmed> |  |  |
-| `contact_type_concept_id` | uniqueidentifier | use of contact (e.g. mobile, home,work' (Combines type into single concept) |  | type_concept_id |
-| `start_date` | varchar(255) | 'The start date of the contact being valid' |  | start_date |
-| `end_date` | varchar(255) | 'The end date of the contact being valid' |  | end_date |
-| `value` | varchar(255) | 'The value of the contact information eg phone number, email address' |  | value |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | 'Unique Identifier for the record' | |
+| `ID` | uniqueidentifier | 'Unique ID of the patient contact' | id |
+| `PERSON_ID` | uniqueidentifier | 'Unique individual across all organisations' | person_id |
+| `PATIENT_ID` | varchar(255) | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | patient_id |
+| `DESCRIPTION` | varchar(255) | '<to be confirmed>' |  |
+| `CONTACT_TYPE_CONCEPT_ID` | uniqueidentifier | 'Use of contact (e.g. mobile, home, work). Combines type into single concept' | type_concept_id |
+| `START_DATE` | varchar(255) | 'The start date of the contact being valid' | start_date |
+| `END_DATE` | varchar(255) | 'The end date of the contact being valid' | end_date |
+| `VALUE` | varchar(255) | 'The value of the contact information eg phone number, email address' | value |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' |  |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' |  |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' |  |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' |  |
 
 ### patient_uprn
 
@@ -1170,45 +1168,46 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass Equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | Unique Identifier for the record |  |  |
-| `id` | uniqueidentifier | Unique ID of the patient uprn match' |  |  |
-| `uprn` | varchar(255) | the matched unique property reference number |  | uprn |
-| `usrn` | varchar(255) | the matched unique street reference number |  |  |
-| `organisation_name` | varchar(255) | the organisation name of the address of the UPRN |  | abp_address_organisation |
-| `department_name` | varchar(255) | the department name of the address of the UPRN |  |  |
-| `sub_building_name` | varchar(255) | the sub-building name of the address of the UPRN |  |  |
-| `building_name` | varchar(255) | the building name of the address of the UPRN |  |  |
-| `building_number` | varchar(255) | the building number of the address of the UPRN |  | abp_address_number |
-| `dependent_thoroughfare` | varchar(255) | Added to uniquely distinguish addresses where the same thoroughfare exists twice in the same district |  |  |
-| `thoroughfare` | varchar(255) | road or street name |  | abp_address_street |
-| `double_dependent_locality` | varchar(255) | A business park, industrial estate or hamlet which is smaller than a Dependent Locality |  |  |
-| `dependent_locality` | varchar(255) | A small town or village name sometimes included in an address when the Delivery Point is outside the boundary of the main Post Town that serves it |  | abp_address_locality |
-| `post_town` | varchar(255) | Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre |  | abp_address_town |
-| `postcode` | varchar(255) | The postal code used for the Unique Property |  | abp_address_postcode |
-| `address_format_quality` | varchar(255) | The quality of the input address (i.e. 'good') |  |  |
-| `postcode_quality` | varchar(255) | The quality of the input postcode (i.e. 'good') |  |  |
-| `matched_with_assign` | varchar(255) | True/false - was a match possible |  |  |
-| `qualifier` | varchar(255) | type of matched address (residential, child) |  | qualifier |
-| `uprn_property_classification` | varchar(255) |  |  | uprn_property_classification |
-| `algorithm` | varchar(255) | <to be confirmed> |  | match_rule |
-| `match_pattern` | varchar(255) | <to be confirmed> |  | Concatenates match_pattern_flat, building, number and postcode fields|
-| `unstructured_postal_address` | varchar(255) | The full input address as a string |  |  |
-| `x_coordinate` | float(53) | The Ordnance Survey X co-ordinate of the address |  | uprn_xcoordinate |
-| `y_coordinate` | float(53) | The Ordnance Survey Y co-ordinate of the address |  | uprn_ycoordinate |
-| `latitude` | float(53) | The latitude of the address |  | latitude |
-| `longitude` | float(53) | The longitude of the address |  | longitude |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_registrar_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record. | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | 'Unique Identifier for the record' |  |
+| `ID` | uniqueidentifier | 'Unique ID of the patient uprn match' |  |
+| `UPRN` | varchar(255) | 'The matched unique property reference number' | uprn |
+| `USRN` | varchar(255) | 'The matched unique street reference number' |  |
+| `ORGANISATION_NAME` | varchar(255) | 'The organisation name of the address of the UPRN' | abp_address_organisation |
+| `DEPARTMENT_NAME` | varchar(255) | 'The department name of the address of the UPRN' |  |
+| `SUB_BUILDING_NAME` | varchar(255) | 'The sub-building name of the address of the UPRN' |  |
+| `BUILDING_NAME` | varchar(255) | 'The building name of the address of the UPRN' |  |
+| `BUILDING_NUMBER` | varchar(255) | 'The building number of the address of the UPRN' | abp_address_number |
+| `DEPENDENT_THOROUGHFARE` | varchar(255) | 'Added to uniquely distinguish addresses where the same thoroughfare exists twice in the same district' |  |
+| `THOROUGHFARE` | varchar(255) | 'Road or street name' | abp_address_street |
+| `DOUBLE_DEPENDENT_LOCALITY` | varchar(255) | 'A business park, industrial estate or hamlet which is smaller than a Dependent Locality' |  |
+| `DEPENDENT_LOCALITY` | varchar(255) | 'A small town or village name sometimes included in an address when the Delivery Point is outside the boundary of the main Post Town that serves it' | abp_address_locality |
+| `POST_TOWN` | varchar(255) | 'Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre' | abp_address_town |
+| `POSTCODE` | varchar(255) | 'The postal code used for the Unique Property' | abp_address_postcode |
+| `ADDRESS_FORMAT_QUALITY` | varchar(255) | 'The quality of the input address (i.e. "good")' |  |
+| `POSTCODE_QUALITY` | varchar(255) | 'The quality of the input postcode (i.e. "good")' |  |
+| `MATCHED_WITH_ASSIGN` | varchar(255) | 'True/false - was a match possible' |  |
+| `QUALIFIER` | varchar(255) | 'Type of matched address (residential, child)' | qualifier |
+| `UPRN_PROPERTY_CLASSIFICATION` | varchar(255) | '<to be confirmed>' | uprn_property_classification |
+| `ALGORITHM` | varchar(255) | '<to be confirmed>' | match_rule |
+| `MATCH_PATTERN` | varchar(255) | '<to be confirmed>' | 'Concatenates match_pattern_flat, building, number and postcode fields' |
+| `UNSTRUCTURED_POSTAL_ADDRESS` | varchar(255) | 'The full input address as a string' |  |
+| `X_COORDINATE` | float(53) | 'The Ordnance Survey X co-ordinate of the address' | uprn_xcoordinate |
+| `Y_COORDINATE` | float(53) | 'The Ordnance Survey Y co-ordinate of the address' | uprn_ycoordinate |
+| `LATITUDE` | float(53) | 'The latitude of the address' | latitude |
+| `LONGITUDE` | float(53) | 'The longitude of the address' | longitude |
+| `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
+| `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the registrar event that processed the record' |  |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' |  |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' |  |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' |  |
+| `LDS_START_DATE_TIME` | datetime(3) | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | 'LDS datetime stamp when the data was updated in the lakehouse' |  |
 
 ### person
 
