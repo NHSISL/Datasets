@@ -1216,62 +1216,62 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- |  ---- |
-| `lds_record_id` | uniqueidentifier | Unique Identifier for the record |  |  |
-| `id` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
-| `requesting_record_id` | uniqueidentifier | The unique record id for the item that acted as the basis for the PDS trace request |  |  |
-| `unique_reference` | uniqueidentifer | The unique reference for the PDS trace request | |  |
-| `requesting_nhs_number` | varchar(10) | Requested NHS number. Populated with the value provided in the request file. The matched NHS number is provided in the column MATCHED _NHS_NO. |  |  |
-| `last_name` | varchar(40) | Surname, or family name. |  |  |
-| `first_name` | varchar(40) | Forename, or given name. |  |  |
-| `middle_name` | varchar(100) | Other given, or middle, name. |  |  |
-| `gender` | varchar(1) | Gender (sex) of the person, values:<br>0 = Not Known<br>1 = Male<br>2 = Female<br>9 = Not Specified |  |  |
-| `birth_date` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
-| `birth_year` | smallint | Birth year of the patient |  | birth_year |
-| `birth_month` | tinyint | Birth month of the patient |  | birth_month |
-| `birth_day` | smallint | Birth day of the patient |  |  |
-| `birth_time` | time(0) | Birth time of the patient | |  |
-| `death_date` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
-| `death_year` | smallint | Death year of the patient |  |  |
-| `death_month` | tinyint | Death month of the patient |  |  |
-| `death_day` | smallint | Death day of the patient |  |  |
-| `death_time` | time(0) | Death time of the patient | |  |
-| `death_notification_status` | varchar(1) | Single digit number code, 1 or 2. 1 is Informal death status where death is reported, but unconfirmed. 2 is formal death status, death has been confirmed officially. |  |  |
-| `address_line_1` | varchar(4000) | First line of a person’s usual address. |  |  |
-| `address_line_2` | varchar(4000) | Second line of a person’s usual address. |  |  |
-| `address_line_3` | varchar(4000) | Third line of a person’s usual address. |  |  |
-| `address_line_4` | varchar(4000) | Fourth line of a person’s usual address. |  |  |
-| `address_line_5` | varchar(4000) | Fifth line of a person’s usual address. |  |  |
-| `postcode` | varchar(8) | Postcode of the person’s usual address. |  |  |
-| `preferred_contact_method` | varchar(1) | Single digit number code as follows: 1=Letter, 2=Visit, 3=Phone, 4=Email, 5=TextPhone, 6=TextPhoneProxy, 7=Sign language, 8=NoPhone |  |  |
-| `nominated_pharmacy` | varchar(5) | Code to designate which community pharmacy is used for patient. Composed of double capital letters then 3 numbers, for example FC890 |  |  |
-| `dispensing_doctor` | varchar(6) | Code to designate which dispensing doctor is used for patient. Composed of first character is a capital letter followed by 5 numbers, for example N85004 |  |  |
-| `medical_appliance_supplier` | varchar(5) | Code to designate which medical appliance supplier is used for patient. Composed of triple capital letters followed by 2 numbers, for example FFF14 |  |  |
-| `gp_practice_code` | varchar(8) | Primary Care Provider GP practice code. |  |  |
-| `gp_registration_date` | varchar(14) | Date the patient was registered with a GP. |  |  |
-| `nhais_posting_id` | varchar(3) | Unique code that represents the NHAIS box. |  |  |
-| `as_at_date` | varchar(8) | Ignore this field. |  |  |
-| `local_patient_id` | varchar(8000) | Ignore this field. |  |  |
-| `internal_id` | varchar(8) | Ignore this field. |  |  |
-| `telephone_number` | varchar(8000) | Person's telephone number. |  |  |
-| `mobile_number` | varchar(8000) | Person's mobile number. |  |  |
-| `email_address` | varchar(8000) | Person's email address. |  |  |
-| `mps_id` | varchar(10) | Ignore this field. |  |  |
-| `error_success_code` | varchar(2) | The code corresponding to this record. <br>See the person level response code table for details.  |  |  |
-| `matched_nhs_no` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
-| `matched_algorithm_indicator` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
-| `requesting_patient_id` | uniqueidentifier | The patient_id for the patient record used to create the PDS trace request | | |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_registrar_event_id` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record; this is null as the record owner is the Personal Demographic Service | |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
-| `lds_initial_data_received_date` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | Unique Identifier for the record |  |  |
+| `ID` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
+| `REQUESTING_RECORD_ID` | uniqueidentifier | The unique record id for the item that acted as the basis for the PDS trace request |  |  |
+| `UNIQUE_REFERENCE` | uniqueidentifer | The unique reference for the PDS trace request | |  |
+| `REQUESTING_NHS_NUMBER` | varchar(10) | Requested NHS number. Populated with the value provided in the request file. The matched NHS number is provided in the column MATCHED _NHS_NO. |  |  |
+| `LAST_NAME` | varchar(40) | Surname, or family name. |  |  |
+| `FIRST_NAME` | varchar(40) | Forename, or given name. |  |  |
+| `MIDDLE_NAME` | varchar(100) | Other given, or middle, name. |  |  |
+| `GENDER` | varchar(1) | Gender (sex) of the person, values:<br>0 = Not Known<br>1 = Male<br>2 = Female<br>9 = Not Specified |  |  |
+| `BIRTH_DATE` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
+| `BIRTH_YEAR` | smallint | Birth year of the patient |  | birth_year |
+| `BIRTH_MONTH` | tinyint | Birth month of the patient |  | birth_month |
+| `BIRTH_DAY` | smallint | Birth day of the patient |  |  |
+| `BIRTH_TIME` | time(0) | Birth time of the patient | |  |
+| `DEATH_DATE` | varchar(12) | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |  |
+| `DEATH_YEAR` | smallint | Death year of the patient |  |  |
+| `DEATH_MONTH` | tinyint | Death month of the patient |  |  |
+| `DEATH_DAY` | smallint | Death day of the patient |  |  |
+| `DEATH_TIME` | time(0) | Death time of the patient | |  |
+| `DEATH_NOTIFICATION_STATUS` | varchar(1) | Single digit number code, 1 or 2. 1 is Informal death status where death is reported, but unconfirmed. 2 is formal death status, death has been confirmed officially. |  |  |
+| `ADDRESS_LINE_1` | varchar(4000) | First line of a person’s usual address. |  |  |
+| `ADDRESS_LINE_2` | varchar(4000) | Second line of a person’s usual address. |  |  |
+| `ADDRESS_LINE_3` | varchar(4000) | Third line of a person’s usual address. |  |  |
+| `ADDRESS_LINE_4` | varchar(4000) | Fourth line of a person’s usual address. |  |  |
+| `ADDRESS_LINE_5` | varchar(4000) | Fifth line of a person’s usual address. |  |  |
+| `POSTCODE` | varchar(8) | Postcode of the person’s usual address. |  |  |
+| `PREFERRED_CONTACT_METHOD` | varchar(1) | Single digit number code as follows: 1=Letter, 2=Visit, 3=Phone, 4=Email, 5=TextPhone, 6=TextPhoneProxy, 7=Sign language, 8=NoPhone |  |  |
+| `NOMINATED_PHARMACY` | varchar(5) | Code to designate which community pharmacy is used for patient. Composed of double capital letters then 3 numbers, for example FC890 |  |  |
+| `DISPENSING_DOCTOR` | varchar(6) | Code to designate which dispensing doctor is used for patient. Composed of first character is a capital letter followed by 5 numbers, for example N85004 |  |  |
+| `MEDICAL_APPLIANCE_SUPPLIER` | varchar(5) | Code to designate which medical appliance supplier is used for patient. Composed of triple capital letters followed by 2 numbers, for example FFF14 |  |  |
+| `GP_PRACTICE_CODE` | varchar(8) | Primary Care Provider GP practice code. |  |  |
+| `GP_REGISTRATION_DATE` | varchar(14) | Date the patient was registered with a GP. |  |  |
+| `NHAIS_POSTING_ID` | varchar(3) | Unique code that represents the NHAIS box. |  |  |
+| `AS_AT_DATE` | varchar(8) | Ignore this field. |  |  |
+| `LOCAL_PATIENT_ID` | varchar(8000) | Ignore this field. |  |  |
+| `INTERNAL_ID` | varchar(8) | Ignore this field. |  |  |
+| `TELEPHONE_NUMBER` | varchar(8000) | Person's telephone number. |  |  |
+| `MOBILE_NUMBER` | varchar(8000) | Person's mobile number. |  |  |
+| `EMAIL_ADDRESS` | varchar(8000) | Person's email address. |  |  |
+| `MPS_ID` | varchar(10) | Ignore this field. |  |  |
+| `ERROR_SUCCESS_CODE` | varchar(2) | The code corresponding to this record. <br>See the person level response code table for details.  |  |  |
+| `MATCHED_NHS_NO` | varchar(10) | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. |  |  |
+| `MATCHED_ALGORITHM_INDICATOR` | varchar(1) | This will be one of the following values: <br>0: No Match <br>1: Cross Check <br>3: Alphanumeric | | |
+| `REQUESTING_PATIENT_ID` | uniqueidentifier | The patient_id for the patient record used to create the PDS trace request | | |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record; this is null as the record owner is the Personal Demographic Service | |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 ## `[OLIDS_TERMINOLOGY]` Schema
 
@@ -1284,16 +1284,16 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- | ---- |
-| `id` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `system` | varchar(255) | The code system reference |  |  |
-| `code` | varchar(255) | The codified concept contained within the code system |  |  |
-| `display` | varchar(255) |  The displayable description for the concept |  |   |
-| `is_mapped` | bit | true/false is the code mapped to a standard concept within the `concept_map` object |  |  |
-| `use_count` | int | the calculated frequency of use of the encoded concept within the processed data to date |  |  |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
+| `ID` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
+| `SYSTEM` | varchar(255) | The code system reference |  |  |
+| `CODE` | varchar(255) | The codified concept contained within the code system |  |  |
+| `DISPLAY` | varchar(255) |  The displayable description for the concept |  |   |
+| `IS_MAPPED` | bit | true/false is the code mapped to a standard concept within the `concept_map` object |  |  |
+| `USE_COUNT` | int | the calculated frequency of use of the encoded concept within the processed data to date |  |  |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 
 ### concept_map
 
@@ -1302,16 +1302,16 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- |  ---- | ---- |
-| `id` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
-| `concept_map_id` | uniqueidentifier | The Unique Identifier for the mapping group |  |  |
-| `source_code_id` | uniqueidentifier | The Unique Identifier for the source concept_id  |  |  |
-| `target_code_id` | uniqueidentifier | The Unique Identifier for the target concept_id  |  |  |
-| `is_primary` | bit | True/false is this the primary mapping for the code |  |  |
-| `equivalence` | varchar(255) | type of mapping equivalence, values include 'equivalent', 'wider', 'narrower', 'subsumes', 'inexact', 'unmatched', 'specializes', 'relatedto', 'unmatched' |  | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
+| `ID` | uniqueidentifier | 'Unique ID of the person' | No Foreign Key reference |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
+| `CONCEPT_MAP_ID` | uniqueidentifier | The Unique Identifier for the mapping group |  |  |
+| `SOURCE_CODE_ID` | uniqueidentifier | The Unique Identifier for the source concept_id  |  |  |
+| `TARGET_CODE_ID` | uniqueidentifier | The Unique Identifier for the target concept_id  |  |  |
+| `IS_PRIMARY` | bit | True/false is this the primary mapping for the code |  |  |
+| `EQUIVALENCE` | varchar(255) | type of mapping equivalence, values include 'equivalent', 'wider', 'narrower', 'subsumes', 'inexact', 'unmatched', 'specializes', 'relatedto', 'unmatched' |  | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 
 ## Ages
 
