@@ -75,49 +75,50 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  `none` |
-| `id` | uniqueidentifier | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
-| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
-| `practitioner_id` | uniqueidentifier | The clinician in role that the activity is recorded against' | `practitioner_id` |
-| `encounter_id` | uniqueidentifier | Reference to the encounter this allergy was record in | `encounter_id` |
-| `clinical_status` | varchar(20) | unmapped - prepared to match FHIR |  `clinical_status` |
-| `verification_status` | varchar(20) | unmapped - prepared to match FHIR' |  |
-| `category` | varchar(20) | unmapped - prepared to match FHIR' |  |
-| `clinical_effective_date` | datetime(3) | The date the clinical code is recorded for | `clinical_effective_date` |
-| `date_precision_concept_id` | uniqueidentifier | Identifies the precision of the clinical effectiveness date' | `date_precision_concept_id` |
-| `is_review` | bit | Is this instance of the code a review of a previous encounter | `is_review` |
-| `medication_name` | varchar(255) | Reference to the clinical name of the medication the patient has an allergy to |  |
-| `multi_lex_action` | varchar(25) |  | |
-| `allergy_intolerance_source_concept_id` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier | `non_core_concept_id` |
-| `age_at_event` | int | The age the patient was at the time of this event | `age_at_event` |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
-| `age_at_event_neonate` | int |The age the patient was at the time of this event if less than 28 days. Null where patient is older than 27 days. See [Ages](#ages) |  |
-| `date_recorded` | datetime(3) |  The date the allergy was recorded | `date_recorded` |
-| `is_confidential` | bit | True/False - is this allergy flagged as a confidential observation |  |
-| `person_id` | uniqueidentifier |  Unique individual across all organisation |  `person_id` |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |
-| `lds_dataset_id` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | 'Owning organisation (i.e. publisher)' | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
-| `lds_initial_data_received_date` | datetime(3) | datetime that the business id value was first witnessed |  |
-| `lds_is_deleted` | bit | LDS flag standardising presentation of deleted state of the record | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  `none` |
+| `ID` | uniqueidentifier | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `PATIENT_ID` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PRACTITIONER_ID` | uniqueidentifier | The clinician in role that the activity is recorded against' | `practitioner_id` |
+| `ENCOUNTER_ID` | uniqueidentifier | Reference to the encounter this allergy was record in | `encounter_id` |
+| `CLINICAL_STATUS` | varchar(20) | unmapped - prepared to match FHIR |  `clinical_status` |
+| `VERIFICATION_STATUS` | varchar(20) | unmapped - prepared to match FHIR' |  |
+| `CATEGORY` | varchar(20) | unmapped - prepared to match FHIR' |  |
+| `CLINICAL_EFFECTIVE_DATE` | datetime(3) | The date the clinical code is recorded for | `clinical_effective_date` |
+| `DATE_PRECISION_CONCEPT_ID` | uniqueidentifier | Identifies the precision of the clinical effectiveness date' | `date_precision_concept_id` |
+| `IS_REVIEW` | bit | Is this instance of the code a review of a previous encounter | `is_review` |
+| `MEDICATION_NAME` | varchar(255) | Reference to the clinical name of the medication the patient has an allergy to |  |
+| `MULTI_LEX_ACTION` | varchar(25) |  | |
+| `ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID` | uniqueidentifier | Reference to the clinical coding of the allergy provided by the supplier | `non_core_concept_id` |
+| `AGE_AT_EVENT` | int | The age the patient was at the time of this event | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
+| `AGE_AT_EVENT_NEONATE` | int |The age the patient was at the time of this event if less than 28 days. Null where patient is older than 27 days. See [Ages](#ages) |  |
+| `DATE_RECORDED` | datetime(3) |  The date the allergy was recorded | `date_recorded` |
+| `IS_CONFIDENTIAL` | bit | True/False - is this allergy flagged as a confidential observation |  |
+| `PERSON_ID` | uniqueidentifier |  Unique individual across all organisation |  `person_id` |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Owning organisation (i.e. publisher)' | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | datetime that the business id value was first witnessed |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardising presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_END_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 *Foreign keys:*
 
 | column | target | cardinality |
 | :--- | :--- | :--- |
-| `lds_record_id` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
-| `patient_id` | `patient.id` | one `patient` can have none to many `allergy_intolerance` items |
-| `practitioner_id` | `practitioner.id` | one `practitioner` can have none to many `allergy_intolerance` items |
-| `encounter_id` | `encounter.id` | one `encounter` can have none to many `allergy_intolerance` items |
-| `allergy_intolerance_source_concept_id` | `concept.id` | one `concept` can appear in one or many `allergy_intolerance` items |
-| `person_id` | `person.id` | one `person` can have none to many `allergy_intolerance` items |
+| `LDS_RECORD_ID` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
+| `PATIENT_ID` | `patient.id` | one `patient` can have none to many `allergy_intolerance` items |
+| `PRACTITIONER_ID` | `practitioner.id` | one `practitioner` can have none to many `allergy_intolerance` items |
+| `ENCOUNTER_ID` | `encounter.id` | one `encounter` can have none to many `allergy_intolerance` items |
+| `ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID` | `concept.id` | one `concept` can appear in one or many `allergy_intolerance` items |
+| `PERSON_ID` | `person.id` | one `person` can have none to many `allergy_intolerance` items |
 
 ### appointment
 
