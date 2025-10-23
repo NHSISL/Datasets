@@ -105,7 +105,6 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | datetime that the business id value was first witnessed |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardising presentation of deleted state of the record | |
 | `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `LDS_END_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
 | `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
 | `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
@@ -129,60 +128,60 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `lds_record_id` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
-| `id` | uniqueidentifier | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
-| `organisation_id` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
-| `patient_id` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times |  `patient_id` |
-| `practitioner_in_role_id` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
-| `schedule_id` | uniqueidentifier | The schedule the patient was put on to book multiple appointments. ID unique to the applied schedule | `schedule_id` |
-| `start_date` | datetime(3) | The start date of the appointment | `start_date` |
-| `planned_duration` | int | The time allocated for the appointment, not necessarily the actual duration always in minutes | `planned_duration` |
-| `actual_duration` | int | Time between sent in and left always in minutes | `actual_duration` |
-| `appointment_status_concept_id` | uniqueidentifier | The status of the appointment e.g. arrived/sent in/left/DNA | `appointment_status_concept_id` |
-| `patient_wait` | int | How long the patient waited from being marked as arrived to being sent in | `patient_wait` |
-| `patient_delay` | int | How long the patient was delayed for | `patient_delay` |
-| `date_time_booked` | datetime(3) | Date and time the appointment booking was made |  |
-| `date_time_sent_in` | datetime(3) | Date and time the patient was sent into the practitioner | `date_time_sent_in` |
-| `date_time_left` | datetime(3) | Date and time the patient left the practitioner | `date_time_left` |
-| `cancelled_date` | datetime(3) | Date and time the appointment was cancelled (TPP only) | `cancelled_date` |
-| `type` | varchar(100) | Description of the slot type |  |
-| `age_at_event` | int |  The age the patient was at the time of this event |  |
-| `age_at_event_baby` | int |  The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. | |
-| `age_at_event_neonate` | int | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
-| `booking_method_concept_id` | uniqueidentifier | Method used to book the appointment |  |
-| `contact_mode_concept_id` | uniqueidentifier | Appointment mode of contact - e.g. telephone | |
-| `is_blocked` | bit | Indicates whether the appointment slot is blocked |  |
-| `national_slot_category_name` | varchar(900) | The name of the national slot category |  |
-| `context_type` | varchar(100) | The national slot category context type | |
-| `service_setting` | varchar(100) | The national slot category service setting |  |
-| `national_slot_category_description` | varchar(900) | The description of the national slot category | |
-| `csds_care_contact_identifier` | varchar(17) |  A link to the commissioning dataset care contact identifier for community services | |
-| `person_id` | uniqueidentifier | 'Unique individual across all organisations' | `person_id` |
-| `lds_id` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
-| `lds_business_key` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
-| `lds_dataset_id` | uniqueidentifier |  LDS assigned identifier for the source dataset |  |
-| `lds_cdm_event_id` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
-| `lds_versioner_event_id` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `record_owner_organisation_code` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
-| `lds_datetime_data_acquired` | datetime(3) |  Date the data was extracted by, received by or supplied to LDS |  |
-| `lds_initial_data_received_date` | datetime(3)  | Date the business id was first witnessed by, received by or supplied to LDS |  |
-| `lds_is_deleted` | bit  | LDS flag standardising presentation of deleted state of the record | |
-| `lds_start_date_time` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
-| `lds_lakehouse_date_processed` | date | LDS date stamp when the data was landed into the lakehouse |  |
-| `lds_lakehouse_datetime_updated` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
+| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  |
+| `ID` | uniqueidentifier | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `PATIENT_ID` | uniqueidentifier | The organisation’s record for this person’s registration. | `patient_id` |
+| `PRACTITIONER_IN_ROLE_ID` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
+| `SCHEDULE_ID` | uniqueidentifier | The schedule the patient was put on to book multiple appointments. | `schedule_id` |
+| `START_DATE` | datetime(3) | The start date of the appointment | `start_date` |
+| `PLANNED_DURATION` | int | The time allocated for the appointment, not necessarily the actual duration (minutes) | `planned_duration` |
+| `ACTUAL_DURATION` | int | Time between sent in and left (minutes) | `actual_duration` |
+| `APPOINTMENT_STATUS_CONCEPT_ID` | uniqueidentifier | The status of the appointment e.g. arrived/sent in/left/DNA | `appointment_status_concept_id` |
+| `PATIENT_WAIT` | int | How long the patient waited from being marked as arrived to being sent in | `patient_wait` |
+| `PATIENT_DELAY` | int | How long the patient was delayed for | `patient_delay` |
+| `DATE_TIME_BOOKED` | datetime(3) | Date and time the appointment booking was made |  |
+| `DATE_TIME_SENT_IN` | datetime(3) | Date and time the patient was sent into the practitioner | `date_time_sent_in` |
+| `DATE_TIME_LEFT` | datetime(3) | Date and time the patient left the practitioner | `date_time_left` |
+| `CANCELLED_DATE` | datetime(3) | Date and time the appointment was cancelled (TPP only) | `cancelled_date` |
+| `TYPE` | varchar(100) | Description of the slot type |  |
+| `AGE_AT_EVENT` | int | The age the patient was at the time of this event |  |
+| `AGE_AT_EVENT_BABY` | int | The age the patient was at the time of this event. Categorised for babies under 1 year old. |  |
+| `AGE_AT_EVENT_NEONATE` | int | The age the patient was at the time of this event if less than 28 days |  |
+| `BOOKING_METHOD_CONCEPT_ID` | uniqueidentifier | Method used to book the appointment |  |
+| `CONTACT_MODE_CONCEPT_ID` | uniqueidentifier | Appointment mode of contact – e.g. telephone |  |
+| `IS_BLOCKED` | bit | Indicates whether the appointment slot is blocked |  |
+| `NATIONAL_SLOT_CATEGORY_NAME` | varchar(900) | The name of the national slot category |  |
+| `CONTEXT_TYPE` | varchar(100) | The national slot category context type |  |
+| `SERVICE_SETTING` | varchar(100) | The national slot category service setting |  |
+| `NATIONAL_SLOT_CATEGORY_DESCRIPTION` | varchar(900) | The description of the national slot category |  |
+| `CSDS_CARE_CONTACT_IDENTIFIER` | varchar(17) | A link to the commissioning dataset care contact identifier for community services |  |
+| `PERSON_ID` | uniqueidentifier | Unique individual across all organisations | `person_id` |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data |  |
+| `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that converted the data |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted or supplied to LDS |  |
+| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first received by LDS |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardising presentation of deleted state of the record |  |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
 *Foreign keys:*
 
 | column | target | cardinality |
 | :--- | :--- | :--- |
-| `lds_record_id` | `allocation.lds_record_id` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
-| `patient_id` | `patient.id` | one `patient` can have none to many `allergy_intolerance` items |
-| `practitioner_in_role_id` | `practitioner_in_role.id` | one `practitioner_in_role` can have none to many `appointment` items |
-| `schedule_id` | `schedule.id` | one `schedule` can have none to many `appointment` items |
-| `appointment_status_concept_id` | `concept.id` | each `concept` can appear in none to many `appointment` items |
-| `booking_method_concept_id` | `concept.id` | each `concept` can appear in none to many `appointment` items |
-| `contact_mode_concept_id` | `concept.id` | each `concept` can appear in none to many `appointment` items |
-| `person_id` | `person.id` | each `person` can have none to many `appointment` items |
+| `LDS_RECORD_ID` | `ALLOCATION.LDS_RECORD_ID` | Each `ALLERGY_INTOLERANCE` can have one to many `ALLOCATION` instructions (administrative object only) |
+| `PATIENT_ID` | `PATIENT.ID` | One `PATIENT` can have none to many `ALLERGY_INTOLERANCE` items |
+| `PRACTITIONER_IN_ROLE_ID` | `PRACTITIONER_IN_ROLE.ID` | One `PRACTITIONER_IN_ROLE` can have none to many `APPOINTMENT` items |
+| `SCHEDULE_ID` | `SCHEDULE.ID` | One `SCHEDULE` can have none to many `APPOINTMENT` items |
+| `APPOINTMENT_STATUS_CONCEPT_ID` | `CONCEPT.ID` | Each `CONCEPT` can appear in none to many `APPOINTMENT` items |
+| `BOOKING_METHOD_CONCEPT_ID` | `CONCEPT.ID` | Each `CONCEPT` can appear in none to many `APPOINTMENT` items |
+| `CONTACT_MODE_CONCEPT_ID` | `CONCEPT.ID` | Each `CONCEPT` can appear in none to many `APPOINTMENT` items |
+| `PERSON_ID` | `PERSON.ID` | Each `PERSON` can have none to many `APPOINTMENT` items |
 
 ### appointment_practitioner
 
