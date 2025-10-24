@@ -1318,6 +1318,40 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `EQUIVALENCE` | varchar(255) | type of mapping equivalence, values include 'equivalent', 'wider', 'narrower', 'subsumes', 'inexact', 'unmatched', 'specializes', 'relatedto', 'unmatched' |  | |
 | `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 
+
+## `[OLIDS_GOVERNANCE]` Schema
+
+### allocation
+
+## `[REFERENCE]` Schema
+
+### postcode_hash
+
+> [!NOTE]  
+> Stores hashed postcodes along with associated organisations and geographic areas for reference, including effective date ranges and LDS audit metadata.
+
+| Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
+| --- | --- | ---- | ---- | ---- |
+| `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |
+| `POSTCODE_HASH` | BINARY(32) | Unique hashed value representing the postcode, also acts as a unique identifier |  |  |
+| `PRIMARY_CARE_ORGANISATION` | VARCHAR(9) | Primary care organisation associated with the postcode |  |  |
+| `LOCAL_AUTHORITY_ORGANISATION` | VARCHAR(5) | Local authority organisation linked to the postcode |  |  |
+| `YR2011_LSOA` | VARCHAR(9) | 2011 Lower Super Output Area (LSOA) code for the postcode |  |  |
+| `YR2011_MSOA` | VARCHAR(9) | 2011 Middle Super Output Area (MSOA) code for the postcode |  |  |
+| `YR2021_LSOA` | VARCHAR(9) | 2021 Lower Super Output Area (LSOA) code for the postcode |  |  |
+| `YR2021_MSOA` | VARCHAR(9) | 2021 Middle Super Output Area (MSOA) code for the postcode |  |  |
+| `EFFECTIVE_FROM` | TIMESTAMP_NTZ(9) | Start date/time from which this record is effective |  |  |
+| `EFFECTIVE_TO` | TIMESTAMP_NTZ(9) | End date/time until which this record is effective |  |  |
+| `IS_LATEST` | NUMBER(38,0) NOT NULL | Flag indicating if this is the latest record (1 = yes, 0 = no) |  |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LAKEHOUSE_DATE_PROCESSED` | DATE NOT NULL | Date when the data was landed into the lakehouse |  |  |
+| `HIGH_WATERMARK_DATE_TIME` | TIMESTAMP_NTZ(9) NOT NULL | High watermark timestamp for incremental loads |  |  |
+| `LDS_ID` | BINARY(32) | LDS assigned unique identifier for this record version |  |  |
+| `LDS_BUSINESS_KEY` | VARCHAR(8000) | Natural or source key for the unique event/entity of the table |  |  |
+| `LDS_DATASET_ID` | BINARY(32) | LDS assigned identifier for the source dataset |  |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+
 ## Ages
 
 Ages shown in the OLIDS dataset for de-identified (also known as "masked" or "pseudonymised") data are shown in:
