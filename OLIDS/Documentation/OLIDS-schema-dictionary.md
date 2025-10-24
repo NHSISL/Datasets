@@ -44,6 +44,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
   - [`[OLIDS_TERMINOLOGY]` Schema](#olids_terminology-schema)
     - [concept](#concept)
     - [concept\_map](#concept_map)
+  - [`[OLIDS_GOVERNANCE]` Schema](#olids_governance-schema)
+    - [allocation](#allocation)   
+  - [`[REFERENCE]` Schema](#reference-schema)
+    - [postcode_hash](#postcode_hash)
   - [Ages](#ages)
 
 ## LDS_dataset_id
