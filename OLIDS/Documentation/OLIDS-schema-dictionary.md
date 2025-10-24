@@ -62,7 +62,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | C26B7031-750D-4B75-A048-87A722F3F712  | RegistrarNDOOResponse     |
 | 72AE46CB-F09E-4395-A977-F37EEC37916C  | RegistrarAddressResponse  |
 
-## `[OLIDS_MASKED]` Schema
+## `[OLIDS_COMMON]` Schema
 
 ### allergy_intolerance
 
