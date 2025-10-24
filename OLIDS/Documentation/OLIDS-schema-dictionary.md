@@ -1355,7 +1355,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- | ---- |
 
-| `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |
+| `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |  |
 | `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
 | `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
