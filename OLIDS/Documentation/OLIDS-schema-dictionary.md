@@ -1322,6 +1322,28 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 ## `[OLIDS_GOVERNANCE]` Schema
 
 ### allocation
+> [!NOTE]
+> Allocation table capturing subscription and subscriber allocation details along with LDS audit metadata.
+
+| Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
+| --- | --- | ---- | ---- | ---- |
+| `ID` | uniqueidentifier | Unique business key generated as concatenation of LDSRecordId, SubscriberId, and SubscriptionId  | No Foreign Key reference |  |
+| `LDS_START_DATE_TIME` | timestamp | Timestamp indicating when this allocation record became active; taken from DateTimeUpdated or DateTimeCreated |  |  |
+| `LDS_RECORD_ID` | varchar(8000) | LDS assigned unique identifier for the record |  |  |
+| `LDS_SOURCE_DATASET_ID` | varchar(8000) | LDS identifier for the source dataset |  |  |
+| `LDS_SOURCE_DATASET_OBJECT_ID` | varchar(8000) | LDS identifier for the specification object within the source dataset |  |  |
+| `LDS_SOURCE_FILE_ID` | varchar(8000) | LDS identifier for the source file from which this record was sourced |  |  |
+| `LDS_BATCH_ID` | varchar(8000) | LDS identifier for the batch processing this record |  |  |
+| `LDS_DATETIME_DATA_SUPPLIED` | timestamp | Date and time when the data was supplied to LDS |  |  |
+| `LDS_SUBSCRIBER_ID` | varchar(8000) | Unique identifier for the subscriber |  |  |
+| `LDS_SUBSCRIPTION_ID` | varchar(8000) | Unique identifier for the subscription |  |  |
+| `LDS_SUBSCRIBER_CODE` | varchar(50) | Subscriber code assigned by the source system |  |  |
+| `LDS_SUBSCRIPTION_ENDPOINT_CODE` | varchar(50) | Subscriber endpoint or subscription endpoint code |  |  |
+| `LDS_ALLOCATION_STATE` | varchar(20) | Status of the allocation, values: 'active', 'rescinded', 'expired' |  |  |
+| `LDS_CREATED_DATE` | timestamp | Date and time the record was created in LDS |  |  |
+| `LDS_CREATED_BY_RUN_ID` | varchar(8000) | Pipeline run identifier that created the record |  |  |
+| `LDS_UPDATED_DATE` | timestamp | Date and time the record was last updated in LDS |  |  |
+| `LDS_UPDATED_BY_RUN_ID` | varchar(8000) | Pipeline run identifier that last updated the record |  |  |
 
 ## `[REFERENCE]` Schema
 
@@ -1332,7 +1354,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- | ---- |
+
 | `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |
+| `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
+| `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
+| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
 | `POSTCODE_HASH` | BINARY(32) | Unique hashed value representing the postcode, also acts as a unique identifier |  |  |
 | `PRIMARY_CARE_ORGANISATION` | VARCHAR(9) | Primary care organisation associated with the postcode |  |  |
 | `LOCAL_AUTHORITY_ORGANISATION` | VARCHAR(5) | Local authority organisation linked to the postcode |  |  |
@@ -1347,9 +1373,6 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
 | `LAKEHOUSE_DATE_PROCESSED` | DATE NOT NULL | Date when the data was landed into the lakehouse |  |  |
 | `HIGH_WATERMARK_DATE_TIME` | TIMESTAMP_NTZ(9) NOT NULL | High watermark timestamp for incremental loads |  |  |
-| `LDS_ID` | BINARY(32) | LDS assigned unique identifier for this record version |  |  |
-| `LDS_BUSINESS_KEY` | VARCHAR(8000) | Natural or source key for the unique event/entity of the table |  |  |
-| `LDS_DATASET_ID` | BINARY(32) | LDS assigned identifier for the source dataset |  |  |
 | `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
 
 ## Ages
