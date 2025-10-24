@@ -569,7 +569,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `DATE_RECORDED` | datetime(3) | Date the medication statement was recorded | `date_recorded` |
 | `IS_ACTIVE` | bit | Is the record active |  |
 | `IS_CONFIDENTIAL` | bit | True/false - is the statement marked as confidential/sensitive |  |
-| `IS_DELETED` | bit | True/false - is the record in a deleted state |  |
+| `EXPIRY_DATE` | datetime | Expiry date of drug | |
 | `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
 | `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table  |  |
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
@@ -579,7 +579,6 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
-| `EXPIRY_DATE` | datetime | Expiry date of drug | |
 | `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
 | `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
 | `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
