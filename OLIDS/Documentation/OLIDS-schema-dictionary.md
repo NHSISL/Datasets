@@ -1353,9 +1353,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 > Stores hashed postcodes along with associated organisations and geographic areas for reference, including effective date ranges and LDS audit metadata.
 
 | Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
-| --- | --- | ---- | ---- | ---- |
-
-| `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |  |
+| --- | --- | --- | --- | --- |
+| `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |
 | `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |  |
 | `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |  |
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |  |
@@ -1369,11 +1368,11 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `EFFECTIVE_FROM` | TIMESTAMP_NTZ(9) | Start date/time from which this record is effective |  |  |
 | `EFFECTIVE_TO` | TIMESTAMP_NTZ(9) | End date/time until which this record is effective |  |  |
 | `IS_LATEST` | NUMBER(38,0) NOT NULL | Flag indicating if this is the latest record (1 = yes, 0 = no) |  |  |
-| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
-| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |  |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |  |
 | `LAKEHOUSE_DATE_PROCESSED` | DATE NOT NULL | Date when the data was landed into the lakehouse |  |  |
 | `HIGH_WATERMARK_DATE_TIME` | TIMESTAMP_NTZ(9) NOT NULL | High watermark timestamp for incremental loads |  |  |
-| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |  |
 
 ## Ages
 
