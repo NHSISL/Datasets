@@ -105,7 +105,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Owning organisation (i.e. publisher)' | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | datetime that the business id value was first witnessed |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardising presentation of deleted state of the record | |
@@ -135,7 +135,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | --- | --- | ---- | ---- |
 | `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  |
 | `ID` | uniqueidentifier | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
-| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `ORGANISATION_ID` | uniqueidentifier | Organisation ID at which the appointment occured | `organization_id` |
 | `PATIENT_ID` | uniqueidentifier | The organisation’s record for this person’s registration. | `patient_id` |
 | `PRACTITIONER_IN_ROLE_ID` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
 | `SCHEDULE_ID` | uniqueidentifier | The schedule the patient was put on to book multiple appointments. | `schedule_id` |
@@ -167,7 +167,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that converted the data |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first received by LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardising presentation of deleted state of the record |  |
@@ -207,7 +207,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
@@ -263,7 +263,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
@@ -300,7 +300,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `PRACTITIONER_ID` | uniqueidentifier | The clinician the activity is recorded against | `practitioner_id` |
 | `APPOINTMENT_ID` | uniqueidentifier | Reference to the appointment this encounter took part on | `appointment_id` |
 | `EPISODE_OF_CARE_ID` | uniqueidentifier | The episode of care under which this encounter occurred | `episode_of_care_id` |
-| `SERVICE_PROVIDER_ORGANISATION_ID` | uniqueidentifier | Reference to the service provider organisation | `service_provider_organisation_id` |
+| `SERVICE_PROVIDER_ORGANISATION_ID` | uniqueidentifier | Reference to the service provider organisation of the encounter | `service_provider_organisation_id` |
 | `CLINICAL_EFFECTIVE_DATE` | datetime(3) | The date the clinical code is recorded for | `clinical_effective_date` |
 | `DATE_PRECISION_CONCEPT_ID` | int | Reference to the precision of the date of the encounter | `date_precision_concept_id` |
 | `LOCATION` | varchar(200) | Reference to the location that the encounter took place at | `institution_location_id` |
@@ -319,7 +319,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
@@ -350,7 +350,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | --- | --- | ---- | ---- |
 | `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  |
 | `ID` | uniqueidentifier | Unique ID of the encounter event | `id` |
-| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `ORGANISATION_ID` | uniqueidentifier | organisation at which the episode of care took place | `organization_id` |
 | `PATIENT_ID` | uniqueidentifier | The patient this event belongs to | `patient_id` |
 | `PERSON_ID` | uniqueidentifier | The person this event belongs to | `person_id` |
 | `EPISODE_TYPE_SOURCE_CONCEPT_ID` | uniqueidentifier | Reference to the registration type of the patient | `registration_type_concept_id` |
@@ -363,7 +363,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
@@ -404,7 +404,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
@@ -492,7 +492,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | --- | --- | ---- | ---- |
 | `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  |
 | `ID` | uniqueidentifier | Unique ID of the medication order | `id` |
-| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `ORGANISATION_ID` | uniqueidentifier | the organisation that initiated the medication order or request and has responsibility for its activation | `organization_id` |
 | `PERSON_ID` | uniqueidentifier | Unique individual across all organisations | `person_id` |
 | `PATIENT_ID` | uniqueidentifier | The organisation’s record for this person’s registration | `patient_id` |
 | `MEDICATION_STATEMENT_ID` | uniqueidentifier | Reference to the medication statement. A medication statement can have many medication orders | `medication_statement_id` |
@@ -525,7 +525,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
@@ -542,7 +542,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | --- | --- | ---- | ---- |
 | `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
 | `ID` | uniqueidentifier | Unique ID of the medication | `id` |
-| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | `organization_id` |
+| `ORGANISATION_ID` | uniqueidentifier | Author of the medication statement | `organization_id` |
 | `PERSON_ID` | uniqueidentifier | Unique individual across all organisations | `person_id` |
 | `PATIENT_ID` | uniqueidentifier | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
 | `ENCOUNTER_ID` | uniqueidentifier | Reference to the encounter this medication was recorded in | `encounter_id` |
@@ -575,7 +575,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
@@ -622,7 +622,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
@@ -654,7 +654,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record.<br>*This will be null for this table, as this table contains shared reference data only*. | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access.<br>*This will be null for this table, as this table contains shared reference data only*. | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
@@ -690,7 +690,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access. | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
@@ -718,7 +718,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access. | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. **Note this column is currently absent, but will be added in a later release**. | |
@@ -748,7 +748,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record. | `organization_id` |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access. | `organization_id` |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. **Note: this column is absent in source CDM for this table (to be corrected).** |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
@@ -799,7 +799,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
@@ -832,7 +832,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for the processing of the UPRN match | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record.<br>*This will be null for this table*. | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access.<br>*This will be null for this table*. | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS. *This will be null for this table.* | |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
@@ -892,7 +892,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
@@ -905,12 +905,15 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 > [!NOTE]
 > A specific set of Roles/Locations/specialties/services that a practitioner may perform at an organization for a period of time.
 
+> [!WARNING]
+> TPP records do not relate a source `SRStaffMemberRole` to a specific organisation as record owner. As such these will be listed as owned by the Organisation under which the role occurs. This may later be altered to a static value (to be agreed with users).
+
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
 | `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
 | `ID` | uniqueidentifier | Unique ID of the practitioner role record | |
 | `PRACTITIONER_ID` | uniqueidentifier | Unique ID of the practitioner | |
-| `ORGANISATION_ID` | uniqueidentifier | Owning organisation (i.e. publisher) | |
+| `ORGANISATION_ID` | uniqueidentifier | The organisation under which the practitioners role takes place | |
 | `ROLE_CODE` | varchar(5) | The role code for the practitioner’s role | |
 | `ROLE` | varchar(200) | The role description for the practitioner’s role | |
 | `DATE_EMPLOYMENT_START` | datetime(3) | Date from which this role was applicable to the practitioner | |
@@ -958,23 +961,27 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset | |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS | |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record | |
 | `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct | |
 | `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse | |
 | `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse | |
+
 ### referral_request
 
 > [!NOTE]
 > Used to record and send details about a request for referral service or transfer of a patient to the care of another provider or provider organisation
 
+> [!WARNING]
+> EMIS records are currently not mapped to populate `ORGANISATION_ID`.
+
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
 | `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version | |
 | `ID` | uniqueidentifier | 'Unique ID of the referral request' | id |
-| `ORGANISATION_ID` | uniqueidentifier | 'Owning organisation (i.e. publisher)' | organization_id |
+| `ORGANISATION_ID` | uniqueidentifier | Organisation where the referral was recorded. Typically the requesting organisation. | organization_id |
 | `PERSON_ID` | uniqueidentifier | 'Unique individual across all organisations' | person_id |
 | `PATIENT_ID` | uniqueidentifier | 'The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times' | patient_id |
 | `ENCOUNTER_ID` | uniqueidentifier | 'Reference to the encounter the referral was made in' | encounter_id |
@@ -1000,7 +1007,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' | |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' | |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' | |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
@@ -1031,7 +1038,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
@@ -1055,7 +1062,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
@@ -1094,7 +1101,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' | |
@@ -1127,7 +1134,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access |  |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' |  |
@@ -1157,7 +1164,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access |  |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' |  |
@@ -1205,7 +1212,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
 | `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | 'LDS assigned identifier for the registrar event that processed the record' |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | 'LDS processing event identifier for sequencing the data' |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | 'Organisation code for the organisation that owns the record.' |  |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access |  |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | 'Date the data was extracted by, received by or supplied to LDS' |  |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
 | `LDS_IS_DELETED` | bit | 'LDS flag standardised presentation of deleted state of the record.' |  |
@@ -1269,7 +1276,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
 | `LDS_REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for sequencing the data |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | Organisation code for the organisation that owns the record; this is null as the record owner is the Personal Demographic Service | |
+| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access; this is null as the record owner is the Personal Demographic Service | |
 | `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS | |
 | `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record. | |
