@@ -14,11 +14,17 @@
   - [Allocation logic](#allocation-logic)
   - [Scenarios](#scenarios)
     - [scenario 1: simple pathway of a new patient with eventual PDS "matched" response](#scenario-1%3A-simple-pathway-of-a-new-patient-with-eventual-pds-%22matched%22-response)
-
+    - [scenario 2: patient recieves a PDS response with a differing NHS number](#scenario-2%3A-patient-recieves-a-pds-response-with-a-differing-nhs-number)
+    - [scenario 3: PDS response returns a 'NO MATCH' response type](#scenario-3%3A-pds-response-returns-a-'no-match'-response-type)
+    - [scenario 4: Patient moves practice](#scenario-4%3A-patient-moves-practice)
 
 ## Overview
 
 This document explains the processes used to generate `PERSON` records and link them through `PATIENT_PERSON` to the set of `PATIENT` records captured by the service.
+
+>[!NOTE]
+> this document frequently refers to "**record-versions**". This is used to describe records within a table that share a common business identifier - for example a "PERSON_ID" but are stored as different rows in the table with a unique record version identifier (`LDS_RECORD_ID`) to allow for a contiguous view of that business idnetifiers attributes over time as new information arrives. This also allows for data to be processed out of order, due to blocks in the process, or delays in receipt of data from publishers.
+
 
 ## Sources
 
@@ -101,18 +107,19 @@ This points us towards a princple that allocation of `PERSON` record-versions mu
 
 The `PERSON` construction process is performed using the following steps:
 
+>[!NOTE]
+>Note that the logic used to calculate the value of `PERSON_ID` is based on the below:
+>- where a NHS number hash-digest is populated, a deterministic calculation on the hash is used to form a unique identifier
+>- where the NHS number hash-digest is not present, a deterministic calculation on the supplied patient identifier is used to form a unique identifier,<br>
+
+
 1. A `PATIENT` source record (i.e. in its EMIS or TPP schema) is received and processed within the common-modelling service to form a common-modelled `PATIENT` record.
 1. As part of populating the `PATIENT` common-model record, the process identifies whether a corresponding `PERSON` record already exists for this patient.
-   1. The `PERSON_ID` is constructed from the available `PATIENT` information based on the logic below
+   1. The `PERSON_ID` is constructed from the available `PATIENT` information based on the logic described above
    1. if the corresponding `PERSON` record, matched on this identifier, does not exist, a "stub" `PERSON` record is created based on corresponding information from the `PATIENT` record. A `PERSON` unique identifier is constructed based upon the digest of the hashed NHS number.
-   1. if the corresponding `PERSON` record exists, matched on this identifier, but only from other supplier fed data (i.e. not from PDS), then a new "stub" `PERSON` can be created if the record-hash for the new record would differ from this existing record (i.e. a new stub with new information would be created).
-   1. if the corresponding `PERSON` record exists, matched on this identifier, and is sourced from PDS, then regardless of whether the `PATIENT` record is newer, it will not be used to create a "stub" `PERSON` record. This is because the PDS sourced information is considered the 'source of truth', and until a newer PDS response is recieved it is the latest PDS-based 'truth' for that patient.
-1. The "bridging" table `PATIENT_PERSON` is then updated to note the link between the added `PERSON` record to the corresponding `PATIENT` record.
-
-The `PERSON_ID` logic is based on:
-
-- where a NHS number hash-digest is populated, a deterministic calculation on the hash is used to form a unique identifier
-- where the NHS number hash-digest is not present, a deterministic calculation on the supplied patient identifier is used to form a unique identifier,
+   2. if the corresponding `PERSON` record exists, matched on this identifier, but only from other supplier fed data (i.e. not from PDS), then a new version of that "stub" `PERSON` record can be created if the record-hash for the new record would differ. (i.e. a new stub with new information would be created).
+   3. if the corresponding `PERSON` record exists, matched on this identifier, and is sourced from PDS, then regardless of whether the `PATIENT` record is newer, it will **not** be used to create a new version of the "stub" `PERSON` record. This is because the PDS sourced information is considered the 'source of truth', and until a newer PDS response is recieved it is the latest PDS-based 'truth' for that patient.
+2. The "bridging" table `PATIENT_PERSON` is then updated to note the link between the added `PERSON` record-version to the corresponding `PATIENT` record-version.
 
 ## General linking process
 
@@ -120,7 +127,7 @@ The process by which subscribers can join `PATIENT` to `PERSON` is shown below. 
 
 ```mermaid
 erDiagram
-PATIENT ||--|| PATIENT_PERSON: has_a
+PATIENT ||--o{ PATIENT_PERSON: "PATIENT.ID = PATIENT_PERSON.PATIENT_ID AND PATIENT.LDS_RECORD_ID = PATIENT_PERSON.LDS_RECORD_ID"
 PATIENT {
     string LDS_RECORD_ID
     string ID
@@ -135,7 +142,7 @@ PATIENT_PERSON {
     string PERSON_ID
     string other_fields
 }
-PATIENT_PERSON }|--|| PERSON: refers_to
+PATIENT_PERSON }o--|| PERSON: "PATIENT_PERSON.PERSON_ID = PERSON.ID AND PATIENT_PERSON.LDS_RECORD_ID_PERSON = PERSON.LDS_RECORD_ID"
 PERSON {
     string LDS_RECORD_ID
     string ID
@@ -234,20 +241,189 @@ In this scenario we will be:
 
 We will use an EMIS Patient record as our supplied record in this example, but the same logic would apply to any source system record.
 
-| step | table |
+- First we begin by recieving a patient record from EMIS. This record will have a Patient identifier, an NHS number hash-digest, and a supplied or acquired datetime for sequencing 
+
+patient table: (some related columns are shown for ease of reference)
+
+| PATIENT_ID | LDS_RECORD_ID | NHS_HASH | LDS_DATETIME_DATA_ACQUIRED | LDS_DATASET_ID | (ICB) |    (PRACTICE) |
+| --- | --- | --- | --- | --- | --- | --- |
+| **PATIENT_01**| REC123456    |    H1234567890    |    2025-02-02 12:00    |    EMIS    |    SWL    | F00001 |
+
+- As we do not have any person records for this patient at this time, and the PDS response is not yet available, we will then use this patient information to generate a "stub". This will use the NHS-number hash-digest as the Person identifier, and will identify that the source is EMIS. 
+
+| PERSON_ID | NHS_HASH | LDS_RECORD_ID | LDS_DATETIME_DATA_ACQUIRED | DATASET |
+| --- | --- | --- | --- | --- |
+| PERSON_01 | H1234567890 | REC123456 | 2025-02-02 12:00 | EMIS
+
+
+We will then insert a record into the bridge table `PATIENT_PERSON` to show the link between this patient and person
+
+| PATIENT_ID | PERSON_ID | PATIENT_RECORD_ID | PERSON_RECORD_ID | LDS_DATETIME_DATA_ACQUIRED |
+| --- | --- | ---- | --- | --- |
+| PATIENT_01 | PERSON_01 | REC123456 | REC123456 | 2025-02-02 12:00 |
+
+
+
+The outcome of this initial phase is that the subscriber would have:
+
+- A `patient` record
+- A `person` record generated from information present in the `patient` record
+- A "bridging" `patient_person` record that links these two entities together
+
+A PDS trace would have already been requested prior to the processing of this data, but may not have yet been responded to and/or processed by the common modelling service. The next phase of the process would be to process this PDS response (once received) and relate it to the patient. We assume in this scenario that the response is a "MATCH" response that shares the same NHS number as the originally recieved `PATIENT` record.
+
+| step | example |
+| :--- | :--- |
+| We recieve a PDS response and insert it into the `PERSON` table, this record shares the same `PERSON_ID` as the previous record. |  |
+| We insert a `PATIENT_PERSON` bridging record to link the new record-version for `PERSON` to the original record-version for `PATIENT` |  |
+
+Note that once this step completes we will update our Delta Lake store of information on configured business identifiers:
+
+- No new `patient` record-versions are added during this second stage, and as such no new delta lake changes are made
+- A new `person` record-version is added to the common model, and this is correspondingly appended to the delta lake store of all `person` record-versions. Note that all record-versions are retained in the delta lake to allow for appropriate allocation of specific `person` record-versions permitted to be visible to each subscriber. This is handled by a careful configuration of the choice of the business key used to source data from this particular table used within the delta-lake importer service.
+- A new `patient_person` record-version is added to the common model, and is used to target an overwrite to the delta lake on the `PATIENT_ID` value. The previous `PATIENT_PERSON` record that existed in the delta lake is in effect overwritten by this new record-version.
+
+The outcome of this second phase is:
+
+- The previous existing `patient` record
+- The addition of a new `person` record-version generated from information present in the PDS response
+- The new record-version of `patient_person` that supercedes the original record, and will redirect the join to the new `person` record-version.
+
+Upon allocation the original "stub" `person` record-version would become orphaned and no longer be visible to any subscriber, only the most recent `person` record-version **which is permitted to be viewed by that subscriber** would be included in the transmitted data.
+
+### scenario 2: patient recieves a PDS response with a differing NHS number
+
+In this scenario we will explore the outcome of a scenario in which the PDS response generated from a given `PATIENT` record contains a NHS number value that differs to the original `PATIENT` record. This response indicates that the information held by the data publisher matches to a different NHS number than the one that they have recorded for this patient. This may be due to a simple keystroke error in recording the patient, or some other error in recording the patients details.
+
+The expected outcome of the process will be to surface to the subscriber the initial "stub" `PERSON` record based on the supplied `PATIENT` information initially, before replacing this with a PDS-based `PERSON` record that contains the corresponding PDS match with a differing NHS number. This match will then be retained by any subsequent update to the `PATIENT` record until a subsequent PDS based response is processed and used to generate another `PERSON` record.
+
+The initial steps are unchanged from Scenario 1:
+
+| step | example |
 | :--- | :--- |
 | First we begin by recieving a patient record from EMIS. This record will have a Patient identifier, an NHS number hash-digest, and a supplied or acquired datetime for sequencing | ![scenario1 step1 patient](assets/scenario01-step01-patient.png) |
 | As we do not have any person records for this patient at this time, and the PDS response is not yet available, we will then use this patient information to generate a "stub". This will use the NHS-number hash-digest as the Person identifier, and will identify that the source is EMIS. | ![scenario1 step1 person](assets/scenario01-step01-person.png) |
 | We will then insert a record into the bridge table `PATIENT_PERSON` to show the link between this patient and person | ![scenario1 step1 bridge](assets/scenario01-step01-bridge.png) |
 
+However in this scenario the PDS response recieved will contain a different NHS number - and as a direct result will calculate to a different `PERSON_ID` - this new person should then be linked to the original `PATIENT` record-version, and a new bridging record be created to direct the relationship to the new peson.
 
-Stage 1: first witness of patient
-- First we begin by recieving a patient record from EMIS. This record will have a Patient identifier, an NHS number hash-digest, and a supplied or acquired datetime for sequencing  
-![scenario1 step1 patient](assets/scenario01-step01-patient.png)
-- As we do not have any person records for this patient at this time, and the PDS response is not yet available, we will then use this patient information to generate a "stub". This will use the NHS-number hash-digest as the Person identifier, and will identify that the source is EMIS.
-![scenario1 step1 person](assets/scenario01-step01-person.png)
-- We will then insert a record into the bridge table `PATIENT_PERSON` to show the link between this patient and person
-![scenario1 step1 bridge](assets/scenario01-step01-bridge.png)
+| step | example |
+| :--- | :--- |
+| We process the PDS response containing the matched information pointing to a new person. This generates a new `PERSON_ID` value, with the associated attributes attached to that new person record-version. |  |
+| We add a new `PATIENT_PERSON` bridging record that repoints the original `PATIENT` record-version to the new `PERSON`. |  |
 
-When transmitted at this point, the links will allow subscribers to see that `PATIENT_01` relates to `PERSON_01`
-![](assets/scenario01-step01-link.png)
+Once this step completes we will update our Delta Lake store of information using configured business identifiers to merge in changes:
+
+- No new `PATIENT` record-versions are added during this second stage, and as such no new delta lake changes are made
+- A new `PERSON` record-version is added to the common model, and this is correspondingly appended to the delta lake store of all `PERSON` record-versions. Note that all record-versions are retained in the delta lake to allow for appropriate allocation of specific `PERSON` record-versions permitted to be visible to each subscriber. This is handled by a careful configuration of the choice of the business key used to source data from this particular table used within the delta-lake importer service.
+- A new `PATIENT_PERSON` record-version is added to the common model, and is used to target an overwrite to the delta lake on the `PATIENT_ID` value. The previous `PATIENT_PERSON` record that existed in the delta lake is in effect overwritten by this new record-version.
+
+The outcome of this second phase is:
+
+- The previous existing `PATIENT` record
+- The addition of a new `PERSON` record-version generated from information present in the PDS response
+- The new record-version of `PATIENT_PERSON` that supercedes the original record, and will redirect the join to the new `PERSON` record-version.
+
+As a result the subscriber accessing the patient record-version will be in receipt of the second of the person record-versions, and the bridging record that pointed this patient to the person record will only point to the second person, having been overwritten in the delta lake.
+
+Scenario 2 is therefore safely covered by the person generation process.
+
+### scenario 3: PDS response returns a 'NO MATCH' response type
+
+In this scenario we will run through a model in which a patient record is received and upon trace the information within the patient record returns a "No Match" response type from PDS. This may be one of the response codes below:
+
+| Response constant | Error or success code | Description |
+| :--- | :--- | :--- |
+| NOT_ENOUGH_DATA | 96 | There are multiple exact matches.<br> Too little data has been provided to provide a meaningful match, so it's not possible to distinguish between the possible matches. For example, John Smith, male where multiple people have the same date of birth, but no address or NHS number was provided.<br> MPT generates response code 96 when top two records have the same score of 100 percent and either date of birth or postcode is unavailable in the request message. |
+| MULTIPLE_CLOSE_MATCHES | 97 | There are multiple matches with very close match scores and no meaningful way to distinguish them apart. |
+| NOT_FOUND | 98 | There is no match for the combination of data in the input |
+
+These type of responses indicate that the information contained within the patient record does not allow PDS to identify a matching person within the national spine system. This in turn indicates that there is a likelihood that the NHS number (if valid and complete) within the patient record does not match with the patient information provided.
+
+The first phase of this scenario follows the same pattern as before:
+
+| step | example |
+| :--- | :--- |
+| First we begin by recieving a patient record from EMIS. This record will have a Patient identifier, an NHS number hash-digest, and a supplied or acquired datetime for sequencing | ![scenario1 step1 patient](assets/scenario01-step01-patient.png) |
+| As we do not have any person records for this patient at this time, and the PDS response is not yet available, we will then use this patient information to generate a "stub". This will use the NHS-number hash-digest as the Person identifier, and will identify that the source is EMIS. | ![scenario1 step1 person](assets/scenario01-step01-person.png) |
+| We will then insert a record into the bridge table `PATIENT_PERSON` to show the link between this patient and person | ![scenario1 step1 bridge](assets/scenario01-step01-bridge.png) |
+
+However in this scenario the PDS response recieved will contain a "No match found" type response - This will be used to generate a new 'unknown' `PERSON_ID` which will be based upon the requesting `PATIENT` records business key value - this new person will then be linked to the original `PATIENT` record-version, and a new bridging record be created to redirect the relationship to the new peson.
+
+| step | example |
+| :--- | :--- |
+| We process the PDS response containing the matched information pointing to an unknown person. As the "no match" response does not contain any NHS number value (or hash), this generates a new `PERSON_ID` value based on the requesting `PATIENT_ID` value, and attributes in the PERSON record will be empty/null as a result. |  |
+| We add a new `PATIENT_PERSON` bridging record that repoints the original `PATIENT` record-version to the new `PERSON`. |  |
+
+Once this step completes we will update our Delta Lake store of information using configured business identifiers to merge in changes:
+
+- No new `PATIENT` record-versions are added during this second stage, and as such no new delta lake changes are made
+- A new `PERSON` record is added to the common model, and this is correspondingly appended to the delta lake store of all `PERSON` record-versions.
+- A new `PATIENT_PERSON` record-version is added to the common model, and is used to target an overwrite to the delta lake on the `PATIENT_ID` value. The previous `PATIENT_PERSON` record that existed in the delta lake is in effect overwritten by this new record-version and redirects the relationship coming from 
+
+### scenario 4: Patient moves practice
+
+In this scenario we will run through a situation in which a patient begins at one practice and subsequently moves to a different practice. We will in this scenario see that the person will appear as two different 'patient' records, each with a distinct `PATIENT_ID`. This is due to the independence of each clinical system. Furthermore, we will see how the solution to generate and track `PERSON` record-versions will ensure that the PDS trace results returned about the person will be tied only to the new patient, and not to the patient that has left the practice.
+
+The first phase of this scenario follows the same pattern as before:
+
+| step | example |
+| :--- | :--- |
+| First we begin by recieving a patient record from EMIS. This record will have a Patient identifier, an NHS number hash-digest, and a supplied or acquired datetime for sequencing | ![scenario1 step1 patient](assets/scenario01-step01-patient.png) |
+| As we do not have any person records for this patient at this time, and the PDS response is not yet available, we will then use this patient information to generate a "stub". This will use the NHS-number hash-digest as the Person identifier, and will identify that the source is EMIS. | ![scenario1 step1 person](assets/scenario01-step01-person.png) |
+| We will then insert a record into the bridge table `PATIENT_PERSON` to show the link between this patient and person | ![scenario1 step1 bridge](assets/scenario01-step01-bridge.png) |
+
+We also still recieve a PDS response containing the matched information. This can either be a "match" or "no match" response.
+
+| step | example |
+| :--- | :--- |
+| The PDS response is recieved into the common-modelling service. The data is used to add a new record-version to the `PERSON` table. If the response contains the same NHS number hash-digest as the requesting record, this will contain the same `PERSON_ID` as the "stub" record-version created previously |  |
+| The bridging `PATIENT_PERSON` table is then updated with the new PDS response for this first patient. The bridge points the `PATIENT_ID` to the new record-version for `PERSON`. |  |
+
+The patient now moves practice.
+
+| step | example |
+| :--- | :--- |
+| A new patient record is recieved with a new `PATIENT_ID`, but containing the same NHS number as the previous patient. This record is added to `PATIENT`. |  |
+| As the patient shares the same NHS number, no new "stub" `PERSON` is created. Instead the existing `PERSON` record-version is linked to this new `PATIENT` by an additional record in the bridging `PATIENT_PERSON` table. |  |
+
+At this stage a PDS trace is underway but as yet unprocessed. At this point a subscriber in receipt of data from the new practice would be in receipt of:
+
+- the new `PATIENT` record,
+- the PDS response `PERSON` record that was generated as a result of the first PDS request
+- the bridging `PATIENT_PERSON` record that points the patient record to that person record-version.
+
+A subscriber in receipt of data for the previous practice would be in receipt of the previous `PATIENT` record, the associated PDS response represented as the `PERSON` record, and the corresponding `PATIENT_PERSON` record that points the patient to that persons record-version.
+
+Once the PDS trace for the new Patient record is performedreturned and the information processed through common-model, the following steps will take place:
+
+| step | example |
+| :--- | :--- |
+| The returned PDS information is used to add a new `PERSON` record-version. Assuming this information shares the same NHS number hash-digest, it will be linked on the same `PERSON_ID`, otherwise it will be assigned a new `PERSON_ID`. |  |
+| A new bridging record is added to `PATIENT_PERSON` to point the new `PATIENT_ID` to the new `PERSON_ID` record-version. **However, the existing bridging records for the previous `PATIENT_ID` are not similarly altered to point to the new `PERSON_ID` record-version**. As such these records remain linked to the older information about that `PERSON`. |  |
+
+Using the same delta lake importer conditions, the following records will then be present in the OLIDS dataset
+
+- the latest record-version for `PATIENT_ID = PATIENT_01`
+- the latest record-version for `PATIENT_ID = PATIENT_02`
+- **all** record-versions for `PERSON_ID = PERSON_01`
+- the following bridging records
+  - `PATIENT_ID = PATIENT_01` pointing to `PERSON_ID = PERSON_01` and `LDS_RECORD_ID_PERSON = REC123456` (bridging record A)
+  - `PATIENT_ID = PATIENT_02` pointing to `PERSON_ID = PERSON_01` and `LDS_RECORD_ID_PERSON = REC987654` (bridging record B)
+
+The allocation of `PERSON` records will then be determined by the visibility of the corresponding bridging records, which in turn are allocated by the publisher of the `PATIENT` record. As such:
+
+- subscribers permitted to view `PATIENT_01` will also be permitted to view:
+  - the bridging record `PATIENT_ID = PATIENT_01` pointing to `PERSON_ID = PERSON_01` and `LDS_RECORD_ID_PERSON = REC123456` (bridging record A)
+  - the person record version `PERSON_ID = PERSON_01` where **`LDS_RECORD_ID_PERSON = REC123456`**
+- subscribers permitted to view `PATIENT_02` will also be permitted to view:
+  - the bridging record `PATIENT_ID = PATIENT_01` pointing to `PERSON_ID = PERSON_01` and `LDS_RECORD_ID_PERSON = REC987654` (bridging record A)
+  - the person record version `PERSON_ID = PERSON_01` where **`LDS_RECORD_ID_PERSON = REC987654`**
+
+This ensures that the subscriber is only sighted on the version of the person record that is appropriate for their access.
+
+> [!NOTE]
+> This process is dependent on the extract dates of the records rather than a clinical effective date or registration date. As such it is still possible that a subscriber will be in receipt of an updated PDS record where a historic rebulk is taking place that then creates a scenario in which the extract date of these records has re-triggered a PDS request.
+
+> [!NOTE]
+> A fix is being planned to limit PDS trace requests to active patients only. Once implemented, this change would reduce the likelihood of a scenario in which a rebulk would allow a PDS trace of historically deducted patients to become visible to the subscriber of that publishers data.
