@@ -4,6 +4,7 @@
   - [Schema issues](#schema-issues)
     - [general](#general)
     - [allergy\_intolerance](#allergy_intolerance)
+    - [appointment](#appointment)
     - [appointment\_practitioner](#appointment_practitioner)
     - [diagnostic\_order](#diagnostic_order)
     - [encounter](#encounter)
@@ -37,6 +38,10 @@ The below is a report of the currently known issues within the One London Integr
 
 - The field `allergy_intolerance_core_concept_id` is reflective of the unmapped concept and is labelled incorrectly. This should be relabeled as a **raw_concept_id** i.e. `allergy_intolerance_raw_concept_id`
 - The field `allergy_intolerance_raw_concept_id` is currently unmapped and is empty (all `null`)
+
+### appointment
+
+- The Practitioner Count is set to 1 for SystmOne Appointments. This value will be updated using data from the list of attendees (SRAttendees).
 
 ### appointment_practitioner
 
