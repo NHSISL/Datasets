@@ -1086,6 +1086,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `FIRST_NAME` | nvarchar(50) | 'The first names of the patient' | first_names |
 | `MIDDLE_NAME` | nvarchar(256) | 'The middle names of the patient' |  |
 | `LAST_NAME` | nvarchar(100) | 'The last name of the patient' | last_name |
+| `GENDER_CONCEPT_ID` | uniqueidentifier | 'Reference to the gender of the patient' |  |
+| `REGISTERED_PRACTICE_ID` | uniqueidentifier | LDS assigned identifier for patient's registered practice |  |
 | `BIRTH_DATE` | date(0) | 'The date of birth of the patient' | date_of_birth |
 | `BIRTH_YEAR` | smallint | 'Birth year of the patient' | birth_year |
 | `BIRTH_MONTH` | smallint | 'Birth month of the patient' | birth_month |
@@ -1096,6 +1098,9 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `DEATH_WEEK_ISO` | smallint | 'Death week of the patient (iso standard)' |  |
 | `DEATH_DAY` | smallint | 'Death day of the patient' |  |
 | `DEATH_DATE` | date(0) | 'The date of death of the patient' | date_of_death |
+| `IS_CONFIDENTIAL` | bit | true/false - is the observation marked as confidential/sensitive |  |
+| `IS_DUMMY_PATIENT` | bit | true/false - is the patient flagged or denoted as a test patient in the source system |  |
+| `IS_SPINE_SENSITIVE` | bit | true/false - is the patient marked as spine sensitive within the source system. **Important note: This column is sourced from local practice systems, and may not reflect values held within the PDS spine service. It is not advised to use this column to inform sensitivity filtering policies.** |  |
 | `LDS_ID` | uniqueidentifier | 'LDS assigned Unique Identifier for this common modelled record version' |  |
 | `LDS_BUSINESS_KEY` | varchar(8000) | 'Natural or source key for the unique event/entity of the table' |  |
 | `LDS_DATASET_ID` | uniqueidentifier | 'LDS assigned identifier for the source dataset' |  |
