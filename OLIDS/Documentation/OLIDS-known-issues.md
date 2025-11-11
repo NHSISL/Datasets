@@ -62,6 +62,7 @@ The below is a report of the currently known issues within the One London Integr
 
 - The field `is_deleted` is the source value from EMIS and should be replaced by a supplier agnostic column `lds_is_deleted` which will standardise the representation of the deleted state across all data sources. This field will be removed and replaced in due course.
 - The field `medication_statement_core_concept_id` is reflective of the supplied surrogate key value for the encoding of the consultation type. This is a **raw** concept and should be relabelled as such. This will be relabelled as `medication_statement_raw_concept_id` as a result in future releases.
+- The field 'bnf_reference' is marked as a legacy field in the provider's documentation. The field is set to null for all rows.
 
 ### observation
 
