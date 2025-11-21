@@ -1296,7 +1296,29 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 > [!NOTE]
 > Used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
 >
-> Code systems define which codes (symbols and/or expressions) exist, and how they are understood. Value sets select a set of codes from one or more code systems to specify which codes can be used in a particular context
+> Code systems define which codes (symbols and/or expressions) exist, and how they are understood. Value sets select a set of codes from one or more code systems to specify which codes can be used in a particular context.
+>
+> Here is an example query that returns concept IDs and display values for mapped values for patient gender.
+
+
+`SELECT P1."gender_concept_id"
+    ,M1."source_code_id"
+    ,C1."display" AS SOURCE_CODE_DISPLAY
+    ,M1."target_code_id"
+    ,C2."display" AS TARGET_CODE_DISPLAY
+FROM DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_MASKED.PATIENT P1
+JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT C1
+ON P1."gender_concept_id" = C1."id"
+JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT_MAP M1 --Sequence
+ON P1."gender_concept_id" = M1."source_code_id"
+JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT C2
+ON M1."target_code_id" = C2."id"
+LIMIT 10
+`
+
+>
+<img width="1550" height="742" alt="image" src="https://github.com/user-attachments/assets/1bd0f421-96f9-4dcd-bed9-4bf12023db18" />
+
 
 | Column Name | Data Type |  Comment | Foreign Key Reference | Compass equivalent |
 | --- | --- | ---- | ---- | ---- |
