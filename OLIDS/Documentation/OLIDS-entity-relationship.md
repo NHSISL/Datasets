@@ -33,6 +33,9 @@ The diagram below outlines the high-level relationships between table objects.
 It is not possible to display all relationships in a single table, due to the number of relationships and overlaps that exist across commonly used entities such as concept, person and patient.
 
 As such, we have broken the diagrams down into a view per table as below.
+Double bars on connectors indicate single connections. Open circles indicate that a connection is optional. Closed circles indicate that a connection is mandatory.
+The diagrams use one (mandatory) to many (optional) connectors, represented by a  or an open circle and multiple endpoints, respectively.
+
 
 ### Allergy Intolerance relations
 
