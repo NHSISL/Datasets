@@ -819,7 +819,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `ID` | uniqueidentifier | Unique ID of the patient UPRN match | |
 | `REGISTRAR_EVENT_ID` | uniqueidentifier | LDS processing event identifier for the processing of the UPRN match. (*this is now duplicated by an audit column below and will be removed*) | |
 | `MASKED_UPRN` | varchar(255) | The matched unique property reference number, with hashing applied | |
-| `MASKED_UPSN` | varchar(255) | The matched unique street reference number, with hashing applied | |
+| `MASKED_USRN` | varchar(255) | The matched unique street reference number, with hashing applied | |
 | `MASKED_POSTCODE` | varchar(255) | The masked input postcode | |
 | `ADDRESS_FORMAT_QUALITY` | varchar(255) | The quality of the input address (i.e. 'good') | |
 | `POSTCODE_QUALITY` | varchar(255) | The quality of the input postcode (i.e. 'good') | |
