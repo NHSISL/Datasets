@@ -11,9 +11,10 @@
 USE DATABASE "Data_Store_OLIDS_Clinical_Validation";  -- Replace with your ICB's OLIDS database name
 
 -- Most recent month-end that OLIDS data covers (PDS updates at month-ends)
+-- Uses lds_start_date_time (LDS ingestion timestamp) since EPISODE_OF_CARE lacks date_recorded
 SET snapshot_date = (
     SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
-        MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END)
+        MAX(CASE WHEN lds_start_date_time <= CURRENT_DATE THEN lds_start_date_time END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
     WHERE record_owner_organisation_code IS NOT NULL

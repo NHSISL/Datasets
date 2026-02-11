@@ -43,11 +43,11 @@
 
 -- Snapshot date: the most recent month-end that OLIDS data covers.
 -- PDS updates at month-ends, so we snap to a month boundary for accurate comparison.
--- Derived from MAX(date_recorded) in EPISODE_OF_CARE, rolled back to the last
--- complete month-end on or before that date.
+-- Derived from MAX(lds_start_date_time) in EPISODE_OF_CARE (the LDS ingestion timestamp),
+-- rolled back to the last complete month-end on or before that date.
 SET snapshot_date = (
     SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
-        MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END)
+        MAX(CASE WHEN lds_start_date_time <= CURRENT_DATE THEN lds_start_date_time END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
     WHERE record_owner_organisation_code IS NOT NULL
