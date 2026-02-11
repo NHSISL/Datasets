@@ -117,7 +117,7 @@ Write-Host ""
 Write-Host "Installing Python dependencies..." -ForegroundColor Cyan
 Push-Location $PSScriptRoot
 try {
-    uv lock --upgrade
+    uv lock
     uv sync
     Write-Host "Dependencies installed." -ForegroundColor Green
 } finally {

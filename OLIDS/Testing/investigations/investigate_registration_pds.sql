@@ -10,7 +10,14 @@
 
 USE DATABASE "Data_Store_OLIDS_Clinical_Validation";  -- Replace with your ICB's OLIDS database name
 
-SET snapshot_date = LAST_DAY(DATEADD(MONTH, -1, CURRENT_DATE));
+-- Most recent month-end that OLIDS data covers (PDS updates at month-ends)
+SET snapshot_date = (
+    SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
+        MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END)
+    )))
+    FROM OLIDS_COMMON.EPISODE_OF_CARE
+    WHERE record_owner_organisation_code IS NOT NULL
+);
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
@@ -50,11 +57,11 @@ patient_to_person AS (
 ),
 
 episode_type_regular AS (
-    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular'
+    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular' LIMIT 1
 ),
 
 episode_status_left AS (
-    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left'
+    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left' LIMIT 1
 ),
 
 filtered_episodes AS (

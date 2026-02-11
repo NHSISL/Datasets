@@ -80,7 +80,7 @@ Use `UNION ALL` to return multiple checks from one file. Any extra columns beyon
 Other notes:
 - Use `SET var = value;` and `$var` for Snowflake session variables (e.g. thresholds)
 - Use schema-qualified names (`OLIDS_COMMON.TABLE`) without the database prefix — the runner injects `USE DATABASE`
-- Avoid semicolons in comments (the runner splits statements on `;`)
+- Avoid semicolons inside comments or string literals — the runner naively splits on `;` to execute statements individually
 
 ## Investigating Failures
 

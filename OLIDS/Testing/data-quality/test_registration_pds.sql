@@ -32,12 +32,26 @@
     failing due to a handful of patients causing a high % diff.
 
     Configuration:
-      - snapshot_date: defaults to last day of previous month
-      - PDS tables: in "Data_Store_Registries"."pds" (change if your ICB differs)
+      - snapshot_date: auto-derived from EPISODE_OF_CARE freshness, snapped
+        to the most recent month-end (PDS updates at month-ends)
+
+    PDS tables:
+      This test reads from "Data_Store_Registries"."pds" which is the standard
+      PDS location for most London ICBs. If your ICB stores PDS data elsewhere,
+      search for "Data_Store_Registries" in this file and replace all occurrences.
 */
 
--- Last day of the previous complete calendar month
-SET snapshot_date = LAST_DAY(DATEADD(MONTH, -1, CURRENT_DATE));
+-- Snapshot date: the most recent month-end that OLIDS data covers.
+-- PDS updates at month-ends, so we snap to a month boundary for accurate comparison.
+-- Derived from MAX(date_recorded) in EPISODE_OF_CARE, rolled back to the last
+-- complete month-end on or before that date.
+SET snapshot_date = (
+    SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
+        MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END)
+    )))
+    FROM OLIDS_COMMON.EPISODE_OF_CARE
+    WHERE record_owner_organisation_code IS NOT NULL
+);
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
@@ -93,12 +107,14 @@ episode_type_regular AS (
     SELECT source_code_id
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Regular'
+    LIMIT 1
 ),
 
 episode_status_left AS (
     SELECT source_code_id
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Left'
+    LIMIT 1
 ),
 
 -- Step 5: Filter to active, valid registration episodes as of the snapshot date

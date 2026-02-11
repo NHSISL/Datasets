@@ -20,6 +20,10 @@
       - metric_value = % of orgs with fresh data
       - total_orgs, fresh_orgs, stale_orgs, min/max/avg days (shown with --verbose)
 
+    Coverage:
+      The 8 tables below are all OLIDS tables that have both
+      record_owner_organisation_code and date_recorded columns.
+
     To add a table:
       Add a UNION ALL block selecting table_name, org_code, MAX(date_recorded),
       and DATEDIFF from any table with record_owner_organisation_code and

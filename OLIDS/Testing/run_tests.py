@@ -115,15 +115,31 @@ def execute_test(conn, sql_file: Path, database: str) -> list:
 
     if USE_SNOWPARK:
         # Execute each statement; collect results from the last one
-        for stmt in statements[:-1]:
-            conn.sql(stmt).collect()
+        for i, stmt in enumerate(statements[:-1]):
+            try:
+                conn.sql(stmt).collect()
+            except Exception as e:
+                if i == 0 and 'USE' in stmt.upper():
+                    raise RuntimeError(
+                        f"Failed to set database '{database}'. "
+                        f"Check SNOWFLAKE_DATABASE in .env is correct and your role has access."
+                    ) from e
+                raise
         df = conn.sql(statements[-1]).to_pandas()
         return df.to_dict('records')
     else:
         cursor = conn.cursor()
         try:
-            for stmt in statements:
-                cursor.execute(stmt)
+            for i, stmt in enumerate(statements):
+                try:
+                    cursor.execute(stmt)
+                except Exception as e:
+                    if i == 0 and 'USE' in stmt.upper():
+                        raise RuntimeError(
+                            f"Failed to set database '{database}'. "
+                            f"Check SNOWFLAKE_DATABASE in .env is correct and your role has access."
+                        ) from e
+                    raise
             columns = [desc[0] for desc in cursor.description] if cursor.description else []
             rows = cursor.fetchall()
             return [dict(zip(columns, row)) for row in rows]

@@ -38,6 +38,17 @@ WITH fk_checks AS (
 
     UNION ALL
 
+    -- ALLERGY_INTOLERANCE -> PERSON
+    SELECT 'ALLERGY_INTOLERANCE', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+
+    UNION ALL
+
     -- ALLERGY_INTOLERANCE -> ENCOUNTER
     SELECT 'ALLERGY_INTOLERANCE', 'encounter_id', 'ENCOUNTER',
         COUNT(DISTINCT c.encounter_id),
@@ -126,6 +137,17 @@ WITH fk_checks AS (
 
     UNION ALL
 
+    -- DIAGNOSTIC_ORDER -> PERSON
+    SELECT 'DIAGNOSTIC_ORDER', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+
+    UNION ALL
+
     -- DIAGNOSTIC_ORDER -> ENCOUNTER
     SELECT 'DIAGNOSTIC_ORDER', 'encounter_id', 'ENCOUNTER',
         COUNT(DISTINCT c.encounter_id),
@@ -167,6 +189,17 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.ENCOUNTER c
     LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+
+    UNION ALL
+
+    -- ENCOUNTER -> PERSON
+    SELECT 'ENCOUNTER', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.ENCOUNTER c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
 
     UNION ALL
 
@@ -222,6 +255,17 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE c
     LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+
+    UNION ALL
+
+    -- EPISODE_OF_CARE -> PERSON
+    SELECT 'EPISODE_OF_CARE', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.EPISODE_OF_CARE c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
 
     UNION ALL
 
@@ -288,6 +332,17 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.MEDICATION_ORDER c
     LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+
+    UNION ALL
+
+    -- MEDICATION_ORDER -> PERSON
+    SELECT 'MEDICATION_ORDER', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.MEDICATION_ORDER c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
 
     UNION ALL
 
@@ -390,6 +445,17 @@ WITH fk_checks AS (
 
     UNION ALL
 
+    -- MEDICATION_STATEMENT -> PERSON
+    SELECT 'MEDICATION_STATEMENT', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+
+    UNION ALL
+
     -- MEDICATION_STATEMENT -> ORGANISATION
     SELECT 'MEDICATION_STATEMENT', 'organisation_id', 'ORGANISATION',
         COUNT(DISTINCT c.organisation_id),
@@ -478,6 +544,17 @@ WITH fk_checks AS (
 
     UNION ALL
 
+    -- OBSERVATION -> PERSON
+    SELECT 'OBSERVATION', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.OBSERVATION c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+
+    UNION ALL
+
     -- OBSERVATION -> ENCOUNTER
     SELECT 'OBSERVATION', 'encounter_id', 'ENCOUNTER',
         COUNT(DISTINCT c.encounter_id),
@@ -552,6 +629,28 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_MASKED.PATIENT_CONTACT c
     LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+
+    UNION ALL
+
+    -- PATIENT_PERSON -> PATIENT
+    SELECT 'PATIENT_PERSON', 'patient_id', 'PATIENT',
+        COUNT(DISTINCT c.patient_id),
+        SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
+        SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.PATIENT_PERSON c
+    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+
+    UNION ALL
+
+    -- PATIENT_PERSON -> PERSON
+    SELECT 'PATIENT_PERSON', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.PATIENT_PERSON c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
 
     UNION ALL
 
@@ -768,15 +867,17 @@ SELECT
     child_table AS table_name,
     fk_column || ' -> ' || parent_table || '.id' AS test_subject,
     CASE
+        WHEN total_rows_with_fk = 0 THEN 'WARN'
         WHEN orphaned_fk = 0 THEN 'PASS'
         ELSE 'FAIL'
     END AS status,
-    ROUND(100.0 * (total_distinct_fk - orphaned_fk) / NULLIF(total_distinct_fk, 0), 2) AS metric_value,
+    CASE WHEN total_rows_with_fk = 0 THEN NULL
+        ELSE ROUND(100.0 * (total_distinct_fk - orphaned_fk) / NULLIF(total_distinct_fk, 0), 2)
+    END AS metric_value,
     100.0 AS threshold,
     total_distinct_fk,
     total_rows_with_fk,
     orphaned_fk,
     orphaned_rows
 FROM fk_checks
-WHERE total_rows_with_fk > 0
 ORDER BY status DESC, metric_value ASC, child_table, fk_column;

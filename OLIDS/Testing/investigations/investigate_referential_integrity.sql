@@ -99,4 +99,54 @@ LEFT JOIN OLIDS_COMMON.SCHEDULE p ON c.schedule_id = p.id
 WHERE c.schedule_id IS NOT NULL AND p.id IS NULL
 GROUP BY c.schedule_id
 
+UNION ALL
+
+-- ENCOUNTER -> PERSON
+SELECT 'ENCOUNTER', 'person_id', 'PERSON',
+    c.person_id, COUNT(*)
+FROM OLIDS_COMMON.ENCOUNTER c
+LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+WHERE c.person_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.person_id
+
+UNION ALL
+
+-- OBSERVATION -> PERSON
+SELECT 'OBSERVATION', 'person_id', 'PERSON',
+    c.person_id, COUNT(*)
+FROM OLIDS_COMMON.OBSERVATION c
+LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+WHERE c.person_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.person_id
+
+UNION ALL
+
+-- EPISODE_OF_CARE -> PERSON
+SELECT 'EPISODE_OF_CARE', 'person_id', 'PERSON',
+    c.person_id, COUNT(*)
+FROM OLIDS_COMMON.EPISODE_OF_CARE c
+LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+WHERE c.person_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.person_id
+
+UNION ALL
+
+-- PATIENT_PERSON -> PATIENT
+SELECT 'PATIENT_PERSON', 'patient_id', 'PATIENT',
+    c.patient_id, COUNT(*)
+FROM OLIDS_COMMON.PATIENT_PERSON c
+LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+WHERE c.patient_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.patient_id
+
+UNION ALL
+
+-- PATIENT_PERSON -> PERSON
+SELECT 'PATIENT_PERSON', 'person_id', 'PERSON',
+    c.person_id, COUNT(*)
+FROM OLIDS_COMMON.PATIENT_PERSON c
+LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+WHERE c.person_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.person_id
+
 ORDER BY child_table, fk_column, row_count DESC;
