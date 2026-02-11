@@ -32,8 +32,8 @@
     failing due to a handful of patients causing a high % diff.
 
     Configuration:
-      - snapshot_date: auto-derived from EPISODE_OF_CARE freshness, snapped
-        to the most recent month-end (PDS updates at month-ends)
+      - snapshot_date: last day of the previous complete calendar month
+        (PDS updates at month-ends)
 
     PDS tables:
       This test reads from "Data_Store_Registries"."pds" which is the standard
@@ -43,11 +43,10 @@
 
 -- Snapshot date: the most recent month-end that OLIDS data covers.
 -- PDS updates at month-ends, so we snap to a month boundary for accurate comparison.
--- Derived from MAX(lds_start_date_time) in EPISODE_OF_CARE (the LDS ingestion timestamp),
--- rolled back to the last complete month-end on or before that date.
+-- Uses MAX(episode_of_care_start_date) as the freshness indicator. Future dates excluded.
 SET snapshot_date = (
     SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
-        MAX(CASE WHEN lds_start_date_time <= CURRENT_DATE THEN lds_start_date_time END)::DATE
+        MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
     WHERE record_owner_organisation_code IS NOT NULL
@@ -107,14 +106,12 @@ episode_type_regular AS (
     SELECT source_code_id
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Regular'
-    LIMIT 1
 ),
 
 episode_status_left AS (
     SELECT source_code_id
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Left'
-    LIMIT 1
 ),
 
 -- Step 5: Filter to active, valid registration episodes as of the snapshot date

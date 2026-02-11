@@ -10,11 +10,12 @@
 
 USE DATABASE "Data_Store_OLIDS_Clinical_Validation";  -- Replace with your ICB's OLIDS database name
 
--- Most recent month-end that OLIDS data covers (PDS updates at month-ends)
--- Uses lds_start_date_time (LDS ingestion timestamp) since EPISODE_OF_CARE lacks date_recorded
+-- Snapshot date: the most recent month-end that OLIDS data covers.
+-- PDS updates at month-ends, so we snap to a month boundary for accurate comparison.
+-- Uses MAX(episode_of_care_start_date) as the freshness indicator. Future dates excluded.
 SET snapshot_date = (
     SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
-        MAX(CASE WHEN lds_start_date_time <= CURRENT_DATE THEN lds_start_date_time END)::DATE
+        MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
     WHERE record_owner_organisation_code IS NOT NULL
@@ -58,11 +59,11 @@ patient_to_person AS (
 ),
 
 episode_type_regular AS (
-    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular' LIMIT 1
+    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular'
 ),
 
 episode_status_left AS (
-    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left' LIMIT 1
+    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left'
 ),
 
 filtered_episodes AS (
