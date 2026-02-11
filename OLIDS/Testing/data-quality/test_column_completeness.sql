@@ -195,7 +195,7 @@ WITH checks AS (
 SELECT
     'column_completeness' AS test_name,
     table_name,
-    column_name AS test_subject,
+    CASE WHEN total_rows = 0 THEN column_name || ' (empty table)' ELSE column_name END AS test_subject,
     CASE
         WHEN total_rows = 0 THEN 'WARN'
         WHEN ROUND(100.0 * null_count / total_rows, 4) <= threshold THEN 'PASS'
