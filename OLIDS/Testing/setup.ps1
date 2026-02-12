@@ -99,14 +99,16 @@ if ($needsSetup -and -not (Test-Path $envFile)) {
     Write-Host "  The ICB-specific OLIDS database (e.g. Data_Store_OLIDS_Alpha)." -ForegroundColor DarkGray
     $database = Read-Host "  SNOWFLAKE_DATABASE"
 
-    # Write .env
-    @"
+    # Write .env (UTF-8 without BOM — PS 5.x's -Encoding UTF8 adds a BOM
+    # which corrupts the first key for python-dotenv)
+    $content = @"
 SNOWFLAKE_ACCOUNT=$account
 SNOWFLAKE_USER=$user
 SNOWFLAKE_WAREHOUSE=$warehouse
 SNOWFLAKE_ROLE=$role
 SNOWFLAKE_DATABASE=$database
-"@ | Set-Content -Path $envFile -Encoding UTF8
+"@
+    [System.IO.File]::WriteAllText($envFile, $content)
 
     Write-Host ""
     Write-Host "Credentials saved to $envFile" -ForegroundColor Green
