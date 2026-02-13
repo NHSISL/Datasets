@@ -5,6 +5,9 @@ SQL-based data quality tests for OLIDS, run against Snowflake. Portable across L
 ## Prerequisites
 
 - **Git** — to clone the repository
+  - Windows: download from [git-scm.com/downloads/win](https://git-scm.com/downloads/win)
+  - macOS: run `xcode-select --install` or download from [git-scm.com/downloads/mac](https://git-scm.com/downloads/mac)
+  - Linux: `sudo apt install git` (Debian/Ubuntu) or `sudo dnf install git` (Fedora)
 - **A web browser** — for Snowflake SSO login (opens automatically on first run)
 
 Python and all dependencies are installed automatically by the setup script via [uv](https://docs.astral.sh/uv/).
