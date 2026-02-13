@@ -1,0 +1,10 @@
+[project]
+name = "olids-testing"
+version = "0.1.0"
+description = "OLIDS data quality tests"
+requires-python = ">=3.9"
+dependencies = [
+    "snowflake-snowpark-python",
+    "snowflake-connector-python[secure-local-storage,pandas]",
+    "python-dotenv",
+]
