@@ -1,15 +1,25 @@
 # OLIDS Data Quality Tests
 
-SQL-based data quality tests for OLIDS, run against Snowflake. Portable across London ICBs — each ICB sets their own database name via `.env` and the runner injects `USE DATABASE` before each test.
+SQL-based data quality tests for OLIDS, run against Snowflake. Portable across London ICBs — each ICB sets their own database name via `.env` and the runner auto-detects schema names at startup.
 
 ## Setup
 
 ```powershell
+# Windows
 cd OLIDS/Testing
 .\setup.ps1
 ```
 
+```bash
+# macOS / Linux
+cd OLIDS/Testing
+chmod +x setup.sh
+./setup.sh
+```
+
 This installs [uv](https://docs.astral.sh/uv/), prompts for Snowflake credentials, writes `.env`, and runs `uv sync`.
+
+> **Snowflake private link**: If your organisation connects via private link, use the format `<account_locator>.<region>.privatelink` as your Snowflake account identifier (e.g. `us96268.uk-south.privatelink`).
 
 ## Running Tests
 
@@ -24,6 +34,9 @@ uv run run_tests.py --test test_column_completeness
 
 # Show passing results and extra columns
 uv run run_tests.py --verbose
+
+# Run an investigation script (or any SQL file) with schema auto-detection
+uv run run_tests.py --run investigations/investigate_column_completeness.sql
 ```
 
 ## Tests
@@ -79,12 +92,16 @@ Use `UNION ALL` to return multiple checks from one file. Any extra columns beyon
 
 Other notes:
 - Use `SET var = value;` and `$var` for Snowflake session variables (e.g. thresholds)
-- Use schema-qualified names (`OLIDS_COMMON.TABLE`) without the database prefix — the runner injects `USE DATABASE`
+- Schema names are configured via SET variables at the top of each file (`schema_masked`, `schema_common`, `schema_terminology`). Reference tables with `IDENTIFIER($schema_common || '.TABLE')`. The runner auto-detects schemas at startup and overwrites the SET values (e.g. `OLIDS_MASKED` → `OLIDS_PCD`). For Snowsight, change the SET values manually.
 - Avoid semicolons inside comments or string literals — the runner naively splits on `;` to execute statements individually
 
 ## Investigating Failures
 
-The `investigations/` folder has companion scripts for each test. These return row-level detail to help diagnose failures. Run them directly in Snowsight or the VS Code Snowflake extension — each file has a `USE DATABASE` line at the top to fill in.
+The `investigations/` folder has companion scripts for each test. These return row-level detail to help diagnose failures. Run them through the runner with `--run` (handles schema detection and database context automatically), or directly in Snowsight (set the `USE DATABASE` and `SET schema_*` variables at the top of each file to match your ICB).
+
+```bash
+uv run run_tests.py --run investigations/investigate_referential_integrity.sql
+```
 
 | File | What it shows |
 |---|---|

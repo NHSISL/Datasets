@@ -41,6 +41,10 @@
       search for "Data_Store_Registries" in this file and replace all occurrences.
 */
 
+SET schema_masked = 'OLIDS_MASKED';        -- Change if your ICB uses a different name (e.g. OLIDS_PCD)
+SET schema_common = 'OLIDS_COMMON';
+SET schema_terminology = 'OLIDS_TERMINOLOGY';
+
 -- Snapshot date: the most recent month-end that OLIDS data covers.
 -- PDS updates at month-ends, so we snap to a month boundary for accurate comparison.
 -- Uses MAX(episode_of_care_start_date) as the freshness indicator. Future dates excluded.
@@ -48,14 +52,14 @@ SET snapshot_date = (
     SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
         MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
-    FROM OLIDS_COMMON.EPISODE_OF_CARE
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE')
     WHERE record_owner_organisation_code IS NOT NULL
 );
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
     SELECT DISTINCT record_owner_organisation_code AS practice_code
-    FROM OLIDS_COMMON.EPISODE_OF_CARE
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE')
     WHERE record_owner_organisation_code IS NOT NULL
 ),
 
@@ -66,7 +70,7 @@ eligible_patients AS (
         sk_patient_id,
         death_year,
         death_month
-    FROM OLIDS_MASKED.PATIENT
+    FROM IDENTIFIER($schema_masked || '.PATIENT')
     WHERE sk_patient_id IS NOT NULL
         AND is_spine_sensitive = FALSE
         AND is_confidential = FALSE
@@ -97,20 +101,20 @@ patient_death_dates AS (
 -- Step 3: Map patient_id to person_id (OLIDS deduplicates by person, not patient)
 patient_to_person AS (
     SELECT patient_id, person_id
-    FROM OLIDS_COMMON.PATIENT_PERSON
+    FROM IDENTIFIER($schema_common || '.PATIENT_PERSON')
     WHERE patient_id IS NOT NULL AND person_id IS NOT NULL
 ),
 
 -- Step 4: Look up concept IDs for 'Regular' episode type and 'Left' status
 episode_type_regular AS (
     SELECT source_code_id
-    FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
+    FROM IDENTIFIER($schema_terminology || '.CONCEPT_MAP')
     WHERE source_code = 'Regular'
 ),
 
 episode_status_left AS (
     SELECT source_code_id
-    FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
+    FROM IDENTIFIER($schema_terminology || '.CONCEPT_MAP')
     WHERE source_code = 'Left'
 ),
 
@@ -122,7 +126,7 @@ filtered_episodes AS (
         eoc.record_owner_organisation_code AS practice_code,
         eoc.organisation_id,
         eoc.episode_of_care_start_date
-    FROM OLIDS_COMMON.EPISODE_OF_CARE eoc
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE') eoc
     INNER JOIN patient_death_dates pdd ON eoc.patient_id = pdd.patient_id
     INNER JOIN patient_to_person ptp ON eoc.patient_id = ptp.patient_id
     INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_code_id

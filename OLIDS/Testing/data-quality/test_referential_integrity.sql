@@ -23,6 +23,10 @@
       Use aliases 'c' (child) and 'p' (parent). Follow the pattern below.
 */
 
+SET schema_masked = 'OLIDS_MASKED';        -- Change if your ICB uses a different name (e.g. OLIDS_PCD)
+SET schema_common = 'OLIDS_COMMON';
+SET schema_terminology = 'OLIDS_TERMINOLOGY';
+
 WITH fk_checks AS (
     -- Each block: LEFT JOIN child.fk_column to parent.id, count orphaned values.
     -- Uses 'c' for child table and 'p' for parent table throughout.
@@ -33,8 +37,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END) AS total_rows_with_fk,
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END) AS orphaned_fk,
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END) AS orphaned_rows
-    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -44,8 +48,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -55,8 +59,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -66,8 +70,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -77,8 +81,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.APPOINTMENT c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.APPOINTMENT') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -88,8 +92,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_in_role_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_in_role_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_in_role_id END),
         SUM(CASE WHEN c.practitioner_in_role_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.APPOINTMENT c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER_IN_ROLE p ON c.practitioner_in_role_id = p.id
+    FROM IDENTIFIER($schema_common || '.APPOINTMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER_IN_ROLE') p ON c.practitioner_in_role_id = p.id
 
     UNION ALL
 
@@ -99,8 +103,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.schedule_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.schedule_id IS NOT NULL AND p.id IS NULL THEN c.schedule_id END),
         SUM(CASE WHEN c.schedule_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.APPOINTMENT c
-    LEFT JOIN OLIDS_COMMON.SCHEDULE p ON c.schedule_id = p.id
+    FROM IDENTIFIER($schema_common || '.APPOINTMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.SCHEDULE') p ON c.schedule_id = p.id
 
     UNION ALL
 
@@ -110,8 +114,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.appointment_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.appointment_id IS NOT NULL AND p.id IS NULL THEN c.appointment_id END),
         SUM(CASE WHEN c.appointment_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.APPOINTMENT_PRACTITIONER c
-    LEFT JOIN OLIDS_COMMON.APPOINTMENT p ON c.appointment_id = p.id
+    FROM IDENTIFIER($schema_common || '.APPOINTMENT_PRACTITIONER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.APPOINTMENT') p ON c.appointment_id = p.id
 
     UNION ALL
 
@@ -121,8 +125,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.APPOINTMENT_PRACTITIONER c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.APPOINTMENT_PRACTITIONER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -132,8 +136,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -143,8 +147,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -154,8 +158,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -165,8 +169,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -176,8 +180,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.parent_observation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.parent_observation_id IS NOT NULL AND p.id IS NULL THEN c.parent_observation_id END),
         SUM(CASE WHEN c.parent_observation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER c
-    LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.parent_observation_id = p.id
+    FROM IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.OBSERVATION') p ON c.parent_observation_id = p.id
 
     UNION ALL
 
@@ -187,8 +191,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.ENCOUNTER') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -198,8 +202,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.ENCOUNTER') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -209,8 +213,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.ENCOUNTER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -220,8 +224,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.episode_of_care_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.episode_of_care_id IS NOT NULL AND p.id IS NULL THEN c.episode_of_care_id END),
         SUM(CASE WHEN c.episode_of_care_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_COMMON.EPISODE_OF_CARE p ON c.episode_of_care_id = p.id
+    FROM IDENTIFIER($schema_common || '.ENCOUNTER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.EPISODE_OF_CARE') p ON c.episode_of_care_id = p.id
 
     UNION ALL
 
@@ -231,8 +235,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.appointment_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.appointment_id IS NOT NULL AND p.id IS NULL THEN c.appointment_id END),
         SUM(CASE WHEN c.appointment_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_COMMON.APPOINTMENT p ON c.appointment_id = p.id
+    FROM IDENTIFIER($schema_common || '.ENCOUNTER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.APPOINTMENT') p ON c.appointment_id = p.id
 
     UNION ALL
 
@@ -242,8 +246,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.service_provider_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.service_provider_organisation_id IS NOT NULL AND p.id IS NULL THEN c.service_provider_organisation_id END),
         SUM(CASE WHEN c.service_provider_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.service_provider_organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.ENCOUNTER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.service_provider_organisation_id = p.id
 
     UNION ALL
 
@@ -253,8 +257,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -264,8 +268,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -275,8 +279,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
         SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -286,8 +290,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.care_manager_practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.care_manager_practitioner_id IS NOT NULL AND p.id IS NULL THEN c.care_manager_practitioner_id END),
         SUM(CASE WHEN c.care_manager_practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.care_manager_practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.care_manager_practitioner_id = p.id
 
     UNION ALL
 
@@ -297,8 +301,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.FLAG c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.FLAG') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -308,8 +312,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.managing_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.managing_organisation_id IS NOT NULL AND p.id IS NULL THEN c.managing_organisation_id END),
         SUM(CASE WHEN c.managing_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.LOCATION c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.managing_organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.LOCATION') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.managing_organisation_id = p.id
 
     UNION ALL
 
@@ -319,8 +323,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.location_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.location_id IS NOT NULL AND p.id IS NULL THEN c.location_id END),
         SUM(CASE WHEN c.location_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.LOCATION_CONTACT c
-    LEFT JOIN OLIDS_COMMON.LOCATION p ON c.location_id = p.id
+    FROM IDENTIFIER($schema_common || '.LOCATION_CONTACT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.LOCATION') p ON c.location_id = p.id
 
     UNION ALL
 
@@ -330,8 +334,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -341,8 +345,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -352,8 +356,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.medication_statement_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.medication_statement_id IS NOT NULL AND p.id IS NULL THEN c.medication_statement_id END),
         SUM(CASE WHEN c.medication_statement_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.MEDICATION_STATEMENT p ON c.medication_statement_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') p ON c.medication_statement_id = p.id
 
     UNION ALL
 
@@ -363,8 +367,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
         SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -374,8 +378,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -385,8 +389,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -396,8 +400,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.observation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.observation_id IS NOT NULL AND p.id IS NULL THEN c.observation_id END),
         SUM(CASE WHEN c.observation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.observation_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.OBSERVATION') p ON c.observation_id = p.id
 
     UNION ALL
 
@@ -407,8 +411,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN c.allergy_intolerance_id END),
         SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.ALLERGY_INTOLERANCE p ON c.allergy_intolerance_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') p ON c.allergy_intolerance_id = p.id
 
     UNION ALL
 
@@ -418,8 +422,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN c.diagnostic_order_id END),
         SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.DIAGNOSTIC_ORDER p ON c.diagnostic_order_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') p ON c.diagnostic_order_id = p.id
 
     UNION ALL
 
@@ -429,8 +433,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.referral_request_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN c.referral_request_id END),
         SUM(CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.REFERRAL_REQUEST p ON c.referral_request_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.REFERRAL_REQUEST') p ON c.referral_request_id = p.id
 
     UNION ALL
 
@@ -440,8 +444,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -451,8 +455,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -462,8 +466,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
         SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -473,8 +477,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -484,8 +488,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -495,8 +499,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.observation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.observation_id IS NOT NULL AND p.id IS NULL THEN c.observation_id END),
         SUM(CASE WHEN c.observation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.observation_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.OBSERVATION') p ON c.observation_id = p.id
 
     UNION ALL
 
@@ -506,8 +510,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN c.allergy_intolerance_id END),
         SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.ALLERGY_INTOLERANCE p ON c.allergy_intolerance_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') p ON c.allergy_intolerance_id = p.id
 
     UNION ALL
 
@@ -517,8 +521,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN c.diagnostic_order_id END),
         SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.DIAGNOSTIC_ORDER p ON c.diagnostic_order_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') p ON c.diagnostic_order_id = p.id
 
     UNION ALL
 
@@ -528,8 +532,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.referral_request_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN c.referral_request_id END),
         SUM(CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.REFERRAL_REQUEST p ON c.referral_request_id = p.id
+    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.REFERRAL_REQUEST') p ON c.referral_request_id = p.id
 
     UNION ALL
 
@@ -539,8 +543,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.OBSERVATION') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -550,8 +554,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.OBSERVATION') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -561,8 +565,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.OBSERVATION') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -572,8 +576,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.OBSERVATION') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -583,8 +587,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.parent_observation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.parent_observation_id IS NOT NULL AND p.id IS NULL THEN c.parent_observation_id END),
         SUM(CASE WHEN c.parent_observation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.parent_observation_id = p.id
+    FROM IDENTIFIER($schema_common || '.OBSERVATION') c
+    LEFT JOIN IDENTIFIER($schema_common || '.OBSERVATION') p ON c.parent_observation_id = p.id
 
     UNION ALL
 
@@ -594,8 +598,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.parent_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.parent_organisation_id IS NOT NULL AND p.id IS NULL THEN c.parent_organisation_id END),
         SUM(CASE WHEN c.parent_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.ORGANISATION c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.parent_organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.ORGANISATION') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.parent_organisation_id = p.id
 
     UNION ALL
 
@@ -605,8 +609,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.registered_practice_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.registered_practice_id IS NOT NULL AND p.id IS NULL THEN c.registered_practice_id END),
         SUM(CASE WHEN c.registered_practice_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_MASKED.PATIENT c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.registered_practice_id = p.id
+    FROM IDENTIFIER($schema_masked || '.PATIENT') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.registered_practice_id = p.id
 
     UNION ALL
 
@@ -616,8 +620,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_MASKED.PATIENT_ADDRESS c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_masked || '.PATIENT_ADDRESS') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -627,8 +631,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_MASKED.PATIENT_CONTACT c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_masked || '.PATIENT_CONTACT') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -638,8 +642,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PATIENT_PERSON c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.PATIENT_PERSON') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -649,8 +653,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
         SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PATIENT_PERSON c
-    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
+    FROM IDENTIFIER($schema_common || '.PATIENT_PERSON') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PERSON') p ON c.person_id = p.id
 
     UNION ALL
 
@@ -660,8 +664,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -671,8 +675,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
         SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -682,8 +686,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -693,8 +697,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.episode_of_care_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.episode_of_care_id IS NOT NULL AND p.id IS NULL THEN c.episode_of_care_id END),
         SUM(CASE WHEN c.episode_of_care_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.EPISODE_OF_CARE p ON c.episode_of_care_id = p.id
+    FROM IDENTIFIER($schema_common || '.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.EPISODE_OF_CARE') p ON c.episode_of_care_id = p.id
 
     UNION ALL
 
@@ -704,8 +708,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.PRACTITIONER_IN_ROLE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -715,8 +719,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
         SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.PRACTITIONER_IN_ROLE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -726,8 +730,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PROCEDURE_REQUEST c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.PROCEDURE_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -737,8 +741,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PROCEDURE_REQUEST c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.PROCEDURE_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -748,8 +752,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.PROCEDURE_REQUEST c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.PROCEDURE_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -759,8 +763,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
         SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_masked || '.PATIENT') p ON c.patient_id = p.id
 
     UNION ALL
 
@@ -770,8 +774,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.encounter_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN c.encounter_id END),
         SUM(CASE WHEN c.encounter_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_COMMON.ENCOUNTER p ON c.encounter_id = p.id
+    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ENCOUNTER') p ON c.encounter_id = p.id
 
     UNION ALL
 
@@ -781,8 +785,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -792,8 +796,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
         SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -803,8 +807,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.requester_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.requester_organisation_id IS NOT NULL AND p.id IS NULL THEN c.requester_organisation_id END),
         SUM(CASE WHEN c.requester_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.requester_organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.requester_organisation_id = p.id
 
     UNION ALL
 
@@ -814,8 +818,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.recipient_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.recipient_organisation_id IS NOT NULL AND p.id IS NULL THEN c.recipient_organisation_id END),
         SUM(CASE WHEN c.recipient_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.recipient_organisation_id = p.id
+    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') c
+    LEFT JOIN IDENTIFIER($schema_common || '.ORGANISATION') p ON c.recipient_organisation_id = p.id
 
     UNION ALL
 
@@ -825,8 +829,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.location_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.location_id IS NOT NULL AND p.id IS NULL THEN c.location_id END),
         SUM(CASE WHEN c.location_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.SCHEDULE c
-    LEFT JOIN OLIDS_COMMON.LOCATION p ON c.location_id = p.id
+    FROM IDENTIFIER($schema_common || '.SCHEDULE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.LOCATION') p ON c.location_id = p.id
 
     UNION ALL
 
@@ -836,8 +840,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.SCHEDULE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.SCHEDULE') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 
     UNION ALL
 
@@ -847,8 +851,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.schedule_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.schedule_id IS NOT NULL AND p.id IS NULL THEN c.schedule_id END),
         SUM(CASE WHEN c.schedule_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.SCHEDULE_PRACTITIONER c
-    LEFT JOIN OLIDS_COMMON.SCHEDULE p ON c.schedule_id = p.id
+    FROM IDENTIFIER($schema_common || '.SCHEDULE_PRACTITIONER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.SCHEDULE') p ON c.schedule_id = p.id
 
     UNION ALL
 
@@ -858,8 +862,8 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
         COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.SCHEDULE_PRACTITIONER c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    FROM IDENTIFIER($schema_common || '.SCHEDULE_PRACTITIONER') c
+    LEFT JOIN IDENTIFIER($schema_common || '.PRACTITIONER') p ON c.practitioner_id = p.id
 )
 
 SELECT

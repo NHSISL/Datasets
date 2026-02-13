@@ -4,11 +4,14 @@ OLIDS Data Quality Test Runner
 
 Discovers and executes test_*.sql files against Snowflake.
 Database context is set from SNOWFLAKE_DATABASE in .env.
+Schema names (OLIDS_MASKED, OLIDS_COMMON, OLIDS_TERMINOLOGY) are
+auto-detected from INFORMATION_SCHEMA and remapped at runtime.
 
 Usage:
     uv run run_tests.py
     uv run run_tests.py --test test_data_freshness
     uv run run_tests.py --verbose
+    uv run run_tests.py --run investigations/investigate_column_completeness.sql
 """
 
 import os
@@ -52,7 +55,7 @@ def validate_config():
             missing.append(var)
     if missing:
         print(f"ERROR: Missing environment variables: {', '.join(missing)}")
-        print("Run setup.ps1 or copy .env.example to .env and fill in your credentials.")
+        print("Run setup.ps1 (Windows) or setup.sh (macOS/Linux), or copy .env.example to .env.")
         sys.exit(1)
 
 
@@ -88,6 +91,94 @@ def discover_tests(test_dir: Path, specific_test: str = None) -> list:
     return tests
 
 
+# Known tables per default schema. Used to auto-detect actual schema names
+# by querying INFORMATION_SCHEMA. All tables in a group must resolve to the
+# same actual schema; detection fails if they don't.
+SCHEMA_TABLES = {
+    'OLIDS_MASKED': [
+        'PATIENT', 'PERSON', 'PATIENT_ADDRESS', 'PATIENT_CONTACT', 'PATIENT_UPRN',
+    ],
+    'OLIDS_COMMON': [
+        'ALLERGY_INTOLERANCE', 'APPOINTMENT', 'APPOINTMENT_PRACTITIONER',
+        'DIAGNOSTIC_ORDER', 'ENCOUNTER', 'EPISODE_OF_CARE', 'FLAG', 'LOCATION',
+        'LOCATION_CONTACT', 'MEDICATION_ORDER', 'MEDICATION_STATEMENT',
+        'OBSERVATION', 'ORGANISATION', 'PATIENT_PERSON',
+        'PATIENT_REGISTERED_PRACTITIONER_IN_ROLE', 'PRACTITIONER',
+        'PRACTITIONER_IN_ROLE', 'PROCEDURE_REQUEST', 'REFERRAL_REQUEST',
+        'SCHEDULE', 'SCHEDULE_PRACTITIONER',
+    ],
+    'OLIDS_TERMINOLOGY': [
+        'CONCEPT', 'CONCEPT_MAP',
+    ],
+}
+
+
+def detect_schemas(conn, database: str) -> dict:
+    """Auto-detect schema names by querying INFORMATION_SCHEMA for known tables.
+
+    Returns a map from default name to actual name, e.g.
+    {'OLIDS_MASKED': 'OLIDS_PCD', 'OLIDS_COMMON': 'OLIDS_COMMON', ...}
+    """
+    # Reverse map: table name -> default schema
+    table_to_default = {}
+    for default_schema, tables in SCHEMA_TABLES.items():
+        for table in tables:
+            table_to_default[table] = default_schema
+
+    all_tables = list(table_to_default.keys())
+    placeholders = ','.join(f"'{t}'" for t in all_tables)
+    query = (
+        f"SELECT TABLE_SCHEMA, TABLE_NAME "
+        f"FROM INFORMATION_SCHEMA.TABLES "
+        f"WHERE TABLE_NAME IN ({placeholders})"
+    )
+
+    if USE_SNOWPARK:
+        rows = conn.sql(query).collect()
+        results = [(r['TABLE_SCHEMA'], r['TABLE_NAME']) for r in rows]
+    else:
+        cursor = conn.cursor()
+        try:
+            cursor.execute(query)
+            results = cursor.fetchall()
+        finally:
+            cursor.close()
+
+    # For each default schema, collect the actual schema(s) its tables appear in
+    default_to_actuals = {ds: set() for ds in SCHEMA_TABLES}
+    for schema, table in results:
+        default = table_to_default.get(table)
+        if default:
+            default_to_actuals[default].add(schema)
+
+    schema_map = {}
+    for default_name, actual_schemas in default_to_actuals.items():
+        if not actual_schemas:
+            print(f"ERROR: No tables found for schema '{default_name}' in database '{database}'.")
+            print(f"  Expected tables: {', '.join(SCHEMA_TABLES[default_name][:5])}...")
+            sys.exit(1)
+        if len(actual_schemas) > 1:
+            print(f"ERROR: Tables for '{default_name}' found in multiple schemas: "
+                  f"{', '.join(sorted(actual_schemas))}")
+            sys.exit(1)
+        schema_map[default_name] = actual_schemas.pop()
+
+    return schema_map
+
+
+def apply_schema_map(sql: str, schema_map: dict) -> str:
+    """Replace default schema names in SQL with the detected actual names.
+
+    Handles both direct references (OLIDS_MASKED.TABLE in test files) and
+    SET variable values ('OLIDS_MASKED' in investigation files).
+    """
+    for default_name, actual_name in schema_map.items():
+        if default_name != actual_name:
+            sql = sql.replace(f'{default_name}.', f'{actual_name}.')
+            sql = sql.replace(f"'{default_name}'", f"'{actual_name}'")
+    return sql
+
+
 def split_statements(sql: str) -> list:
     """Split SQL into individual statements, skipping empty/comment-only ones."""
     statements = []
@@ -103,13 +194,24 @@ def split_statements(sql: str) -> list:
     return statements
 
 
-def execute_test(conn, sql_file: Path, database: str) -> list:
-    """Execute USE DATABASE then the test SQL, returning result rows as dicts."""
+def execute_sql(conn, sql_file: Path, database: str, schema_map: dict = None) -> list:
+    """Execute USE DATABASE then the SQL file, returning result rows as dicts.
+
+    Strips any USE DATABASE statements from the file (the runner controls database
+    context via .env), and applies schema name remapping before execution.
+    """
     preamble = f'USE DATABASE "{database}"'
     sql = sql_file.read_text(encoding='utf-8')
+    if schema_map:
+        sql = apply_schema_map(sql, schema_map)
     full_sql = preamble + ';\n' + sql
 
     statements = split_statements(full_sql)
+    # Strip USE DATABASE/SCHEMA statements from the file; the preamble handles context
+    statements = [statements[0]] + [
+        s for s in statements[1:]
+        if not s.strip().upper().startswith(('USE DATABASE', 'USE SCHEMA'))
+    ]
     if not statements:
         return []
 
@@ -157,6 +259,26 @@ STANDARD_COLUMNS = {'TEST_NAME', 'TABLE_NAME', 'TEST_SUBJECT', 'STATUS',
 def _extra_columns(row: dict) -> dict:
     """Return non-standard columns from a result row."""
     return {k: v for k, v in row.items() if k not in STANDARD_COLUMNS}
+
+
+def print_query_results(results: list):
+    """Print query results as a formatted table (for --run mode)."""
+    if not results:
+        print("No results returned.")
+        return
+    columns = list(results[0].keys())
+    col_widths = {}
+    for col in columns:
+        values = [str(r.get(col, '')) for r in results]
+        col_widths[col] = min(max(len(col), max((len(v) for v in values), default=0)), 40)
+    header = ' | '.join(col.ljust(col_widths[col])[:col_widths[col]] for col in columns)
+    separator = '-+-'.join('-' * col_widths[col] for col in columns)
+    print(header)
+    print(separator)
+    for r in results:
+        row = ' | '.join(str(r.get(col, '')).ljust(col_widths[col])[:col_widths[col]] for col in columns)
+        print(row)
+    print(f"\n{len(results)} row(s)")
 
 
 def print_results(all_results: dict, durations: dict = None, verbose: bool = False):
@@ -253,26 +375,39 @@ def main():
     parser.add_argument('--dir', '-d', default='data-quality',
                         help='Test subdirectory (default: data-quality)')
     parser.add_argument('--test', '-t', help='Run specific test file only')
+    parser.add_argument('--run', '-r', help='Execute any SQL file with schema replacement and print results')
     parser.add_argument('--verbose', '-v', action='store_true', help='Show detailed output')
     args = parser.parse_args()
 
     validate_config()
 
-    # Find tests
-    test_dir = Path(__file__).parent / args.dir
-    if not test_dir.exists():
-        print(f"ERROR: Test directory not found: {test_dir}")
-        sys.exit(1)
+    run_file = None
+    if args.run:
+        run_path = Path(args.run)
+        if not run_path.is_absolute():
+            run_path = Path(__file__).parent / run_path
+        if not run_path.exists():
+            print(f"ERROR: SQL file not found: {args.run}")
+            sys.exit(1)
+        run_file = run_path
 
-    tests = discover_tests(test_dir, args.test)
+    # Find tests (skip when using --run)
+    tests = []
+    if not run_file:
+        test_dir = Path(__file__).parent / args.dir
+        if not test_dir.exists():
+            print(f"ERROR: Test directory not found: {test_dir}")
+            sys.exit(1)
 
-    if not tests:
-        print(f"No test files found (test_*.sql) in {test_dir}")
-        sys.exit(1)
+        tests = discover_tests(test_dir, args.test)
 
-    print(f"Found {len(tests)} test file(s)")
-    for t in tests:
-        print(f"  - {t.name}")
+        if not tests:
+            print(f"No test files found (test_*.sql) in {test_dir}")
+            sys.exit(1)
+
+        print(f"Found {len(tests)} test file(s)")
+        for t in tests:
+            print(f"  - {t.name}")
 
     # Connect to Snowflake
     print("\nConnecting to Snowflake...")
@@ -283,6 +418,48 @@ def main():
         print(f"ERROR: Failed to connect: {e}")
         sys.exit(1)
 
+    # Detect schema names
+    print("\nDetecting schemas...")
+    try:
+        use_db_stmt = f'USE DATABASE "{DATABASE}"'
+        if USE_SNOWPARK:
+            conn.sql(use_db_stmt).collect()
+        else:
+            cursor = conn.cursor()
+            try:
+                cursor.execute(use_db_stmt)
+            finally:
+                cursor.close()
+    except Exception as e:
+        print(f"ERROR: Failed to set database '{DATABASE}': {e}")
+        print("Check SNOWFLAKE_DATABASE in .env is correct and your role has access.")
+        conn.close()
+        sys.exit(1)
+
+    schema_map = detect_schemas(conn, DATABASE)
+    remapped = {k: v for k, v in schema_map.items() if k != v}
+    if remapped:
+        print("Schema mapping:")
+        for default, actual in schema_map.items():
+            label = f" (remapped from {default})" if default != actual else ""
+            print(f"  {actual}{label}")
+    else:
+        print(f"Schemas: {', '.join(schema_map.values())}")
+
+    # --run mode: execute a single SQL file and print results
+    if run_file:
+        print(f"\nExecuting: {run_file.name}...")
+        try:
+            results = execute_sql(conn, run_file, DATABASE, schema_map)
+            print()
+            print_query_results(results)
+        except Exception as e:
+            print(f"ERROR: {e}")
+            sys.exit(1)
+        finally:
+            conn.close()
+        sys.exit(0)
+
     # Execute tests
     all_results = {}
     all_durations = {}
@@ -292,7 +469,7 @@ def main():
             print(f"\nExecuting: {test_file.name}...")
             test_start = time.time()
             try:
-                results = execute_test(conn, test_file, DATABASE)
+                results = execute_sql(conn, test_file, DATABASE, schema_map)
                 duration = time.time() - test_start
                 all_results[test_file.name] = results
                 all_durations[test_file.name] = duration
