@@ -2,6 +2,13 @@
 
 SQL-based data quality tests for OLIDS, run against Snowflake. Portable across London ICBs — each ICB sets their own database name via `.env` and the runner auto-detects schema names at startup.
 
+## Prerequisites
+
+- **Git** — to clone the repository
+- **A web browser** — for Snowflake SSO login (opens automatically on first run)
+
+Python and all dependencies are installed automatically by the setup script via [uv](https://docs.astral.sh/uv/).
+
 ## Setup
 
 ```powershell
