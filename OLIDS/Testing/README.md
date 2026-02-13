@@ -20,7 +20,7 @@ cd OLIDS/Testing
 ```
 
 ```bash
-# macOS / Linux
+# macOS
 cd OLIDS/Testing
 ./setup.sh
 ```

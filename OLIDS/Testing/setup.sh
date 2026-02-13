@@ -18,11 +18,14 @@ if ! command -v uv &>/dev/null; then
     echo "uv not found on PATH. Installing..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
 
-    # Source the env file uv's installer creates
-    if [ -f "$HOME/.local/bin/env" ]; then
-        source "$HOME/.local/bin/env"
-    fi
-    export PATH="$HOME/.local/bin:$PATH"
+    # uv installs to ~/.local/bin or ~/.cargo/bin depending on the system.
+    # Source the env file it creates and add both locations to PATH.
+    for env_file in "$HOME/.local/bin/env" "$HOME/.cargo/env"; do
+        if [ -f "$env_file" ]; then
+            source "$env_file"
+        fi
+    done
+    export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
     if ! command -v uv &>/dev/null; then
         echo "ERROR: uv installation succeeded but is still not on PATH."
