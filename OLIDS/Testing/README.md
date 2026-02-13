@@ -27,7 +27,7 @@ cd OLIDS/Testing
 
 This installs [uv](https://docs.astral.sh/uv/), prompts for Snowflake credentials, writes `.env`, and runs `uv sync`.
 
-> **Snowflake private link**: If your organisation connects via private link, use the format `<account_locator>.<region>.privatelink` as your Snowflake account identifier (e.g. `us96268.uk-south.privatelink`).
+> **Snowflake private link**: If your organisation connects via private link, use the format `<account_locator>.<region>.privatelink` as your Snowflake account identifier (e.g. `us12345.uk-south.privatelink`).
 
 ## Running Tests
 
