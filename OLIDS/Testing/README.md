@@ -7,7 +7,6 @@ SQL-based data quality tests for OLIDS, run against Snowflake. Portable across L
 - **Git** — to clone the repository
   - Windows: download from [git-scm.com/downloads/win](https://git-scm.com/downloads/win)
   - macOS: run `xcode-select --install` or download from [git-scm.com/downloads/mac](https://git-scm.com/downloads/mac)
-  - Linux: `sudo apt install git` (Debian/Ubuntu) or `sudo dnf install git` (Fedora)
 - **A web browser** — for Snowflake SSO login (opens automatically on first run)
 
 Python and all dependencies are installed automatically by the setup script via [uv](https://docs.astral.sh/uv/).
@@ -21,7 +20,7 @@ cd OLIDS/Testing
 ```
 
 ```bash
-# macOS / Linux
+# macOS
 cd OLIDS/Testing
 chmod +x setup.sh
 ./setup.sh
@@ -102,12 +101,12 @@ Use `UNION ALL` to return multiple checks from one file. Any extra columns beyon
 
 Other notes:
 - Use `SET var = value;` and `$var` for Snowflake session variables (e.g. thresholds)
-- Schema names are configured via SET variables at the top of each file (`schema_masked`, `schema_common`, `schema_terminology`). Reference tables with `IDENTIFIER($schema_common || '.TABLE')`. The runner auto-detects schemas at startup and overwrites the SET values (e.g. `OLIDS_MASKED` → `OLIDS_PCD`). For Snowsight, change the SET values manually.
+- Schema names are declared as SET variables at the top of each file (`schema_masked`, `schema_common`, `schema_terminology`). The runner auto-detects actual schema names at startup and replaces them in the SQL before execution (e.g. `OLIDS_MASKED` → `OLIDS_PCD`). For Snowsight, find-replace the schema prefixes to match your ICB.
 - Avoid semicolons inside comments or string literals — the runner naively splits on `;` to execute statements individually
 
 ## Investigating Failures
 
-The `investigations/` folder has companion scripts for each test. These return row-level detail to help diagnose failures. Run them through the runner with `--run` (handles schema detection and database context automatically), or directly in Snowsight (set the `USE DATABASE` and `SET schema_*` variables at the top of each file to match your ICB).
+The `investigations/` folder has companion scripts for each test. These return row-level detail to help diagnose failures. Run them through the runner with `--run` (handles schema detection and database context automatically), or directly in Snowsight (set the `USE DATABASE` and find-replace the schema prefixes at the top of each file to match your ICB).
 
 ```bash
 uv run run_tests.py --run investigations/investigate_referential_integrity.sql

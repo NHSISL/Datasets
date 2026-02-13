@@ -55,7 +55,7 @@ def validate_config():
             missing.append(var)
     if missing:
         print(f"ERROR: Missing environment variables: {', '.join(missing)}")
-        print("Run setup.ps1 (Windows) or setup.sh (macOS/Linux), or copy .env.example to .env.")
+        print("Run setup.ps1 (Windows) or setup.sh (macOS), or copy .env.example to .env.")
         sys.exit(1)
 
 

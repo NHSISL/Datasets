@@ -43,7 +43,7 @@ WITH org_freshness AS (
     SELECT 'OBSERVATION' AS table_name, record_owner_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM IDENTIFIER($schema_common || '.OBSERVATION') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.OBSERVATION WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -52,7 +52,7 @@ WITH org_freshness AS (
     SELECT 'ENCOUNTER', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.ENCOUNTER') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.ENCOUNTER WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -61,7 +61,7 @@ WITH org_freshness AS (
     SELECT 'MEDICATION_ORDER', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.MEDICATION_ORDER') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.MEDICATION_ORDER WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -70,7 +70,7 @@ WITH org_freshness AS (
     SELECT 'MEDICATION_STATEMENT', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.MEDICATION_STATEMENT') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.MEDICATION_STATEMENT WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -79,7 +79,7 @@ WITH org_freshness AS (
     SELECT 'DIAGNOSTIC_ORDER', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.DIAGNOSTIC_ORDER') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -88,7 +88,7 @@ WITH org_freshness AS (
     SELECT 'ALLERGY_INTOLERANCE', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.ALLERGY_INTOLERANCE') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -97,7 +97,7 @@ WITH org_freshness AS (
     SELECT 'PROCEDURE_REQUEST', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.PROCEDURE_REQUEST') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.PROCEDURE_REQUEST WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 
     UNION ALL
@@ -106,7 +106,7 @@ WITH org_freshness AS (
     SELECT 'REFERRAL_REQUEST', record_owner_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM IDENTIFIER($schema_common || '.REFERRAL_REQUEST') WHERE record_owner_organisation_code IS NOT NULL
+    FROM OLIDS_COMMON.REFERRAL_REQUEST WHERE record_owner_organisation_code IS NOT NULL
     GROUP BY record_owner_organisation_code
 ),
 

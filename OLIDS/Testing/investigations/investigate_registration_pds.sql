@@ -22,20 +22,20 @@ SET snapshot_date = (
     SELECT LAST_DAY(DATEADD(MONTH, -1, DATEADD(DAY, 1,
         MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
-    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE')
+    FROM OLIDS_COMMON.EPISODE_OF_CARE
     WHERE record_owner_organisation_code IS NOT NULL
 );
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
     SELECT DISTINCT record_owner_organisation_code AS practice_code
-    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE')
+    FROM OLIDS_COMMON.EPISODE_OF_CARE
     WHERE record_owner_organisation_code IS NOT NULL
 ),
 
 eligible_patients AS (
     SELECT id AS patient_id, sk_patient_id, death_year, death_month
-    FROM IDENTIFIER($schema_masked || '.PATIENT')
+    FROM OLIDS_MASKED.PATIENT
     WHERE sk_patient_id IS NOT NULL
         AND is_spine_sensitive = FALSE
         AND is_confidential = FALSE
@@ -59,23 +59,23 @@ patient_death_dates AS (
 
 patient_to_person AS (
     SELECT patient_id, person_id
-    FROM IDENTIFIER($schema_common || '.PATIENT_PERSON')
+    FROM OLIDS_COMMON.PATIENT_PERSON
     WHERE patient_id IS NOT NULL AND person_id IS NOT NULL
 ),
 
 episode_type_regular AS (
-    SELECT source_code_id FROM IDENTIFIER($schema_terminology || '.CONCEPT_MAP') WHERE source_code = 'Regular'
+    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular'
 ),
 
 episode_status_left AS (
-    SELECT source_code_id FROM IDENTIFIER($schema_terminology || '.CONCEPT_MAP') WHERE source_code = 'Left'
+    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left'
 ),
 
 filtered_episodes AS (
     SELECT eoc.id AS episode_id, ptp.person_id,
         eoc.record_owner_organisation_code AS practice_code,
         eoc.organisation_id, eoc.episode_of_care_start_date
-    FROM IDENTIFIER($schema_common || '.EPISODE_OF_CARE') eoc
+    FROM OLIDS_COMMON.EPISODE_OF_CARE eoc
     INNER JOIN patient_death_dates pdd ON eoc.patient_id = pdd.patient_id
     INNER JOIN patient_to_person ptp ON eoc.patient_id = ptp.patient_id
     INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_code_id
