@@ -437,14 +437,10 @@ def main():
         sys.exit(1)
 
     schema_map = detect_schemas(conn, DATABASE)
-    remapped = {k: v for k, v in schema_map.items() if k != v}
-    if remapped:
-        print("Schema mapping:")
-        for default, actual in schema_map.items():
-            label = f" (remapped from {default})" if default != actual else ""
-            print(f"  {actual}{label}")
-    else:
-        print(f"Schemas: {', '.join(schema_map.values())}")
+    print(f"Database: {DATABASE}")
+    for default, actual in schema_map.items():
+        label = f" (remapped from {default})" if default != actual else ""
+        print(f"  {actual}{label}")
 
     # --run mode: execute a single SQL file and print results
     if run_file:
