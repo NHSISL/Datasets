@@ -9,7 +9,7 @@
          total rows and NULL rows for that column in a single table scan.
       2. The 'threshold' value is the max allowed NULL % for that column:
          - 0.0%: Primary keys (no NULLs allowed)
-         - 0.5%: Core foreign keys (patient_id, person_id, sk_patient_id)
+         - 0.5%: Core foreign keys (patient_id, person_id)
          - 1.0%: System/clinical dates (lds_start_date_time, clinical_effective_date)
          - 5.0%: Concept fields (*_concept_id) — higher tolerance for optional coding
       3. The final SELECT computes the completeness % (100 - null%) and
@@ -35,11 +35,11 @@ SET schema_terminology = 'OLIDS_TERMINOLOGY';
 WITH checks AS (
     -- Each row: table, column, max allowed NULL %, total rows, NULL count
     -- PATIENT (OLIDS_MASKED)
+    -- Note: sk_patient_id and gender_concept_id are MASKED-only columns (not in OLIDS_PCD).
+    -- Add those checks to an ICB-specific test directory if needed.
     SELECT 'PATIENT' AS table_name, 'id' AS column_name, 0.0 AS threshold, COUNT(*) AS total_rows, SUM(CASE WHEN id IS NULL THEN 1 ELSE 0 END) AS null_count FROM OLIDS_MASKED.PATIENT
-    UNION ALL SELECT 'PATIENT', 'sk_patient_id', 0.5, COUNT(*), SUM(CASE WHEN sk_patient_id IS NULL THEN 1 ELSE 0 END) FROM OLIDS_MASKED.PATIENT
     UNION ALL SELECT 'PATIENT', 'birth_year', 1.0, COUNT(*), SUM(CASE WHEN birth_year IS NULL THEN 1 ELSE 0 END) FROM OLIDS_MASKED.PATIENT
     UNION ALL SELECT 'PATIENT', 'birth_month', 1.0, COUNT(*), SUM(CASE WHEN birth_month IS NULL THEN 1 ELSE 0 END) FROM OLIDS_MASKED.PATIENT
-    UNION ALL SELECT 'PATIENT', 'gender_concept_id', 5.0, COUNT(*), SUM(CASE WHEN gender_concept_id IS NULL THEN 1 ELSE 0 END) FROM OLIDS_MASKED.PATIENT
     UNION ALL SELECT 'PATIENT', 'lds_start_date_time', 1.0, COUNT(*), SUM(CASE WHEN lds_start_date_time IS NULL THEN 1 ELSE 0 END) FROM OLIDS_MASKED.PATIENT
 
     -- PERSON (OLIDS_MASKED)
