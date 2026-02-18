@@ -16,8 +16,9 @@
     - [practitioner](#practitioner)
     - [procedure\_request](#procedure_request)
     - [referral\_request](#referral_request)
-    - [person (pcd)](#person (pcd))
-    - [Record Owner Organsiation Evolution](#record_owner_organisation_code-evolution)
+    - [person (pcd)](#person-(pcd))
+    - [patient](#patient)
+    - [appointment](#appointment)
 
 The below is a report of the currently known issues within the One London Integrated Data Set (OLIDS)
 
@@ -116,6 +117,13 @@ The fields “telephone_number”, “mobile_number”, “email_address”, “
   - `internal_id`
   - `mps_id`
  
+## patient
+
+- Within the pre‑production environment, the Date of Birth (DOB) field contains NULL values as of 08/01/2026. Because DOB is used to derive Birth Year and Birth Month, these downstream fields are also being populated as NULL in the output dataset. This affects both EMIS and TPP data set.
+
+## appointment
+
+- The field booking method concept id doesn't appear to be available within TPP data set, as such all TPP's booking method concept is set as NULL from the derivation as of 08/01/2026. EMIS is not affected.
 ### RECORD_OWNER_ORGANISATION_CODE Evolution
 Note that we have formalised the definitions of "publisher", "author" and "supplier" as below:
 
