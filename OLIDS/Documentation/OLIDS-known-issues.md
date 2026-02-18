@@ -34,6 +34,7 @@ The below is a report of the currently known issues within the One London Integr
   - `FLAG` - this is because there is currently no mapping from EMIS data to the flag table.
 - There is general inconsistency of the inclusion or exclusion of the fields `lds_start_date_time` and `lds_end_date_time`. These fields are system fields to denote the lifespan of the version of the record with the stated business key. They are of no value for analytical purposes. As such we will likely remove these in future releases.
 - There is a general inconsistency of the inclusion of exclusion of the fields `lds_is_deleted` and `is_deleted`. The former is the dataset agnostic deletion indicator, the latter is the dataset source systems own indicator. In relational stores the service will be applying deletions and hence all records will be in an active state only. This therefore means that these fields may not be required and may simply cause confusion by their inclusion in the tables. As such we will likely remove these in future releases.
+- Evolution of the 'RECORD_OWNER_ORGANISATION_CODE' column. It has been desribed as confusing as such we will work towards a managed change to a new set of definitions. 
 
 ### allergy_intolerance
 
@@ -123,3 +124,29 @@ The fields “telephone_number”, “mobile_number”, “email_address”, “
 ## appointment
 
 - The field booking method concept id doesn't appear to be available within TPP data set, as such all TPP's booking method concept is set as NULL from the derivation as of 08/01/2026. EMIS is not affected.
+### RECORD_OWNER_ORGANISATION_CODE Evolution
+Note that we have formalised the definitions of "publisher", "author" and "supplier" as below:
+
+#### PUBLISHER 
+is the data controller authorising the publication of data into the London Data Service, and directly governs onward distribution of a record
+- example 1: a GP Practice may be the PUBLISHER of a GP appointment record
+- example 2: NHS England may be the PUBLISHER of a Commissioning Data Set / MHSDS record
+- example 3: Facts and Dimensions Ltd may be the PUBLISHER of a reference data object from "UK Health Dimensions" a record
+
+ #### AUTHOR is the originating controller that creates the record information.
+
+example 1: a GP Practice may be the AUTHOR of a GP appointment record
+example 2: Barts Health Trust may be the AUTHOR of a Secondary User Services (SUS) Commissioning Data Set record
+example 3: the Office For National Statistics may be the author of a reference item within a "UK Health Dimensions" table
+
+#### SUPPLIER
+is the organisation / entity that provides the data (or access to the data) to the London Data Service, but does not necessarily govern the data flow (i.e. they may be a processor, not a controller).
+- example 1: a GP system supplier such as EMIS or TPP may be the SUPPLIER of a GP appointment record.
+- example 2: a Data Services for Commissioners Regional Office (DSCRO) may be the SUPPLIER of a CDS record.
+- example 3: Facts and Dimensions Ltd may be the SUPPLIER of their own "UK Health Dimensions" records.
+
+#### General notes
+An organisation can simultaneously be publisher, author and supplier of a record. This would mean that they are responsible for the originating governance of the record (data capture), are directly responsible for submission to London Data Services (i.e. they do not submit to a intermediary data controller operating a larger data collection), and directly facilitate the flow of data into the London Data Service (i.e. they do not use a sub-processor or processor to supply that data into the service).
+
+#### Implementation 
+This will be phased with an initial release linked to [BUG 25880](https://dev.azure.com/NELAnalytics/LondonDataService/_boards/board/t/User%20Testing/Stories?System.WorkItemType=Bug&workitem=25880) for the Practitiner Table
