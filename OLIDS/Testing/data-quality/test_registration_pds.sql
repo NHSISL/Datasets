@@ -124,7 +124,6 @@ filtered_episodes AS (
         eoc.id AS episode_id,
         ptp.person_id,
         eoc.record_owner_organisation_code AS practice_code,
-        eoc.organisation_id,
         eoc.episode_of_care_start_date
     FROM OLIDS_COMMON.EPISODE_OF_CARE eoc
     INNER JOIN patient_death_dates pdd ON eoc.patient_id = pdd.patient_id
@@ -135,7 +134,6 @@ filtered_episodes AS (
         AND eoc.lds_start_date_time IS NOT NULL
         AND eoc.episode_of_care_start_date IS NOT NULL
         AND eoc.patient_id IS NOT NULL
-        AND eoc.organisation_id IS NOT NULL
         -- Exclude Left episodes with no end date (data quality issue)
         AND NOT (esl.source_code_id IS NOT NULL AND eoc.episode_of_care_end_date IS NULL)
         -- Episode started on or before snapshot
@@ -155,7 +153,7 @@ deduplicated_registrations AS (
     SELECT person_id, practice_code
     FROM filtered_episodes
     QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY person_id, organisation_id
+        PARTITION BY person_id, practice_code
         ORDER BY episode_of_care_start_date DESC, episode_id DESC
     ) = 1
 ),

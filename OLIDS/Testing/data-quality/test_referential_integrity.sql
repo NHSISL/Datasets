@@ -273,17 +273,6 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- EPISODE_OF_CARE -> ORGANISATION
-    SELECT 'EPISODE_OF_CARE', 'organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
-
-    UNION ALL
-
     -- EPISODE_OF_CARE -> PRACTITIONER (care manager)
     SELECT 'EPISODE_OF_CARE', 'care_manager_practitioner_id', 'PRACTITIONER',
         COUNT(DISTINCT c.care_manager_practitioner_id),

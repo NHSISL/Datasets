@@ -235,16 +235,6 @@ GROUP BY c.person_id
 
 UNION ALL
 
--- EPISODE_OF_CARE -> ORGANISATION
-SELECT 'EPISODE_OF_CARE', 'organisation_id', 'ORGANISATION',
-    c.organisation_id, COUNT(*)
-FROM OLIDS_COMMON.EPISODE_OF_CARE c
-LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
-WHERE c.organisation_id IS NOT NULL AND p.id IS NULL
-GROUP BY c.organisation_id
-
-UNION ALL
-
 -- EPISODE_OF_CARE -> PRACTITIONER (care manager)
 SELECT 'EPISODE_OF_CARE', 'care_manager_practitioner_id', 'PRACTITIONER',
     c.care_manager_practitioner_id, COUNT(*)
