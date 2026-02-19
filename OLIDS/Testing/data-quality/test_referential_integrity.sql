@@ -865,7 +865,7 @@ SELECT
         ELSE 'FAIL'
     END AS status,
     CASE WHEN total_rows_with_fk = 0 THEN NULL
-        ELSE ROUND(100.0 * (total_distinct_fk - orphaned_fk) / NULLIF(total_distinct_fk, 0), 2)
+        ELSE TRUNC(100.0 * (total_distinct_fk - orphaned_fk) / NULLIF(total_distinct_fk, 0), 2)
     END AS metric_value,
     100.0 AS threshold,
     total_distinct_fk,

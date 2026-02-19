@@ -327,9 +327,10 @@ def print_results(all_results: dict, durations: dict = None, verbose: bool = Fal
                 threshold = f.get('THRESHOLD', 'N/A')
                 print(f"   - {table}.{subject}: {metric}% (threshold: {threshold}%)")
 
-                if verbose:
-                    for k, v in _extra_columns(f).items():
-                        print(f"       {k}: {v}")
+                extras = _extra_columns(f)
+                if extras:
+                    detail = ', '.join(f"{k}={v}" for k, v in extras.items())
+                    print(f"     [{detail}]")
 
         # Show passing results
         passes = [r for r in results if r.get('STATUS') == 'PASS']

@@ -207,7 +207,7 @@ SELECT
         WHEN distinct_count = total_rows THEN 'PASS'
         ELSE 'FAIL'
     END AS status,
-    CASE WHEN total_rows = 0 THEN NULL ELSE ROUND(100.0 * distinct_count / total_rows, 4) END AS metric_value,
+    CASE WHEN total_rows = 0 THEN NULL ELSE TRUNC(100.0 * distinct_count / total_rows, 4) END AS metric_value,
     100.0 AS threshold,
     total_rows,
     distinct_count,
