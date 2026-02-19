@@ -6,8 +6,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 - [OLIDS data dictionary](#olids-data-dictionary)
   - [Contents](#contents)
-  - [LDS_dataset_id](#lds_dataset_id)
-  - [`[OLIDS_COMMON]` Schema](#olids_common-schema)
+  - [LDS\_dataset\_id](#lds_dataset_id)
+  - [`[OLIDS_COMMON]` Schema](#%60%5Bolids_common%5D%60-schema)
     - [allergy\_intolerance](#allergy_intolerance)
     - [appointment](#appointment)
     - [appointment\_practitioner](#appointment_practitioner)
@@ -21,33 +21,32 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
     - [medication\_statement](#medication_statement)
     - [observation](#observation)
     - [organisation](#organisation)
+    - [patient (masked)](#patient-(masked))
+    - [patient\_address (masked)](#patient_address-(masked))
+    - [patient\_contact (masked)](#patient_contact-(masked))
     - [patient\_person](#patient_person)
     - [patient\_registered\_practitioner\_in\_role](#patient_registered_practitioner_in_role)
+    - [patient\_uprn (masked)](#patient_uprn-(masked))
+    - [person (masked)](#person-(masked))
     - [practitioner](#practitioner)
     - [practitioner\_in\_role](#practitioner_in_role)
     - [procedure\_request](#procedure_request)
     - [referral\_request](#referral_request)
     - [schedule](#schedule)
     - [schedule\_practitioner](#schedule_practitioner)
-  - [`[OLIDS_MASKED]` Schema](#olids_masked-schema)
-    - [patient](#patient-masked)
-    - [patient\_address](#patient_address-masked)
-    - [patient\_contact](#patient_contact-masked)
-    - [patient\_uprn](#patient_uprn-masked)
-    - [person](#person-masked)
-  - [`[OLIDS_PCD]` Schema](#olids_pcd-schema)
+  - [`[OLIDS_PCD]` Schema](#%60%5Bolids_pcd%5D%60-schema)
     - [patient](#patient)
     - [patient\_address](#patient_address)
     - [patient\_contact](#patient_contact)
     - [patient\_uprn](#patient_uprn)
     - [person](#person)
-  - [`[OLIDS_TERMINOLOGY]` Schema](#olids_terminology-schema)
+  - [`[OLIDS_TERMINOLOGY]` Schema](#%60%5Bolids_terminology%5D%60-schema)
     - [concept](#concept)
     - [concept\_map](#concept_map)
-  - [`[OLIDS_GOVERNANCE]` Schema](#olids_governance-schema)
-    - [allocation](#allocation)   
-  - [`[REFERENCE]` Schema](#reference-schema)
-    - [postcode_hash](#postcode_hash)
+  - [`[OLIDS_GOVERNANCE]` Schema](#%60%5Bolids_governance%5D%60-schema)
+    - [allocation](#allocation)
+  - [`[REFERENCE]` Schema](#%60%5Breference%5D%60-schema)
+    - [postcode\_hash](#postcode_hash)
   - [Ages](#ages)
 
 ## LDS_dataset_id
@@ -55,7 +54,7 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 >[!NOTE]
 >LDS assigned identifier for the source dataset
 
-| LDS_dataset_id                          | dataset_name              |
+| LDS_dataset_id                        | dataset_name              |
 |---------------------------------------|---------------------------|
 | 07F337BD-E189-484A-9350-D9C6442AA829  |PrimaryCareTPP             |
 | 6A62313A-7442-462E-B6E8-DEC541DDD0BA  | PrimaryCareEMIS           |
@@ -349,9 +348,10 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 
 | Column Name | Data Type | Description | Compass Equivalent |
 | --- | --- | ---- | ---- |
-| `LDS_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_ID` | uniqueidentifier | LDS assigned Unique Identifier for the source record version |  |
 | `ID` | uniqueidentifier | Unique ID of the encounter event | `id` |
-| `ORGANISATION_ID` | uniqueidentifier | organisation at which the episode of care took place | `organization_id` |
+| `ORGANISATION_ID_PUBLISHER` | uniqueidentifier | data controller for the record that supplied this episode of care information. Joins to `ORGANISATION.ID` | `organization_id` |
+| `ORGANISATION_ID_MANAGING` | uniqueidentifier | organisation at which the episode of care took place / responsible for delivering the care. Joins to `ORGANISATION.ID` | |
 | `PATIENT_ID` | uniqueidentifier | The patient this event belongs to | `patient_id` |
 | `PERSON_ID` | uniqueidentifier | The person this event belongs to | `person_id` |
 | `EPISODE_TYPE_SOURCE_CONCEPT_ID` | uniqueidentifier | Reference to the registration type of the patient | `registration_type_concept_id` |
@@ -360,15 +360,18 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `EPISODE_OF_CARE_END_DATE` | datetime(3) | The date the episode of care ended | `date_registered_end` |
 | `CARE_MANAGER_PRACTITIONER_ID` | uniqueidentifier | Reference to the usual GP for this episode of care | `usual_gp_practitioner_id` |
 | `LDS_ID` | uniqueidentifier | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_SOURCE_RECORD_BINARY_ID` | binary() | added to test/evalute conversion of uniqueidentifiers in MSSQL to binary types preferred by snowflake for joins. | |
+| `LDS_SOURCE_RECORD_SHARD_ID` | int | added to test/evaulate performance improvements for sharding/clustering records for allocation join optimisation | |
 | `LDS_BUSINESS_KEY` | varchar(8000) | Natural or source key for the unique event/entity of the table |  |
-| `LDS_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
+| `LDS_SOURCE_DATASET_ID` | uniqueidentifier | LDS assigned identifier for the source dataset |  |
 | `LDS_CDM_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
 | `LDS_VERSIONER_EVENT_ID` | uniqueidentifier | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
-| `RECORD_OWNER_ORGANISATION_CODE` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
-| `LDS_DATETIME_DATA_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
-| `LDS_INITIAL_DATA_RECEIVED_DATE` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `ORGANISATION_CODE_PUBLISHER` | varchar(50) | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `ORGANISATION_CODE_MANAGING` | varchar(50) | The organisation code of the care provider. |  |
+| `LDS_DATETIME_SOURCE_RECORD_ACQUIRED` | datetime(3) | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_DATETIME_SOURCE_RECORD_UPDATED` | datetime(3) | Date the business id was first witnessed by, received by or supplied to LDS |  |
 | `LDS_IS_DELETED` | bit | LDS flag standardised presentation of deleted state of the record |  |
-| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the record version was correct |  |
+| `LDS_START_DATE_TIME` | datetime(3) | LDS datetime stamp from which the OLIDS record version was correct |  |
 | `LDS_LAKEHOUSE_DATE_PROCESSED` | date | LDS date stamp when the data was landed into the lakehouse |  |
 | `LDS_LAKEHOUSE_DATETIME_UPDATED` | datetime(3) | LDS datetime stamp when the data was updated in the lakehouse |  |
 
@@ -382,6 +385,8 @@ The tables below show the One London Integrated Data Set (OLIDS) schema definiti
 | `EPISODE_TYPE_SOURCE_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referenced by none to many `EPISODE_OF_CARE` items |
 | `EPISODE_STATUS_SOURCE_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referenced by none to many `EPISODE_OF_CARE` items |
 | `CARE_MANAGER_PRACTITIONER_ID` | `PRACTITIONER.ID` | One `PRACTITIONER` can be a care manager in none to many `EPISODE_OF_CARE` items |
+| `ORGANISATION_ID_PUBLISHER` | `ORGANISATION.ID` | One `ORGANISATION` can publish many `EPISODE_OF_CARE` events |
+| `ORGANISATION_ID_MANAGING` | `ORGANISATION.ID` | One `ORGANISATION` can manage many `EPISODE_OF_CARE` events |
 
 ### flag
 
