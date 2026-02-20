@@ -61,7 +61,7 @@ The list below only provides guidance on changes to the structure of tables (dat
 
 #### ✏️ Renamed or Altered columns
 
-- ✏️ Rename `ORGANISATION_ID` to `ORGANISATION_ID_PUBLISHER` - _this clarifies that the column relates to the data controller of the record, rather than to the manager of care. Joins to `ORGANISATION.ID`. Intended to tie in with proposed renaming of `RECORD_OWNER_ORGANSIATION_CODE` to `ORGANISATION_CODE_PUBLISHER`. See added columns below._
+- ✏️ Rename `ORGANISATION_ID` to `ORGANISATION_ID_PUBLISHER` - _this clarifies that the column relates to the **data controller** of the record, rather than to the manager of care. Joins to `ORGANISATION.ID`. Intended to tie in with proposed renaming of `RECORD_OWNER_ORGANSIATION_CODE` to `ORGANISATION_CODE_PUBLISHER`. See added columns below._
 
 - ✏️ Rename `LDS_DATASET_ID` to `LDS_SOURCE_DATASET_ID` - _this clarifies that the column relates to the originating source dataset that informed the OLIDS record. Intended to tie in with proposed renaming of `LDS_RECORD_ID`, see `LDS_SOURCE_RECORD_ID` in added columns below._
 
@@ -73,7 +73,7 @@ The list below only provides guidance on changes to the structure of tables (dat
 
 - ➕ `LDS_SOURCE_RECORD_ID` - _proposed renaming for `LDS_RECORD_ID`, this clarifies that the information relates to the originating supplied (i.e. EMIS or TPP) record, rather than to the generated OLIDS record. If accepted this would be applied to all tables_.
 
-- ➕ `ORGANISATION_CODE_PUBLISHER` - _proposed renaming for `RECORD_OWNER_ORGANISATION_CODE`, this is the ODS code of the organisation leading / delivering the episode of care_
+- ➕ `ORGANISATION_CODE_PUBLISHER` - _proposed renaming for `RECORD_OWNER_ORGANISATION_CODE`, this is the ODS code of the **data controller** organisation who supplied the information to LDS._
 
 - ➕ `ORGANISATION_CODE_MANAGING` - _this is the ODS code of the organisation leading / delivering the episode of care_
 
