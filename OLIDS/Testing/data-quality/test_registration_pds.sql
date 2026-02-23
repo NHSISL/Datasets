@@ -53,14 +53,14 @@ SET snapshot_date = (
         MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
-    WHERE record_owner_organisation_code IS NOT NULL
+    WHERE organisation_code_publisher IS NOT NULL
 );
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
-    SELECT DISTINCT record_owner_organisation_code AS practice_code
+    SELECT DISTINCT organisation_code_publisher AS practice_code
     FROM OLIDS_COMMON.EPISODE_OF_CARE
-    WHERE record_owner_organisation_code IS NOT NULL
+    WHERE organisation_code_publisher IS NOT NULL
 ),
 
 -- Step 1: Patients eligible for counting (exclude test/sensitive/confidential)
@@ -123,7 +123,7 @@ filtered_episodes AS (
     SELECT
         eoc.id AS episode_id,
         ptp.person_id,
-        eoc.record_owner_organisation_code AS practice_code,
+        eoc.organisation_code_publisher AS practice_code,
         eoc.episode_of_care_start_date
     FROM OLIDS_COMMON.EPISODE_OF_CARE eoc
     INNER JOIN patient_death_dates pdd ON eoc.patient_id = pdd.patient_id

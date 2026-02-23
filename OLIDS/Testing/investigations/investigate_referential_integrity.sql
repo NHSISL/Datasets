@@ -245,6 +245,26 @@ GROUP BY c.care_manager_practitioner_id
 
 UNION ALL
 
+-- EPISODE_OF_CARE -> ORGANISATION (publisher)
+SELECT 'EPISODE_OF_CARE', 'organisation_id_publisher', 'ORGANISATION',
+    c.organisation_id_publisher, COUNT(*)
+FROM OLIDS_COMMON.EPISODE_OF_CARE c
+LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_publisher = p.id
+WHERE c.organisation_id_publisher IS NOT NULL AND p.id IS NULL
+GROUP BY c.organisation_id_publisher
+
+UNION ALL
+
+-- EPISODE_OF_CARE -> ORGANISATION (managing)
+SELECT 'EPISODE_OF_CARE', 'organisation_id_managing', 'ORGANISATION',
+    c.organisation_id_managing, COUNT(*)
+FROM OLIDS_COMMON.EPISODE_OF_CARE c
+LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_managing = p.id
+WHERE c.organisation_id_managing IS NOT NULL AND p.id IS NULL
+GROUP BY c.organisation_id_managing
+
+UNION ALL
+
 -- FLAG -> PATIENT
 SELECT 'FLAG', 'patient_id', 'PATIENT',
     c.patient_id, COUNT(*)
