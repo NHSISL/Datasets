@@ -3,6 +3,10 @@
 > [!NOTE]
 > The below is a summary of the changes since the previous release [Release-282](Release-282.md).
 
+- *Environment release date: 2026-02-24*
+- *Release Date to consumers: ???*
+- *Release note published: 2026-03-03*
+
 ## Summary
 This release delivers important enhancements to the One London Data Platform, including new monitoring views, improved data processing pipelines, and fixes for data quality and performance issues. Users will benefit from more reliable data flows, improved completeness, and easier troubleshooting, while internal teams gain new tools for monitoring and administration.
 
@@ -122,4 +126,5 @@ The full details of all the Pull Requests and their associated Work Items includ
   - User Story [WI 27704](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27704): Add spark profiles to code repo
 - [PR 3270](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/3270): Updating pipeline: Transmitter Master
   - User Story [WI 27770](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27770): Update transmitter : Compare row counts for OLIDS only - not MONITORING, REFERENCE
+
 
