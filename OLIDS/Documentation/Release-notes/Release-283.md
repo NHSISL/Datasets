@@ -4,14 +4,14 @@
 > The below is a summary of the changes since the previous release [Release-282](Release-282.md).
 
 - *Environment release date: 2026-02-24*
-- *Release Date to consumers: ???*
+- *Release Date to consumers: 2026-03-11*
 - *Release note published: 2026-03-03*
 
 ## Summary
 This release delivers important enhancements to the One London Data Platform, including new monitoring views, improved data processing pipelines, and fixes for data quality and performance issues. Users will benefit from more reliable data flows, improved completeness, and easier troubleshooting, while internal teams gain new tools for monitoring and administration.
 
 ### New Features
-- Added new monitoring views for tracking versioner events and silent failures, supporting better oversight of data processing. *[SQL, [PR#3254](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3254), [WI#27568](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27568)]*  
+- Added new monitoring views for tracking versioner events and silent failures, supporting better oversight of data processing and suppored data to be re-processed. *[SQL, [PR#3254](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3254), [WI#27568](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27568)]*  
   > ✨ ***Feature:*** Enables internal teams to monitor and troubleshoot data processing more effectively.
 
 - Introduced a stored procedure to identify tables with Sflag and Valueset tags, providing additional reference data for Fabric. *[SQL, [PR#3272](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3272), [WI#26533](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/26533)]*  
@@ -19,10 +19,10 @@ This release delivers important enhancements to the One London Data Platform, in
 
 ### Improvements
 - Standardized contact information logic across EMIS and TPP layers, ensuring consistent handling of patient and location contacts. *[SQL, [PR#3247](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3247), [WI#27372](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27372), [WI#27620](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27620)]*  
-  > 🎯 ***Impact:*** Reduces duplicate IDs and improves data consistency across systems.
+  > 🎯 ***Impact:*** Reduces duplicate IDs and improves data consistency across systems. This fixes [Bug 27372](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27372/)
 
 - Updated system values for medication statements to align with terminology mappings, improving compatibility and mapping accuracy. *[SQL, [PR#3262](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3262), [WI#27110](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27110), [WI#27722](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27722)]*  
-  > 🎯 ***Impact:*** Ensures correct mapping for medication authorisation types and supports polypharmacy analysis.
+  > 🎯 ***Impact:*** Ensures correct mapping for medication authorisation types and supports polypharmacy analysis. Fixing bug [Bug 27110](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27110/)
 
 - Added query performance helper views to the CommonModel database for identifying slow queries. *[SQL, [PR#3248](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3248), [WI#26816](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/26816)]*  
   > 🎯 ***Impact:*** Helps optimize database performance and improves responsiveness.
@@ -41,7 +41,7 @@ This release delivers important enhancements to the One London Data Platform, in
   > 🐞 ***Fix:*** Restores data flow to registrar service, preventing missing records.
 
 - Made concept ID generation null-safe, preventing orphaned values and improving referential integrity. *[SQL, [PR#3263](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3263), [WI#27370](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27370)]*  
-  > 🐞 ***Fix:*** Ensures concept IDs are only generated when valid, improving data quality.
+  > 🐞 ***Fix:*** Ensures concept IDs are only generated when valid, improving data quality. 
 
 - Added a tie-breaker and improved partitioning for episode of care sequencing, resolving broken references and orphaned rows. *[SQL, [PR#3261](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SQL/pullrequest/3261), [WI#26370](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/26370)]*  
   > 🐞 ***Fix:*** Guarantees deterministic output and correct episode grouping.
@@ -126,5 +126,6 @@ The full details of all the Pull Requests and their associated Work Items includ
   - User Story [WI 27704](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27704): Add spark profiles to code repo
 - [PR 3270](https://dev.azure.com/NELAnalytics/LondonDataService/_git/SynapseWorkspace/pullrequest/3270): Updating pipeline: Transmitter Master
   - User Story [WI 27770](https://dev.azure.com/NELAnalytics/LondonDataService/_workitems/edit/27770): Update transmitter : Compare row counts for OLIDS only - not MONITORING, REFERENCE
+
 
 
