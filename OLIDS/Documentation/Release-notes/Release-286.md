@@ -3,6 +3,10 @@
 > [!NOTE]
 > The below is a summary of the changes since the previous release [Release-283](Release-283.md).
 
+- *Environment release date: 2026-03-12*
+- *Release Date to consumers: TBC*
+- *Release note published: 2026-03-12*
+
 ## Summary
 This release delivers several important bug fixes and enhancements to the One London Data Platform, improving data quality, system reliability, and performance. Key highlights include improved performance for Versioner processing, resolution of data duplication and null value issues, and enhanced orchestration stability. New data objects and procedures have been added, and referential integrity checks have been refined for greater accuracy.
 
