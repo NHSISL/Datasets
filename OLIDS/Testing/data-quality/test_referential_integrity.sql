@@ -284,25 +284,14 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- EPISODE_OF_CARE -> ORGANISATION (publisher)
-    SELECT 'EPISODE_OF_CARE', 'organisation_id_publisher', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id_publisher),
-        SUM(CASE WHEN c.organisation_id_publisher IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id_publisher IS NOT NULL AND p.id IS NULL THEN c.organisation_id_publisher END),
-        SUM(CASE WHEN c.organisation_id_publisher IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- EPISODE_OF_CARE -> ORGANISATION
+    SELECT 'EPISODE_OF_CARE', 'organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.organisation_id),
+        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
+        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_publisher = p.id
-
-    UNION ALL
-
-    -- EPISODE_OF_CARE -> ORGANISATION (managing)
-    SELECT 'EPISODE_OF_CARE', 'organisation_id_managing', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id_managing),
-        SUM(CASE WHEN c.organisation_id_managing IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id_managing IS NOT NULL AND p.id IS NULL THEN c.organisation_id_managing END),
-        SUM(CASE WHEN c.organisation_id_managing IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_managing = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
 
     UNION ALL
 
@@ -581,25 +570,25 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- OBSERVATION -> PRACTITIONER
-    SELECT 'OBSERVATION', 'practitioner_id', 'PRACTITIONER',
-        COUNT(DISTINCT c.practitioner_id),
-        SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
-        SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- OBSERVATION -> PRACTITIONER (UAT column typo: practioner_id)
+    SELECT 'OBSERVATION', 'practioner_id', 'PRACTITIONER',
+        COUNT(DISTINCT c.practioner_id),
+        SUM(CASE WHEN c.practioner_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.practioner_id IS NOT NULL AND p.id IS NULL THEN c.practioner_id END),
+        SUM(CASE WHEN c.practioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practioner_id = p.id
 
     UNION ALL
 
-    -- OBSERVATION -> OBSERVATION (parent)
-    SELECT 'OBSERVATION', 'parent_observation_id', 'OBSERVATION',
-        COUNT(DISTINCT c.parent_observation_id),
-        SUM(CASE WHEN c.parent_observation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.parent_observation_id IS NOT NULL AND p.id IS NULL THEN c.parent_observation_id END),
-        SUM(CASE WHEN c.parent_observation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- OBSERVATION -> OBSERVATION (parent, UAT column typo: parent_obervation_id)
+    SELECT 'OBSERVATION', 'parent_obervation_id', 'OBSERVATION',
+        COUNT(DISTINCT c.parent_obervation_id),
+        SUM(CASE WHEN c.parent_obervation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.parent_obervation_id IS NOT NULL AND p.id IS NULL THEN c.parent_obervation_id END),
+        SUM(CASE WHEN c.parent_obervation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.OBSERVATION c
-    LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.parent_observation_id = p.id
+    LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.parent_obervation_id = p.id
 
     UNION ALL
 
