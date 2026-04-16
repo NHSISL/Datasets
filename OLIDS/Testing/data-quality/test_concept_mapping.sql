@@ -49,14 +49,14 @@ WITH checks AS (
 
     UNION ALL
 
-    SELECT 'OBSERVATION', 'result_value_unit_concept_id',
-        COUNT(DISTINCT base.result_value_unit_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.result_value_unit_concept_id END),
+    SELECT 'OBSERVATION', 'result_value_units_concept_id',
+        COUNT(DISTINCT base.result_value_units_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.result_value_units_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.OBSERVATION base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.result_value_unit_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.result_value_units_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.result_value_unit_concept_id IS NOT NULL
+    WHERE base.result_value_units_concept_id IS NOT NULL
 
     UNION ALL
 
@@ -83,14 +83,14 @@ WITH checks AS (
     UNION ALL
 
     -- MEDICATION_STATEMENT
-    SELECT 'MEDICATION_STATEMENT', 'medication_statement_core_concept_id',
-        COUNT(DISTINCT base.medication_statement_core_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.medication_statement_core_concept_id END),
+    SELECT 'MEDICATION_STATEMENT', 'medication_statement_source_concept_id',
+        COUNT(DISTINCT base.medication_statement_source_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.medication_statement_source_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.MEDICATION_STATEMENT base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_statement_core_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_statement_source_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.medication_statement_core_concept_id IS NOT NULL
+    WHERE base.medication_statement_source_concept_id IS NOT NULL
 
     UNION ALL
 
@@ -117,14 +117,14 @@ WITH checks AS (
     UNION ALL
 
     -- MEDICATION_ORDER
-    SELECT 'MEDICATION_ORDER', 'medication_order_core_concept_id',
-        COUNT(DISTINCT base.medication_order_core_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.medication_order_core_concept_id END),
+    SELECT 'MEDICATION_ORDER', 'medication_order_source_concept_id',
+        COUNT(DISTINCT base.medication_order_source_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.medication_order_source_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.MEDICATION_ORDER base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_order_core_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.medication_order_source_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.medication_order_core_concept_id IS NOT NULL
+    WHERE base.medication_order_source_concept_id IS NOT NULL
 
     UNION ALL
 
@@ -151,6 +151,17 @@ WITH checks AS (
 
     UNION ALL
 
+    SELECT 'DIAGNOSTIC_ORDER', 'result_value_units_concept_id',
+        COUNT(DISTINCT base.result_value_units_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.result_value_units_concept_id END),
+        SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER base
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.result_value_units_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
+    WHERE base.result_value_units_concept_id IS NOT NULL
+
+    UNION ALL
+
     SELECT 'DIAGNOSTIC_ORDER', 'date_precision_concept_id',
         COUNT(DISTINCT base.date_precision_concept_id), COUNT(*),
         COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.date_precision_concept_id END),
@@ -174,14 +185,14 @@ WITH checks AS (
     UNION ALL
 
     -- PROCEDURE_REQUEST
-    SELECT 'PROCEDURE_REQUEST', 'procedure_core_concept_id',
-        COUNT(DISTINCT base.procedure_core_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.procedure_core_concept_id END),
+    SELECT 'PROCEDURE_REQUEST', 'procedure_request_source_concept_id',
+        COUNT(DISTINCT base.procedure_request_source_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.procedure_request_source_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.PROCEDURE_REQUEST base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.procedure_core_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.procedure_request_source_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.procedure_core_concept_id IS NOT NULL
+    WHERE base.procedure_request_source_concept_id IS NOT NULL
 
     UNION ALL
 
@@ -241,14 +252,14 @@ WITH checks AS (
 
     UNION ALL
 
-    SELECT 'REFERRAL_REQUEST', 'referal_request_type_concept_id',
-        COUNT(DISTINCT base.referal_request_type_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.referal_request_type_concept_id END),
+    SELECT 'REFERRAL_REQUEST', 'referral_request_type_concept_id',
+        COUNT(DISTINCT base.referral_request_type_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.referral_request_type_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.REFERRAL_REQUEST base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.referal_request_type_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.referral_request_type_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.referal_request_type_concept_id IS NOT NULL
+    WHERE base.referral_request_type_concept_id IS NOT NULL
 
     UNION ALL
 
@@ -287,14 +298,14 @@ WITH checks AS (
     UNION ALL
 
     -- ENCOUNTER
-    SELECT 'ENCOUNTER', 'encounter_core_concept_id',
-        COUNT(DISTINCT base.encounter_core_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.encounter_core_concept_id END),
+    SELECT 'ENCOUNTER', 'encounter_source_concept_id',
+        COUNT(DISTINCT base.encounter_source_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.encounter_source_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.ENCOUNTER base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.encounter_core_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.encounter_source_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.encounter_core_concept_id IS NOT NULL
+    WHERE base.encounter_source_concept_id IS NOT NULL
 
     UNION ALL
 
@@ -310,25 +321,25 @@ WITH checks AS (
     UNION ALL
 
     -- EPISODE_OF_CARE
-    SELECT 'EPISODE_OF_CARE', 'episode_type_raw_concept_id',
-        COUNT(DISTINCT base.episode_type_raw_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.episode_type_raw_concept_id END),
+    SELECT 'EPISODE_OF_CARE', 'episode_type_source_concept_id',
+        COUNT(DISTINCT base.episode_type_source_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.episode_type_source_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.episode_type_raw_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.episode_type_source_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.episode_type_raw_concept_id IS NOT NULL
+    WHERE base.episode_type_source_concept_id IS NOT NULL
 
     UNION ALL
 
-    SELECT 'EPISODE_OF_CARE', 'episode_status_raw_concept_id',
-        COUNT(DISTINCT base.episode_status_raw_concept_id), COUNT(*),
-        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.episode_status_raw_concept_id END),
+    SELECT 'EPISODE_OF_CARE', 'episode_status_source_concept_id',
+        COUNT(DISTINCT base.episode_status_source_concept_id), COUNT(*),
+        COUNT(DISTINCT CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN base.episode_status_source_concept_id END),
         SUM(CASE WHEN (cm.source_code_id IS NULL OR c.id IS NULL) THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE base
-    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.episode_status_raw_concept_id = cm.source_code_id
+    LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm ON base.episode_status_source_concept_id = cm.source_code_id
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT c ON cm.target_code_id = c.id
-    WHERE base.episode_status_raw_concept_id IS NOT NULL
+    WHERE base.episode_status_source_concept_id IS NOT NULL
 
     UNION ALL
 

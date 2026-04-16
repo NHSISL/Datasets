@@ -195,47 +195,53 @@ def split_statements(sql: str) -> list:
 
 
 def execute_sql(conn, sql_file: Path, database: str, schema_map: dict = None) -> list:
-    """Execute a SQL file, returning result rows as dicts.
+    """Execute USE DATABASE then the SQL file, returning result rows as dicts.
 
-    Each call re-establishes database context and the case-insensitive
-    identifier setting. USE DATABASE runs first (before the flag changes
-    identifier resolution) so mixed-case database names resolve correctly.
+    Strips any USE DATABASE statements from the file (the runner controls database
+    context via .env), and applies schema name remapping before execution.
     """
+    preamble = f'USE DATABASE "{database}"'
     sql = sql_file.read_text(encoding='utf-8')
     if schema_map:
         sql = apply_schema_map(sql, schema_map)
+    full_sql = preamble + ';\n' + sql
 
-    statements = split_statements(sql)
+    statements = split_statements(full_sql)
     # Strip USE DATABASE/SCHEMA statements from the file; the preamble handles context
-    statements = [
-        s for s in statements
+    statements = [statements[0]] + [
+        s for s in statements[1:]
         if not s.strip().upper().startswith(('USE DATABASE', 'USE SCHEMA'))
     ]
     if not statements:
         return []
 
-    # Preamble: USE DATABASE (case-sensitive, before the flag changes resolution)
-    # then enable case-insensitive column matching for lowercase UAT columns.
-    # Files with '-- no-case-fix' opt out (e.g. when referencing external DBs
-    # with mixed-case names that would be broken by the flag).
-    needs_case_fix = '-- no-case-fix' not in sql
-    preamble = [f'USE DATABASE "{database}"']
-    if needs_case_fix:
-        preamble.append('ALTER SESSION SET QUOTED_IDENTIFIERS_IGNORE_CASE = TRUE')
-    else:
-        preamble.append('ALTER SESSION SET QUOTED_IDENTIFIERS_IGNORE_CASE = FALSE')
-    statements = preamble + statements
-
     if USE_SNOWPARK:
-        for stmt in statements[:-1]:
-            conn.sql(stmt).collect()
+        # Execute each statement; collect results from the last one
+        for i, stmt in enumerate(statements[:-1]):
+            try:
+                conn.sql(stmt).collect()
+            except Exception as e:
+                if i == 0 and 'USE' in stmt.upper():
+                    raise RuntimeError(
+                        f"Failed to set database '{database}'. "
+                        f"Check SNOWFLAKE_DATABASE in .env is correct and your role has access."
+                    ) from e
+                raise
         df = conn.sql(statements[-1]).to_pandas()
         return df.to_dict('records')
     else:
         cursor = conn.cursor()
         try:
-            for stmt in statements:
-                cursor.execute(stmt)
+            for i, stmt in enumerate(statements):
+                try:
+                    cursor.execute(stmt)
+                except Exception as e:
+                    if i == 0 and 'USE' in stmt.upper():
+                        raise RuntimeError(
+                            f"Failed to set database '{database}'. "
+                            f"Check SNOWFLAKE_DATABASE in .env is correct and your role has access."
+                        ) from e
+                    raise
             columns = [desc[0] for desc in cursor.description] if cursor.description else []
             rows = cursor.fetchall()
             return [dict(zip(columns, row)) for row in rows]
@@ -416,19 +422,13 @@ def main():
     # Detect schema names
     print("\nDetecting schemas...")
     try:
-        # Case-insensitive identifiers: UAT databases use lowercase column names
-        # created with quoted identifiers. This setting lets unquoted SQL references
-        # (resolved to uppercase by default) match lowercase columns.
-        case_stmt = 'ALTER SESSION SET QUOTED_IDENTIFIERS_IGNORE_CASE = TRUE'
         use_db_stmt = f'USE DATABASE "{DATABASE}"'
         if USE_SNOWPARK:
             conn.sql(use_db_stmt).collect()
-            conn.sql(case_stmt).collect()
         else:
             cursor = conn.cursor()
             try:
                 cursor.execute(use_db_stmt)
-                cursor.execute(case_stmt)
             finally:
                 cursor.close()
     except Exception as e:
