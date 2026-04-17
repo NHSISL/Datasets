@@ -1,0 +1,40 @@
+version: 2
+sources:
+  - name: olids_terminology
+    schema: OLIDS_TERMINOLOGY
+    tables:
+      - name: concept_map
+        description: 'A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.'
+        meta:
+          source_markdown: 'OLIDS/Documentation/OLIDS-schema-dictionary.md'
+        columns:
+          - name: 'ID'
+            description: '''Unique ID of the person'''
+            data_type: 'uniqueidentifier'
+          - name: 'LDS_ID'
+            description: 'LDS assigned Unique Identifier for this common modelled record version'
+            data_type: 'uniqueidentifier'
+          - name: 'LDS_BUSINESS_KEY'
+            description: 'Natural or source key for the unique event/entity of the table'
+            data_type: 'varchar(8000)'
+          - name: 'LDS_DATASET_ID'
+            description: 'LDS assigned identifier for the source dataset'
+            data_type: 'uniqueidentifier'
+          - name: 'CONCEPT_MAP_ID'
+            description: 'The Unique Identifier for the mapping group'
+            data_type: 'uniqueidentifier'
+          - name: 'SOURCE_CODE_ID'
+            description: 'The Unique Identifier for the source concept_id'
+            data_type: 'uniqueidentifier'
+          - name: 'TARGET_CODE_ID'
+            description: 'The Unique Identifier for the target concept_id'
+            data_type: 'uniqueidentifier'
+          - name: 'IS_PRIMARY'
+            description: 'True/false is this the primary mapping for the code'
+            data_type: 'bit'
+          - name: 'EQUIVALENCE'
+            description: 'type of mapping equivalence, values include ''equivalent'', ''wider'', ''narrower'', ''subsumes'', ''inexact'', ''unmatched'', ''specializes'', ''relatedto'', ''unmatched'''
+            data_type: 'varchar(255)'
+          - name: 'LDS_START_DATE_TIME'
+            description: 'LDS datetime stamp from which the record version was correct'
+            data_type: 'datetime(3)'
