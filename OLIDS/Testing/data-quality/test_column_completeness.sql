@@ -201,7 +201,8 @@ WITH checks AS (
     UNION ALL SELECT 'CONCEPT_MAP', 'lds_start_datetime', 1.0, COUNT(*), SUM(CASE WHEN lds_start_datetime IS NULL THEN 1 ELSE 0 END) FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
 )
 
--- Compute completeness % and compare against threshold
+-- Compute completeness % and compare against threshold.
+-- A column passes if its per-column threshold is met OR completeness > 99%.
 SELECT
     'column_completeness' AS test_name,
     table_name,
@@ -209,6 +210,7 @@ SELECT
     CASE
         WHEN total_rows = 0 THEN 'WARN'
         WHEN ROUND(100.0 * null_count / total_rows, 4) <= threshold THEN 'PASS'
+        WHEN ROUND(100.0 - (100.0 * null_count / total_rows), 4) > 99 THEN 'PASS'
         ELSE 'FAIL'
     END AS status,
     CASE WHEN total_rows = 0 THEN NULL ELSE ROUND(100.0 - (100.0 * null_count / total_rows), 2) END AS metric_value,

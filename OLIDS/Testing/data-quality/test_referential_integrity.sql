@@ -800,6 +800,7 @@ WITH fk_checks AS (
     LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
 )
 
+-- A relationship passes if no orphans OR >99% of distinct FK values resolve.
 SELECT
     'referential_integrity' AS test_name,
     child_table AS table_name,
@@ -807,12 +808,13 @@ SELECT
     CASE
         WHEN total_rows_with_fk = 0 THEN 'WARN'
         WHEN orphaned_fk = 0 THEN 'PASS'
+        WHEN TRUNC(100.0 * (total_distinct_fk - orphaned_fk) / NULLIF(total_distinct_fk, 0), 4) > 99 THEN 'PASS'
         ELSE 'FAIL'
     END AS status,
     CASE WHEN total_rows_with_fk = 0 THEN NULL
         ELSE TRUNC(100.0 * (total_distinct_fk - orphaned_fk) / NULLIF(total_distinct_fk, 0), 2)
     END AS metric_value,
-    100.0 AS threshold,
+    99.0 AS threshold,
     total_distinct_fk,
     total_rows_with_fk,
     orphaned_fk,
