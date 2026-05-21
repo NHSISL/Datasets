@@ -23,14 +23,14 @@ SET snapshot_date = (
         MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
-    WHERE organisation_code_publisher IS NOT NULL
+    WHERE publisher_organisation_code IS NOT NULL
 );
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
-    SELECT DISTINCT organisation_code_publisher AS practice_code
+    SELECT DISTINCT publisher_organisation_code AS practice_code
     FROM OLIDS_COMMON.EPISODE_OF_CARE
-    WHERE organisation_code_publisher IS NOT NULL
+    WHERE publisher_organisation_code IS NOT NULL
 ),
 
 eligible_patients AS (
@@ -39,7 +39,7 @@ eligible_patients AS (
     WHERE sk_patient_id IS NOT NULL
         AND is_spine_sensitive = FALSE
         AND is_confidential = FALSE
-        AND is_dummy_patient = FALSE
+        AND is_test_patient = FALSE
 ),
 
 patient_death_dates AS (
@@ -64,28 +64,28 @@ patient_to_person AS (
 ),
 
 episode_type_regular AS (
-    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular'
+    SELECT source_concept_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Regular'
 ),
 
 episode_status_left AS (
-    SELECT source_code_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left'
+    SELECT source_concept_id FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE source_code = 'Left'
 ),
 
 filtered_episodes AS (
     SELECT eoc.id AS episode_id, ptp.person_id,
-        eoc.organisation_code_publisher AS practice_code,
-        eoc.organisation_id_publisher, eoc.episode_of_care_start_date
+        eoc.publisher_organisation_code AS practice_code,
+        eoc.publisher_organisation_id, eoc.episode_of_care_start_date
     FROM OLIDS_COMMON.EPISODE_OF_CARE eoc
     INNER JOIN patient_death_dates pdd ON eoc.patient_id = pdd.patient_id
     INNER JOIN patient_to_person ptp ON eoc.patient_id = ptp.patient_id
-    INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_code_id
-    LEFT JOIN episode_status_left esl ON eoc.episode_status_source_concept_id = esl.source_code_id
+    INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_concept_id
+    LEFT JOIN episode_status_left esl ON eoc.episode_status_source_concept_id = esl.source_concept_id
     WHERE COALESCE(eoc.lds_is_deleted, FALSE) = FALSE
-        AND eoc.lds_start_date_time IS NOT NULL
+        AND eoc.lds_start_datetime IS NOT NULL
         AND eoc.episode_of_care_start_date IS NOT NULL
         AND eoc.patient_id IS NOT NULL
-        AND eoc.organisation_id_publisher IS NOT NULL
-        AND NOT (esl.source_code_id IS NOT NULL AND eoc.episode_of_care_end_date IS NULL)
+        AND eoc.publisher_organisation_id IS NOT NULL
+        AND NOT (esl.source_concept_id IS NOT NULL AND eoc.episode_of_care_end_date IS NULL)
         AND eoc.episode_of_care_start_date <= $snapshot_date::DATE
         AND (eoc.episode_of_care_end_date IS NULL
             OR eoc.episode_of_care_end_date > $snapshot_date::DATE
@@ -97,7 +97,7 @@ deduplicated_registrations AS (
     SELECT person_id, practice_code
     FROM filtered_episodes
     QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY person_id, organisation_id_publisher
+        PARTITION BY person_id, publisher_organisation_id
         ORDER BY episode_of_care_start_date DESC, episode_id DESC
     ) = 1
 ),

@@ -22,11 +22,11 @@
 
     Coverage:
       The 8 tables below are all OLIDS tables that have both
-      record_owner_organisation_code and date_recorded columns.
+      publisher_organisation_code and date_recorded columns.
 
     To add a table:
       Add a UNION ALL block selecting table_name, org_code, MAX(date_recorded),
-      and DATEDIFF from any table with record_owner_organisation_code and
+      and DATEDIFF from any table with publisher_organisation_code and
       date_recorded columns.
 */
 
@@ -40,74 +40,74 @@ SET pass_threshold_pct = 90.0;
 WITH org_freshness AS (
     -- Each block: find most recent date_recorded per org for one table
     -- OBSERVATION
-    SELECT 'OBSERVATION' AS table_name, record_owner_organisation_code AS org_code,
+    SELECT 'OBSERVATION' AS table_name, publisher_organisation_code AS org_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END) AS max_date_recorded,
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE) AS days_since_last
-    FROM OLIDS_COMMON.OBSERVATION WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.OBSERVATION WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- ENCOUNTER
-    SELECT 'ENCOUNTER', record_owner_organisation_code,
+    SELECT 'ENCOUNTER', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.ENCOUNTER WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.ENCOUNTER WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- MEDICATION_ORDER
-    SELECT 'MEDICATION_ORDER', record_owner_organisation_code,
+    SELECT 'MEDICATION_ORDER', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.MEDICATION_ORDER WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.MEDICATION_ORDER WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- MEDICATION_STATEMENT
-    SELECT 'MEDICATION_STATEMENT', record_owner_organisation_code,
+    SELECT 'MEDICATION_STATEMENT', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.MEDICATION_STATEMENT WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- DIAGNOSTIC_ORDER
-    SELECT 'DIAGNOSTIC_ORDER', record_owner_organisation_code,
+    SELECT 'DIAGNOSTIC_ORDER', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.DIAGNOSTIC_ORDER WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- ALLERGY_INTOLERANCE
-    SELECT 'ALLERGY_INTOLERANCE', record_owner_organisation_code,
+    SELECT 'ALLERGY_INTOLERANCE', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.ALLERGY_INTOLERANCE WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- PROCEDURE_REQUEST
-    SELECT 'PROCEDURE_REQUEST', record_owner_organisation_code,
+    SELECT 'PROCEDURE_REQUEST', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.PROCEDURE_REQUEST WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.PROCEDURE_REQUEST WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 
     UNION ALL
 
     -- REFERRAL_REQUEST
-    SELECT 'REFERRAL_REQUEST', record_owner_organisation_code,
+    SELECT 'REFERRAL_REQUEST', publisher_organisation_code,
         MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END),
         DATEDIFF('day', MAX(CASE WHEN date_recorded <= CURRENT_DATE THEN date_recorded END), CURRENT_DATE)
-    FROM OLIDS_COMMON.REFERRAL_REQUEST WHERE record_owner_organisation_code IS NOT NULL
-    GROUP BY record_owner_organisation_code
+    FROM OLIDS_COMMON.REFERRAL_REQUEST WHERE publisher_organisation_code IS NOT NULL
+    GROUP BY publisher_organisation_code
 ),
 
 -- Aggregate: count fresh vs stale orgs per table

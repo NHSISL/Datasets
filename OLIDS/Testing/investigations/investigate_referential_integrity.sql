@@ -206,12 +206,12 @@ GROUP BY c.appointment_id
 UNION ALL
 
 -- ENCOUNTER -> ORGANISATION (service provider)
-SELECT 'ENCOUNTER', 'service_provider_organisation_id', 'ORGANISATION',
-    c.service_provider_organisation_id, COUNT(*)
+SELECT 'ENCOUNTER', 'provider_organisation_id', 'ORGANISATION',
+    c.provider_organisation_id, COUNT(*)
 FROM OLIDS_COMMON.ENCOUNTER c
-LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.service_provider_organisation_id = p.id
-WHERE c.service_provider_organisation_id IS NOT NULL AND p.id IS NULL
-GROUP BY c.service_provider_organisation_id
+LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.provider_organisation_id = p.id
+WHERE c.provider_organisation_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.provider_organisation_id
 
 UNION ALL
 
@@ -236,42 +236,32 @@ GROUP BY c.person_id
 UNION ALL
 
 -- EPISODE_OF_CARE -> PRACTITIONER (care manager)
-SELECT 'EPISODE_OF_CARE', 'care_manager_practitioner_id', 'PRACTITIONER',
-    c.care_manager_practitioner_id, COUNT(*)
+SELECT 'EPISODE_OF_CARE', 'care_manager_practitioner_in_role_id', 'PRACTITIONER',
+    c.care_manager_practitioner_in_role_id, COUNT(*)
 FROM OLIDS_COMMON.EPISODE_OF_CARE c
-LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.care_manager_practitioner_id = p.id
-WHERE c.care_manager_practitioner_id IS NOT NULL AND p.id IS NULL
-GROUP BY c.care_manager_practitioner_id
+LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.care_manager_practitioner_in_role_id = p.id
+WHERE c.care_manager_practitioner_in_role_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.care_manager_practitioner_in_role_id
 
 UNION ALL
 
 -- EPISODE_OF_CARE -> ORGANISATION (publisher)
-SELECT 'EPISODE_OF_CARE', 'organisation_id_publisher', 'ORGANISATION',
-    c.organisation_id_publisher, COUNT(*)
+SELECT 'EPISODE_OF_CARE', 'publisher_organisation_id', 'ORGANISATION',
+    c.publisher_organisation_id, COUNT(*)
 FROM OLIDS_COMMON.EPISODE_OF_CARE c
-LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_publisher = p.id
-WHERE c.organisation_id_publisher IS NOT NULL AND p.id IS NULL
-GROUP BY c.organisation_id_publisher
+LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.publisher_organisation_id = p.id
+WHERE c.publisher_organisation_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.publisher_organisation_id
 
 UNION ALL
 
 -- EPISODE_OF_CARE -> ORGANISATION (managing)
-SELECT 'EPISODE_OF_CARE', 'organisation_id_managing', 'ORGANISATION',
-    c.organisation_id_managing, COUNT(*)
+SELECT 'EPISODE_OF_CARE', 'provider_organisation_id', 'ORGANISATION',
+    c.provider_organisation_id, COUNT(*)
 FROM OLIDS_COMMON.EPISODE_OF_CARE c
-LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_managing = p.id
-WHERE c.organisation_id_managing IS NOT NULL AND p.id IS NULL
-GROUP BY c.organisation_id_managing
-
-UNION ALL
-
--- FLAG -> PATIENT
-SELECT 'FLAG', 'patient_id', 'PATIENT',
-    c.patient_id, COUNT(*)
-FROM OLIDS_COMMON.FLAG c
-LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
-WHERE c.patient_id IS NOT NULL AND p.id IS NULL
-GROUP BY c.patient_id
+LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.provider_organisation_id = p.id
+WHERE c.provider_organisation_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.provider_organisation_id
 
 UNION ALL
 
@@ -546,12 +536,12 @@ GROUP BY c.parent_organisation_id
 UNION ALL
 
 -- PATIENT -> ORGANISATION (registered practice)
-SELECT 'PATIENT', 'registered_practice_id', 'ORGANISATION',
-    c.registered_practice_id, COUNT(*)
+SELECT 'PATIENT', 'registered_practice_organisation_id', 'ORGANISATION',
+    c.registered_practice_organisation_id, COUNT(*)
 FROM OLIDS_MASKED.PATIENT c
-LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.registered_practice_id = p.id
-WHERE c.registered_practice_id IS NOT NULL AND p.id IS NULL
-GROUP BY c.registered_practice_id
+LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.registered_practice_organisation_id = p.id
+WHERE c.registered_practice_organisation_id IS NOT NULL AND p.id IS NULL
+GROUP BY c.registered_practice_organisation_id
 
 UNION ALL
 

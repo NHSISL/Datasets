@@ -240,14 +240,14 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- ENCOUNTER -> ORGANISATION (service provider)
-    SELECT 'ENCOUNTER', 'service_provider_organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.service_provider_organisation_id),
-        SUM(CASE WHEN c.service_provider_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.service_provider_organisation_id IS NOT NULL AND p.id IS NULL THEN c.service_provider_organisation_id END),
-        SUM(CASE WHEN c.service_provider_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- ENCOUNTER -> ORGANISATION (provider)
+    SELECT 'ENCOUNTER', 'provider_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.provider_organisation_id),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN c.provider_organisation_id END),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.ENCOUNTER c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.service_provider_organisation_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.provider_organisation_id = p.id
 
     UNION ALL
 
@@ -273,47 +273,36 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- EPISODE_OF_CARE -> PRACTITIONER (care manager)
-    SELECT 'EPISODE_OF_CARE', 'care_manager_practitioner_id', 'PRACTITIONER',
-        COUNT(DISTINCT c.care_manager_practitioner_id),
-        SUM(CASE WHEN c.care_manager_practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.care_manager_practitioner_id IS NOT NULL AND p.id IS NULL THEN c.care_manager_practitioner_id END),
-        SUM(CASE WHEN c.care_manager_practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- EPISODE_OF_CARE -> PRACTITIONER_IN_ROLE (care manager)
+    SELECT 'EPISODE_OF_CARE', 'care_manager_practitioner_in_role_id', 'PRACTITIONER_IN_ROLE',
+        COUNT(DISTINCT c.care_manager_practitioner_in_role_id),
+        SUM(CASE WHEN c.care_manager_practitioner_in_role_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.care_manager_practitioner_in_role_id IS NOT NULL AND p.id IS NULL THEN c.care_manager_practitioner_in_role_id END),
+        SUM(CASE WHEN c.care_manager_practitioner_in_role_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.care_manager_practitioner_id = p.id
+    LEFT JOIN OLIDS_COMMON.PRACTITIONER_IN_ROLE p ON c.care_manager_practitioner_in_role_id = p.id
 
     UNION ALL
 
     -- EPISODE_OF_CARE -> ORGANISATION (publisher)
-    SELECT 'EPISODE_OF_CARE', 'organisation_id_publisher', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id_publisher),
-        SUM(CASE WHEN c.organisation_id_publisher IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id_publisher IS NOT NULL AND p.id IS NULL THEN c.organisation_id_publisher END),
-        SUM(CASE WHEN c.organisation_id_publisher IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    SELECT 'EPISODE_OF_CARE', 'publisher_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.publisher_organisation_id),
+        SUM(CASE WHEN c.publisher_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.publisher_organisation_id IS NOT NULL AND p.id IS NULL THEN c.publisher_organisation_id END),
+        SUM(CASE WHEN c.publisher_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_publisher = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.publisher_organisation_id = p.id
 
     UNION ALL
 
-    -- EPISODE_OF_CARE -> ORGANISATION (managing)
-    SELECT 'EPISODE_OF_CARE', 'organisation_id_managing', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id_managing),
-        SUM(CASE WHEN c.organisation_id_managing IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id_managing IS NOT NULL AND p.id IS NULL THEN c.organisation_id_managing END),
-        SUM(CASE WHEN c.organisation_id_managing IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- EPISODE_OF_CARE -> ORGANISATION (provider)
+    SELECT 'EPISODE_OF_CARE', 'provider_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.provider_organisation_id),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN c.provider_organisation_id END),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.EPISODE_OF_CARE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id_managing = p.id
-
-    UNION ALL
-
-    -- FLAG -> PATIENT
-    SELECT 'FLAG', 'patient_id', 'PATIENT',
-        COUNT(DISTINCT c.patient_id),
-        SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
-        SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.FLAG c
-    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.provider_organisation_id = p.id
 
     UNION ALL
 
@@ -372,14 +361,14 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- MEDICATION_ORDER -> ORGANISATION
-    SELECT 'MEDICATION_ORDER', 'organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- MEDICATION_ORDER -> ORGANISATION (provider)
+    SELECT 'MEDICATION_ORDER', 'provider_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.provider_organisation_id),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN c.provider_organisation_id END),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.provider_organisation_id = p.id
 
     UNION ALL
 
@@ -416,39 +405,6 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- MEDICATION_ORDER -> ALLERGY_INTOLERANCE
-    SELECT 'MEDICATION_ORDER', 'allergy_intolerance_id', 'ALLERGY_INTOLERANCE',
-        COUNT(DISTINCT c.allergy_intolerance_id),
-        SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN c.allergy_intolerance_id END),
-        SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.ALLERGY_INTOLERANCE p ON c.allergy_intolerance_id = p.id
-
-    UNION ALL
-
-    -- MEDICATION_ORDER -> DIAGNOSTIC_ORDER
-    SELECT 'MEDICATION_ORDER', 'diagnostic_order_id', 'DIAGNOSTIC_ORDER',
-        COUNT(DISTINCT c.diagnostic_order_id),
-        SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN c.diagnostic_order_id END),
-        SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.DIAGNOSTIC_ORDER p ON c.diagnostic_order_id = p.id
-
-    UNION ALL
-
-    -- MEDICATION_ORDER -> REFERRAL_REQUEST
-    SELECT 'MEDICATION_ORDER', 'referral_request_id', 'REFERRAL_REQUEST',
-        COUNT(DISTINCT c.referral_request_id),
-        SUM(CASE WHEN c.referral_request_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN c.referral_request_id END),
-        SUM(CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_ORDER c
-    LEFT JOIN OLIDS_COMMON.REFERRAL_REQUEST p ON c.referral_request_id = p.id
-
-    UNION ALL
-
     -- MEDICATION_STATEMENT -> PATIENT
     SELECT 'MEDICATION_STATEMENT', 'patient_id', 'PATIENT',
         COUNT(DISTINCT c.patient_id),
@@ -471,14 +427,14 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- MEDICATION_STATEMENT -> ORGANISATION
-    SELECT 'MEDICATION_STATEMENT', 'organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- MEDICATION_STATEMENT -> ORGANISATION (provider)
+    SELECT 'MEDICATION_STATEMENT', 'provider_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.provider_organisation_id),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN c.provider_organisation_id END),
+        SUM(CASE WHEN c.provider_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.provider_organisation_id = p.id
 
     UNION ALL
 
@@ -512,39 +468,6 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.observation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.MEDICATION_STATEMENT c
     LEFT JOIN OLIDS_COMMON.OBSERVATION p ON c.observation_id = p.id
-
-    UNION ALL
-
-    -- MEDICATION_STATEMENT -> ALLERGY_INTOLERANCE
-    SELECT 'MEDICATION_STATEMENT', 'allergy_intolerance_id', 'ALLERGY_INTOLERANCE',
-        COUNT(DISTINCT c.allergy_intolerance_id),
-        SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN c.allergy_intolerance_id END),
-        SUM(CASE WHEN c.allergy_intolerance_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.ALLERGY_INTOLERANCE p ON c.allergy_intolerance_id = p.id
-
-    UNION ALL
-
-    -- MEDICATION_STATEMENT -> DIAGNOSTIC_ORDER
-    SELECT 'MEDICATION_STATEMENT', 'diagnostic_order_id', 'DIAGNOSTIC_ORDER',
-        COUNT(DISTINCT c.diagnostic_order_id),
-        SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN c.diagnostic_order_id END),
-        SUM(CASE WHEN c.diagnostic_order_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.DIAGNOSTIC_ORDER p ON c.diagnostic_order_id = p.id
-
-    UNION ALL
-
-    -- MEDICATION_STATEMENT -> REFERRAL_REQUEST
-    SELECT 'MEDICATION_STATEMENT', 'referral_request_id', 'REFERRAL_REQUEST',
-        COUNT(DISTINCT c.referral_request_id),
-        SUM(CASE WHEN c.referral_request_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN c.referral_request_id END),
-        SUM(CASE WHEN c.referral_request_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
-    FROM OLIDS_COMMON.MEDICATION_STATEMENT c
-    LEFT JOIN OLIDS_COMMON.REFERRAL_REQUEST p ON c.referral_request_id = p.id
 
     UNION ALL
 
@@ -615,13 +538,13 @@ WITH fk_checks AS (
     UNION ALL
 
     -- PATIENT -> ORGANISATION (registered practice)
-    SELECT 'PATIENT', 'registered_practice_id', 'ORGANISATION',
-        COUNT(DISTINCT c.registered_practice_id),
-        SUM(CASE WHEN c.registered_practice_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.registered_practice_id IS NOT NULL AND p.id IS NULL THEN c.registered_practice_id END),
-        SUM(CASE WHEN c.registered_practice_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    SELECT 'PATIENT', 'registered_practice_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.registered_practice_organisation_id),
+        SUM(CASE WHEN c.registered_practice_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.registered_practice_organisation_id IS NOT NULL AND p.id IS NULL THEN c.registered_practice_organisation_id END),
+        SUM(CASE WHEN c.registered_practice_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_MASKED.PATIENT c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.registered_practice_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.registered_practice_organisation_id = p.id
 
     UNION ALL
 
@@ -680,25 +603,25 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- PATIENT_REGISTERED_PRACTITIONER_IN_ROLE -> ORGANISATION
-    SELECT 'PATIENT_REGISTERED_PRACTITIONER_IN_ROLE', 'organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- PATIENT_REGISTERED_PRACTITIONER_IN_ROLE -> ORGANISATION (publisher)
+    SELECT 'PATIENT_REGISTERED_PRACTITIONER_IN_ROLE', 'publisher_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.publisher_organisation_id),
+        SUM(CASE WHEN c.publisher_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.publisher_organisation_id IS NOT NULL AND p.id IS NULL THEN c.publisher_organisation_id END),
+        SUM(CASE WHEN c.publisher_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.publisher_organisation_id = p.id
 
     UNION ALL
 
-    -- PATIENT_REGISTERED_PRACTITIONER_IN_ROLE -> PRACTITIONER
-    SELECT 'PATIENT_REGISTERED_PRACTITIONER_IN_ROLE', 'practitioner_id', 'PRACTITIONER',
-        COUNT(DISTINCT c.practitioner_id),
-        SUM(CASE WHEN c.practitioner_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_id END),
-        SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- PATIENT_REGISTERED_PRACTITIONER_IN_ROLE -> PRACTITIONER_IN_ROLE
+    SELECT 'PATIENT_REGISTERED_PRACTITIONER_IN_ROLE', 'practitioner_in_role_id', 'PRACTITIONER_IN_ROLE',
+        COUNT(DISTINCT c.practitioner_in_role_id),
+        SUM(CASE WHEN c.practitioner_in_role_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.practitioner_in_role_id IS NOT NULL AND p.id IS NULL THEN c.practitioner_in_role_id END),
+        SUM(CASE WHEN c.practitioner_in_role_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.PATIENT_REGISTERED_PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+    LEFT JOIN OLIDS_COMMON.PRACTITIONER_IN_ROLE p ON c.practitioner_in_role_id = p.id
 
     UNION ALL
 
@@ -724,14 +647,14 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- PRACTITIONER_IN_ROLE -> ORGANISATION
-    SELECT 'PRACTITIONER_IN_ROLE', 'organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- PRACTITIONER_IN_ROLE -> ORGANISATION (employer)
+    SELECT 'PRACTITIONER_IN_ROLE', 'employer_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.employer_organisation_id),
+        SUM(CASE WHEN c.employer_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.employer_organisation_id IS NOT NULL AND p.id IS NULL THEN c.employer_organisation_id END),
+        SUM(CASE WHEN c.employer_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.PRACTITIONER_IN_ROLE c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.employer_organisation_id = p.id
 
     UNION ALL
 
@@ -801,14 +724,14 @@ WITH fk_checks AS (
 
     UNION ALL
 
-    -- REFERRAL_REQUEST -> ORGANISATION
-    SELECT 'REFERRAL_REQUEST', 'organisation_id', 'ORGANISATION',
-        COUNT(DISTINCT c.organisation_id),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL THEN 1 ELSE 0 END),
-        COUNT(DISTINCT CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN c.organisation_id END),
-        SUM(CASE WHEN c.organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    -- REFERRAL_REQUEST -> ORGANISATION (publisher)
+    SELECT 'REFERRAL_REQUEST', 'publisher_organisation_id', 'ORGANISATION',
+        COUNT(DISTINCT c.publisher_organisation_id),
+        SUM(CASE WHEN c.publisher_organisation_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.publisher_organisation_id IS NOT NULL AND p.id IS NULL THEN c.publisher_organisation_id END),
+        SUM(CASE WHEN c.publisher_organisation_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.REFERRAL_REQUEST c
-    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.organisation_id = p.id
+    LEFT JOIN OLIDS_COMMON.ORGANISATION p ON c.publisher_organisation_id = p.id
 
     UNION ALL
 

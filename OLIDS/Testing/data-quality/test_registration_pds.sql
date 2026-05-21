@@ -36,9 +36,9 @@
         (PDS updates at month-ends)
 
     PDS tables:
-      This test reads from "Data_Store_Registries"."pds" which is the standard
+      This test reads from "NCL_Data_Store_Registries"."pds" which is the standard
       PDS location for most London ICBs. If your ICB stores PDS data elsewhere,
-      search for "Data_Store_Registries" in this file and replace all occurrences.
+      search for "NCL_Data_Store_Registries" in this file and replace all occurrences.
 */
 
 SET schema_masked = 'OLIDS_MASKED';        -- Change if your ICB uses a different name (e.g. OLIDS_PCD)
@@ -53,14 +53,14 @@ SET snapshot_date = (
         MAX(CASE WHEN episode_of_care_start_date <= CURRENT_DATE THEN episode_of_care_start_date END)::DATE
     )))
     FROM OLIDS_COMMON.EPISODE_OF_CARE
-    WHERE organisation_code_publisher IS NOT NULL
+    WHERE publisher_organisation_code IS NOT NULL
 );
 
 -- Practice codes derived from EPISODE_OF_CARE (only practices with actual data)
 WITH icb_practices AS (
-    SELECT DISTINCT organisation_code_publisher AS practice_code
+    SELECT DISTINCT publisher_organisation_code AS practice_code
     FROM OLIDS_COMMON.EPISODE_OF_CARE
-    WHERE organisation_code_publisher IS NOT NULL
+    WHERE publisher_organisation_code IS NOT NULL
 ),
 
 -- Step 1: Patients eligible for counting (exclude test/sensitive/confidential)
@@ -74,7 +74,7 @@ eligible_patients AS (
     WHERE sk_patient_id IS NOT NULL
         AND is_spine_sensitive = FALSE
         AND is_confidential = FALSE
-        AND is_dummy_patient = FALSE
+        AND is_test_patient = FALSE
 ),
 
 -- Step 2: Approximate death dates from year/month (OLIDS only stores year+month, not exact date)
@@ -107,13 +107,13 @@ patient_to_person AS (
 
 -- Step 4: Look up concept IDs for 'Regular' episode type and 'Left' status
 episode_type_regular AS (
-    SELECT source_code_id
+    SELECT source_concept_id
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Regular'
 ),
 
 episode_status_left AS (
-    SELECT source_code_id
+    SELECT source_concept_id
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
     WHERE source_code = 'Left'
 ),
@@ -123,19 +123,19 @@ filtered_episodes AS (
     SELECT
         eoc.id AS episode_id,
         ptp.person_id,
-        eoc.organisation_code_publisher AS practice_code,
+        eoc.publisher_organisation_code AS practice_code,
         eoc.episode_of_care_start_date
     FROM OLIDS_COMMON.EPISODE_OF_CARE eoc
     INNER JOIN patient_death_dates pdd ON eoc.patient_id = pdd.patient_id
     INNER JOIN patient_to_person ptp ON eoc.patient_id = ptp.patient_id
-    INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_code_id
-    LEFT JOIN episode_status_left esl ON eoc.episode_status_source_concept_id = esl.source_code_id
+    INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_concept_id
+    LEFT JOIN episode_status_left esl ON eoc.episode_status_source_concept_id = esl.source_concept_id
     WHERE COALESCE(eoc.lds_is_deleted, FALSE) = FALSE
-        AND eoc.lds_start_date_time IS NOT NULL
+        AND eoc.lds_start_datetime IS NOT NULL
         AND eoc.episode_of_care_start_date IS NOT NULL
         AND eoc.patient_id IS NOT NULL
         -- Exclude Left episodes with no end date (data quality issue)
-        AND NOT (esl.source_code_id IS NOT NULL AND eoc.episode_of_care_end_date IS NULL)
+        AND NOT (esl.source_concept_id IS NOT NULL AND eoc.episode_of_care_end_date IS NULL)
         -- Episode started on or before snapshot
         AND eoc.episode_of_care_start_date <= $snapshot_date::DATE
         -- Episode still active: not ended, or end_date after snapshot, or end_date < start_date (bad data, treat as active)
@@ -166,23 +166,23 @@ olids_counts AS (
 ),
 
 -- Step 8: PDS registrations - count per practice using merged NHS numbers
--- PDS tables are in "Data_Store_Registries"."pds" - change if your ICB differs.
+-- PDS tables are in "NCL_Data_Store_Registries"."pds" - change if your ICB differs.
 -- Uses temporal BETWEEN filters on business effective dates for point-in-time accuracy.
 pds_merged AS (
     SELECT
         COALESCE(merger."Pseudo Superseded NHS Number", reg."Pseudo NHS Number") AS merged_sk_patient_id,
         reg."Primary Care Provider" AS practice_code
-    FROM "Data_Store_Registries"."pds"."PDS_Patient_Care_Practice" reg
+    FROM "NCL_Data_Store_Registries"."pds"."PDS_Patient_Care_Practice" reg
     INNER JOIN icb_practices ip ON reg."Primary Care Provider" = ip.practice_code
-    LEFT JOIN "Data_Store_Registries"."pds"."PDS_Person_Merger" merger
+    LEFT JOIN "NCL_Data_Store_Registries"."pds"."PDS_Person_Merger" merger
         ON reg."Pseudo NHS Number" = merger."Pseudo NHS Number"
         AND $snapshot_date::DATE BETWEEN merger."Person Merger Business Effective From Date"
             AND COALESCE(merger."Person Merger Business Effective To Date", '9999-12-31')
-    LEFT JOIN "Data_Store_Registries"."pds"."PDS_Person" person
+    LEFT JOIN "NCL_Data_Store_Registries"."pds"."PDS_Person" person
         ON reg."Pseudo NHS Number" = person."Pseudo NHS Number"
         AND $snapshot_date::DATE BETWEEN person."Person Business Effective From Date"
             AND COALESCE(person."Person Business Effective To Date", '9999-12-31')
-    LEFT JOIN "Data_Store_Registries"."pds"."PDS_Reason_For_Removal" rfr
+    LEFT JOIN "NCL_Data_Store_Registries"."pds"."PDS_Reason_For_Removal" rfr
         ON reg."Pseudo NHS Number" = rfr."Pseudo NHS Number"
         AND $snapshot_date::DATE BETWEEN rfr."Reason for Removal Business Effective From Date"
             AND COALESCE(rfr."Reason for Removal Business Effective To Date", '9999-12-31')
