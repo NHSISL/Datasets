@@ -65,9 +65,10 @@
       - EMIS coding table is referenced under REFERENCE schema (matches the
         actual Data_Store_OLIDS share). If your ICB stores it elsewhere,
         find-replace REFERENCE.PRIMARY_CARE_EMIS_CLINICAL_CODE in this file.
-      - CONCEPT_MAP joins use SOURCE_CODE (numeric EMIS code) rather than
-        SOURCE_CONCEPT_ID UUID, because the EMIS reference table and the
-        CONCEPT_MAP allocate different UUIDs for the same EMIS code.
+      - CONCEPT_MAP joins use SOURCE_CONCEPT_ID (UUID) =
+        OLIDS_EMIS_CODE_CONCEPT_ID (UUID). The EMIS reference table has
+        duplicate rows for some codes, so ref is deduped per UUID first to
+        keep each CONCEPT_MAP row matched to a single ref row.
 */
 
 SET schema_masked = 'OLIDS_MASKED';        -- Change if your ICB uses a different name (e.g. OLIDS_PCD)
@@ -75,50 +76,48 @@ SET schema_common = 'OLIDS_COMMON';
 SET schema_terminology = 'OLIDS_TERMINOLOGY';
 
 WITH
+-- Deduped EMIS reference (one row per OLIDS UUID) so the joins below don't fan out
+emis_ref_dedup AS (
+    SELECT OLIDS_EMIS_CODE_CONCEPT_ID::UUID AS uuid_id,
+           ANY_VALUE(EMIS_CODE_ID) AS EMIS_CODE_ID,
+           ANY_VALUE(SNOMED_CT_CONCEPT_ID) AS SNOMED_CT_CONCEPT_ID
+    FROM REFERENCE.PRIMARY_CARE_EMIS_CLINICAL_CODE
+    GROUP BY OLIDS_EMIS_CODE_CONCEPT_ID
+),
+
 -- Check 1: EMIS clinical codes (with a SNOMED in the EMIS reference) that are missing from CONCEPT_MAP
 emis_coverage AS (
     SELECT
-        COUNT(DISTINCT CASE WHEN cm.SOURCE_CODE IS NULL THEN ref.EMIS_CODE_ID END) AS missing,
-        COUNT(DISTINCT ref.EMIS_CODE_ID) AS total
-    FROM REFERENCE.PRIMARY_CARE_EMIS_CLINICAL_CODE ref
+        COUNT(DISTINCT CASE WHEN cm.SOURCE_CONCEPT_ID IS NULL THEN ref.uuid_id END) AS missing,
+        COUNT(DISTINCT ref.uuid_id) AS total
+    FROM emis_ref_dedup ref
     LEFT JOIN OLIDS_TERMINOLOGY.CONCEPT_MAP cm
-        ON ref.EMIS_CODE_ID::VARCHAR = cm.SOURCE_CODE
-       AND cm.SOURCE_SYSTEM = 'http://LDS.nhs/EMIS/CodeID/cs'
+        ON ref.uuid_id = cm.SOURCE_CONCEPT_ID
     WHERE ref.SNOMED_CT_CONCEPT_ID IS NOT NULL
 ),
 
 -- Check 2: CONCEPT_MAP rows pointing at SNOMED root 138875005, broken down by category.
--- Joining EMIS ref via cm.SOURCE_CODE (numeric EMIS code) since the UUID columns differ.
--- Dedupe the EMIS reference per code first so multiple ref rows for the same EMIS code
--- don't fan out the row count.
-emis_ref_dedup AS (
-    SELECT EMIS_CODE_ID, ANY_VALUE(SNOMED_CT_CONCEPT_ID) AS SNOMED_CT_CONCEPT_ID
-    FROM REFERENCE.PRIMARY_CARE_EMIS_CLINICAL_CODE
-    WHERE SNOMED_CT_CONCEPT_ID IS NOT NULL
-    GROUP BY EMIS_CODE_ID
-),
+-- Joining EMIS ref via SOURCE_CONCEPT_ID = OLIDS_EMIS_CODE_CONCEPT_ID UUID.
 root_target_breakdown AS (
     SELECT
         cm.MAPPED_ITEM_ID,
-        cm.SOURCE_CODE,
         ref.SNOMED_CT_CONCEPT_ID AS ref_snomed,
         sct."Active" AS sct_active
     FROM OLIDS_TERMINOLOGY.CONCEPT_MAP cm
     LEFT JOIN emis_ref_dedup ref
-        ON cm.SOURCE_SYSTEM = 'http://LDS.nhs/EMIS/CodeID/cs'
-       AND cm.SOURCE_CODE = ref.EMIS_CODE_ID::VARCHAR
+        ON cm.SOURCE_CONCEPT_ID = ref.uuid_id
     LEFT JOIN "Dictionary"."NHSD_SnomedReportingModel"."SCT_Concept" sct
         ON ref.SNOMED_CT_CONCEPT_ID = sct."Id"
     WHERE cm.TARGET_CODE = '138875005'
 ),
 root_target_categories AS (
     SELECT
-        SUM(CASE WHEN ref_snomed IS NULL THEN 1 ELSE 0 END) AS no_emis_ref_match,
-        SUM(CASE WHEN ref_snomed = 138875005 THEN 1 ELSE 0 END) AS legitimately_root,
-        SUM(CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active = TRUE THEN 1 ELSE 0 END) AS fixable_active,
-        SUM(CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active = FALSE THEN 1 ELSE 0 END) AS retired_in_emis_ref,
-        SUM(CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active IS NULL THEN 1 ELSE 0 END) AS fixable_emis_namespace,
-        COUNT(*) AS total_root_rows,
+        COUNT(DISTINCT CASE WHEN ref_snomed IS NULL THEN MAPPED_ITEM_ID END) AS no_emis_ref_match,
+        COUNT(DISTINCT CASE WHEN ref_snomed = 138875005 THEN MAPPED_ITEM_ID END) AS legitimately_root,
+        COUNT(DISTINCT CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active = TRUE THEN MAPPED_ITEM_ID END) AS fixable_active,
+        COUNT(DISTINCT CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active = FALSE THEN MAPPED_ITEM_ID END) AS retired_in_emis_ref,
+        COUNT(DISTINCT CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active IS NULL THEN MAPPED_ITEM_ID END) AS fixable_emis_namespace,
+        COUNT(DISTINCT MAPPED_ITEM_ID) AS total_root_rows,
         (SELECT COUNT(*) FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE TARGET_CODE IS NOT NULL) AS total_cm_rows
     FROM root_target_breakdown
 ),
