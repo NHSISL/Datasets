@@ -13,8 +13,19 @@
 
       2. Mappings pointing to root SNOMED concept (138875005)
          Mappings whose target is the SNOMED root concept ("SNOMED CT Concept")
-         are essentially meaningless. Counts CONCEPT_MAP rows with
-         TARGET_CODE = '138875005'.
+         are essentially meaningless. Broken down by why the row is there
+         (per NCL terminology-bugs investigation, 2026-03-27):
+           - no_emis_ref_match: mostly TPP rows, no EMIS reference entry,
+             so cannot be auto-fixed via the EMIS reference table
+           - fixable_active: source code DOES have an active national SNOMED
+             concept in the EMIS reference - easy backfill
+           - fixable_emis_namespace: source maps to an EMIS-namespace SNOMED
+             extension (module 1000006), valid local concept, not in NHSD
+             reporting model, needs Dedalus to incorporate
+           - retired_in_emis_ref: EMIS reference points to a retired concept
+           - legitimately_root: EMIS reference also points at 138875005 -
+             these are correctly mapped, NOT a bug
+         The 'legitimately_root' rows count towards PASS, the others FAIL.
 
       3. Mappings pointing to retired SNOMED concepts
          A target that is no longer active in the NHSD SNOMED reporting
@@ -26,6 +37,13 @@
          Active concepts that never appear as a CONCEPT_MAP.TARGET_CODE are
          effectively invisible if data starts to flow against them. Counts
          active SCT_Concept rows that have no CONCEPT_MAP target reference.
+
+      5. Root-targeting rows resolvable via SCT_Description term match
+         Of the rows pointing at SNOMED root, how many have a SOURCE_DISPLAY
+         that exactly (case-insensitive) matches the Term on an active
+         SCT_Description belonging to an active SCT_Concept. These are
+         straightforward fix candidates - Dedalus could pick the matched
+         concept as the target.
 
     External dependencies:
       - REFERENCE.PRIMARY_CARE_EMIS_CLINICAL_CODE  (in the current OLIDS DB)
@@ -69,13 +87,40 @@ emis_coverage AS (
     WHERE ref.SNOMED_CT_CONCEPT_ID IS NOT NULL
 ),
 
--- Check 2: CONCEPT_MAP rows pointing at SNOMED root concept 138875005
-root_target AS (
+-- Check 2: CONCEPT_MAP rows pointing at SNOMED root 138875005, broken down by category.
+-- Joining EMIS ref via cm.SOURCE_CODE (numeric EMIS code) since the UUID columns differ.
+-- Dedupe the EMIS reference per code first so multiple ref rows for the same EMIS code
+-- don't fan out the row count.
+emis_ref_dedup AS (
+    SELECT EMIS_CODE_ID, ANY_VALUE(SNOMED_CT_CONCEPT_ID) AS SNOMED_CT_CONCEPT_ID
+    FROM REFERENCE.PRIMARY_CARE_EMIS_CLINICAL_CODE
+    WHERE SNOMED_CT_CONCEPT_ID IS NOT NULL
+    GROUP BY EMIS_CODE_ID
+),
+root_target_breakdown AS (
     SELECT
-        SUM(CASE WHEN TARGET_CODE = '138875005' THEN 1 ELSE 0 END) AS bad,
-        COUNT(*) AS total
-    FROM OLIDS_TERMINOLOGY.CONCEPT_MAP
-    WHERE TARGET_CODE IS NOT NULL
+        cm.MAPPED_ITEM_ID,
+        cm.SOURCE_CODE,
+        ref.SNOMED_CT_CONCEPT_ID AS ref_snomed,
+        sct."Active" AS sct_active
+    FROM OLIDS_TERMINOLOGY.CONCEPT_MAP cm
+    LEFT JOIN emis_ref_dedup ref
+        ON cm.SOURCE_SYSTEM = 'http://LDS.nhs/EMIS/CodeID/cs'
+       AND cm.SOURCE_CODE = ref.EMIS_CODE_ID::VARCHAR
+    LEFT JOIN "Dictionary"."NHSD_SnomedReportingModel"."SCT_Concept" sct
+        ON ref.SNOMED_CT_CONCEPT_ID = sct."Id"
+    WHERE cm.TARGET_CODE = '138875005'
+),
+root_target_categories AS (
+    SELECT
+        SUM(CASE WHEN ref_snomed IS NULL THEN 1 ELSE 0 END) AS no_emis_ref_match,
+        SUM(CASE WHEN ref_snomed = 138875005 THEN 1 ELSE 0 END) AS legitimately_root,
+        SUM(CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active = TRUE THEN 1 ELSE 0 END) AS fixable_active,
+        SUM(CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active = FALSE THEN 1 ELSE 0 END) AS retired_in_emis_ref,
+        SUM(CASE WHEN ref_snomed IS NOT NULL AND ref_snomed <> 138875005 AND sct_active IS NULL THEN 1 ELSE 0 END) AS fixable_emis_namespace,
+        COUNT(*) AS total_root_rows,
+        (SELECT COUNT(*) FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE TARGET_CODE IS NOT NULL) AS total_cm_rows
+    FROM root_target_breakdown
 ),
 
 -- Check 3: CONCEPT_MAP rows whose target is a retired SNOMED concept
@@ -87,6 +132,23 @@ retired_target AS (
     JOIN "Dictionary"."NHSD_SnomedReportingModel"."SCT_Concept" sct
         ON cm.TARGET_CODE = sct."Id"::VARCHAR
     WHERE sct."Active" = FALSE
+),
+
+-- Check 5: root-targeting rows whose SOURCE_DISPLAY has an active SCT_Description term match
+root_term_match AS (
+    SELECT
+        COUNT(DISTINCT cm.MAPPED_ITEM_ID) AS fixable_term_match,
+        (SELECT COUNT(*) FROM OLIDS_TERMINOLOGY.CONCEPT_MAP WHERE TARGET_CODE = '138875005') AS total_root_rows
+    FROM OLIDS_TERMINOLOGY.CONCEPT_MAP cm
+    WHERE cm.TARGET_CODE = '138875005'
+      AND cm.SOURCE_DISPLAY IS NOT NULL
+      AND EXISTS (
+        SELECT 1
+        FROM "Dictionary"."NHSD_SnomedReportingModel"."SCT_Description" d
+        JOIN "Dictionary"."NHSD_SnomedReportingModel"."SCT_Concept" c ON d."ConceptId" = c."Id"
+        WHERE d."Active" = TRUE AND c."Active" = TRUE
+          AND LOWER(d."Term") = LOWER(cm.SOURCE_DISPLAY)
+      )
 ),
 
 -- Check 4: active SNOMED concepts that never appear as a CONCEPT_MAP target
@@ -115,14 +177,70 @@ checks AS (
 
     UNION ALL
 
+    -- Root target rows that are NOT legitimately mapped (i.e. should not be there)
     SELECT
         'concept_map_root_target',
         'CONCEPT_MAP',
-        'CONCEPT_MAP rows not pointing at SNOMED root (138875005)',
-        total - bad,
-        bad,
-        total
-    FROM root_target
+        'CONCEPT_MAP rows not erroneously pointing at SNOMED root (138875005)',
+        total_cm_rows - (total_root_rows - legitimately_root),
+        total_root_rows - legitimately_root,
+        total_cm_rows
+    FROM root_target_categories
+
+    UNION ALL
+
+    SELECT
+        'concept_map_root_no_emis_ref',
+        'CONCEPT_MAP',
+        'Root-targeting rows with NO EMIS reference match (mostly TPP - not auto-fixable)',
+        total_root_rows - no_emis_ref_match,
+        no_emis_ref_match,
+        total_root_rows
+    FROM root_target_categories
+
+    UNION ALL
+
+    SELECT
+        'concept_map_root_fixable_active',
+        'CONCEPT_MAP',
+        'Root-targeting rows where EMIS ref has an ACTIVE national SNOMED (fixable backfill)',
+        total_root_rows - fixable_active,
+        fixable_active,
+        total_root_rows
+    FROM root_target_categories
+
+    UNION ALL
+
+    SELECT
+        'concept_map_root_emis_namespace',
+        'CONCEPT_MAP',
+        'Root-targeting rows where EMIS ref points to an EMIS-namespace SNOMED extension',
+        total_root_rows - fixable_emis_namespace,
+        fixable_emis_namespace,
+        total_root_rows
+    FROM root_target_categories
+
+    UNION ALL
+
+    SELECT
+        'concept_map_root_retired_in_ref',
+        'CONCEPT_MAP',
+        'Root-targeting rows where EMIS ref points to a RETIRED SNOMED concept',
+        total_root_rows - retired_in_emis_ref,
+        retired_in_emis_ref,
+        total_root_rows
+    FROM root_target_categories
+
+    UNION ALL
+
+    SELECT
+        'concept_map_root_term_match',
+        'CONCEPT_MAP',
+        'Root-targeting rows resolvable via active SCT_Description term exact match (case-insensitive)',
+        total_root_rows - fixable_term_match,
+        fixable_term_match,
+        total_root_rows
+    FROM root_term_match
 
     UNION ALL
 
