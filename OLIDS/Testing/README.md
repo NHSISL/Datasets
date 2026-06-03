@@ -52,10 +52,21 @@ uv run run_tests.py --run investigations/investigate_column_completeness.sql
 | File | What it checks |
 |---|---|
 | `test_column_completeness.sql` | NULL rates per column, with per-column thresholds |
+| `test_uniqueness.sql` | No duplicates in `id` / `lds_source_record_id` / `lds_id` / `lds_business_key` |
 | `test_referential_integrity.sql` | Foreign keys reference existing parent records |
-| `test_concept_mapping.sql` | Concept IDs map through CONCEPT_MAP to CONCEPT |
-| `test_data_freshness.sql` | GP practices sending data within N days |
-| `test_registration_pds.sql` | OLIDS registration counts vs PDS at 1%, 2%, 5% thresholds |
+| `test_concept_mapping.sql` | Concept IDs used in clinical tables map through CONCEPT_MAP to CONCEPT |
+| `test_concept_map_health.sql` | Catalogue + in-use checks against the EMIS reference and NHSD SNOMED release: missing mappings, root-target rows (`138875005`), retired-target rows, and SCT_Description term-match auto-fix candidates |
+| `test_data_freshness.sql` | GP practices sending data within N days, per clinical table |
+| `test_registration_pds.sql` | OLIDS active GP registration counts vs PDS at 1% / 2% / 5% thresholds per practice |
+
+### External-share dependencies
+
+Two tests need shares beyond the OLIDS database:
+
+- `test_concept_map_health.sql` reads `Dictionary.NHSD_SnomedReportingModel.SCT_Concept` and `SCT_Description` (NHSD SNOMED share)
+- `test_registration_pds.sql` reads `NCL_Data_Store_Registries.pds.PDS_*` tables (find-replace the database name at the top of the file for non-NCL ICBs)
+
+The remaining tests run against the OLIDS schema directly and have no external dependencies.
 
 ## Output Contract
 
@@ -77,6 +88,7 @@ Additional columns are allowed and shown with `--verbose`.
 Each test file has a `-- To add a check:` comment at the top explaining the pattern. In general:
 
 - **Column completeness**: add a `UNION ALL SELECT` row with table, column, threshold, `COUNT(*)`, and `SUM(CASE WHEN col IS NULL ...)`.
+- **Uniqueness**: add a `UNION ALL SELECT` row with table, column, `COUNT(*)`, and `COUNT(DISTINCT col)`.
 - **Referential integrity**: add a `UNION ALL` block with the child table `LEFT JOIN`ed to the parent.
 - **Concept mapping**: add a `UNION ALL` block joining the concept field through `CONCEPT_MAP` and `CONCEPT`.
 - **Data freshness**: add a `UNION ALL` block selecting `table_name`, `org_code`, `MAX(date_recorded)` from any table with those columns.
@@ -114,6 +126,7 @@ uv run run_tests.py --run investigations/investigate_referential_integrity.sql
 | File | What it shows |
 |---|---|
 | `investigate_column_completeness.sql` | All checked columns with NULL counts and rates |
+| `investigate_uniqueness.sql` | Duplicate values per identifier column with occurrence counts |
 | `investigate_concept_mapping.sql` | Unmapped concept IDs and their row counts per table |
 | `investigate_data_freshness.sql` | Per-org, per-table last data date, ordered by stalest |
 | `investigate_referential_integrity.sql` | Orphaned FK values with row counts |
