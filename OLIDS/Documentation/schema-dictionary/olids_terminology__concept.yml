@@ -1,0 +1,36 @@
+version: 2
+sources:
+  - name: olids_terminology
+    schema: OLIDS_TERMINOLOGY
+    tables:
+      - name: concept
+        description: 'Used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content. Code systems define which codes (symbols and/or expressions) exist, and how they are understood. Value sets select a set of codes from one or more code systems to specify which codes can be used in a particular context. Here is an example query that returns concept IDs and display values for mapped values for patient gender. ```sql SELECT P1."gender_concept_id" ,M1."source_code_id" ,C1."display" AS SOURCE_CODE_DISPLAY ,M1."target_code_id" ,C2."display" AS TARGET_CODE_DISPLAY FROM DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_MASKED.PATIENT P1 JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT C1 ON P1."gender_concept_id" = C1."id" JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT_MAP M1 --Sequence ON P1."gender_concept_id" = M1."source_code_id" JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT C2 ON M1."target_code_id" = C2."id" LIMIT 10 ```'
+        meta:
+          source_markdown: 'OLIDS/Documentation/OLIDS-schema-dictionary.md'
+        columns:
+          - name: 'CONCEPT_ID'
+            description: '''Unique ID of the person'''
+            data_type: 'uniqueidentifier'
+            meta:
+              compass_equivalent: 'No Foreign Key reference'
+          - name: 'SYSTEM'
+            description: 'The code system reference'
+            data_type: 'varchar(255)'
+          - name: 'CODE'
+            description: 'The codified concept contained within the code system'
+            data_type: 'varchar(255)'
+          - name: 'DISPLAY'
+            description: 'The displayable description for the concept'
+            data_type: 'varchar(255)'
+          - name: 'IS_MAPPED'
+            description: 'true/false is the code mapped to a standard concept within the concept_map object'
+            data_type: 'bit'
+          - name: 'USE_COUNT'
+            description: 'the calculated frequency of use of the encoded concept within the processed data to date'
+            data_type: 'int'
+          - name: 'LDS_IS_DELETED'
+            description: 'LDS flag standardised presentation of deleted state of the record.'
+            data_type: 'bit'
+          - name: 'LDS_START_DATETIME'
+            description: 'LDS datetime stamp from which the record version was correct'
+            data_type: 'datetime(3)'
