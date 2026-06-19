@@ -45,7 +45,21 @@ uv run run_tests.py --verbose
 
 # Run an investigation script (or any SQL file) with schema auto-detection
 uv run run_tests.py --run investigations/investigate_column_completeness.sql
+
+# Optional: force a dbt/Snowflake single-schema layout
+uv run run_tests.py --olids-schema OLIDS_PCD
+
+# Disable schema compatibility pruning and fail on legacy schema mismatches
+uv run run_tests.py --strict-schema
 ```
+
+By default the runner auto-detects schema names, including dbt/Snowflake OLIDS releases where all tables live in one physical schema such as `OLIDS_PCD` or `OLIDS_PSEUDO`. In that layout it maps the legacy logical schemas (`OLIDS_MASKED`, `OLIDS_COMMON`, `OLIDS_TERMINOLOGY`) to the discovered schema. If discovery ever needs help, set `OLIDS_SCHEMA=OLIDS_PCD` in `.env`, or pass `--olids-schema`.
+
+The runner also prunes individual `UNION` check blocks that reference OLIDS tables or columns missing from the target database. This keeps the Synapse-aligned tests runnable against the dbt/Snowflake rewrite where some legacy columns/tables no longer exist. Pruned checks are reported as `WARN` rows.
+
+For normal test runs, compatible `UNION` check blocks are executed independently. This makes each table/column relationship behave more like its own test: one incompatible block can be skipped without preventing the rest of the file from running. `--run` mode still executes the requested SQL file as a single query for investigation use.
+
+For scripted Windows runs, you can set `SNOWFLAKE_PASSWORD` before invoking the runner to use password/PAT auth instead of browser SSO. If `SNOWFLAKE_PASSWORD` is not set, the runner keeps using `externalbrowser`.
 
 ## Tests
 
