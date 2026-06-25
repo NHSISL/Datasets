@@ -637,8 +637,15 @@ def validate_sql_branch(branch: str, metadata: dict, active_schemas: set) -> tup
     return not reasons, sorted(set(reasons))
 
 
-def compatibility_warning(sql_file: Path, reason: str, table_name: str = 'N/A') -> dict:
-    """Build a WARN row that fits the normal test output contract."""
+def compatibility_warning(sql_file: Path, reason: str, table_name: str = 'N/A',
+                          kind: str = 'schema_absent') -> dict:
+    """Build a WARN row that fits the normal test output contract.
+
+    kind 'schema_absent': check skipped because a table/column is not in this
+    build (expected on the dbt/Snowflake layout; reported as SKIPPED, excluded
+    from the pass/fail percentages). kind 'compile_error': a block/file failed
+    to compile after pruning (a real WARN worth surfacing).
+    """
     return {
         'TEST_NAME': 'schema_compatibility',
         'TABLE_NAME': table_name,
@@ -647,6 +654,7 @@ def compatibility_warning(sql_file: Path, reason: str, table_name: str = 'N/A') 
         'METRIC_VALUE': None,
         'THRESHOLD': None,
         'SQL_FILE': sql_file.name,
+        'WARN_KIND': kind,
     }
 
 
@@ -817,6 +825,7 @@ def _execute_statements(conn, statements: list, database: str, sql_file: Path,
                 warnings.append(compatibility_warning(
                     sql_file,
                     f"Skipped {subject} after compatibility pruning could not compile: {e}",
+                    kind='compile_error',
                 ))
                 return [], warnings
             raise
@@ -837,6 +846,7 @@ def _execute_statements(conn, statements: list, database: str, sql_file: Path,
                     warnings.append(compatibility_warning(
                         sql_file,
                         f"Skipped {subject} after compatibility pruning could not compile: {e}",
+                        kind='compile_error',
                     ))
                     return [], warnings
                 raise
@@ -933,11 +943,17 @@ def print_query_results(results: list):
 
 
 def print_results(all_results: dict, durations: dict = None, verbose: bool = False):
-    """Print formatted test results to console."""
-    total_tests = 0
+    """Print formatted test results to console.
+
+    Percentages are calculated over executed checks (PASS + FAIL). Checks pruned
+    because a table/column is absent from this build are reported as SKIPPED and
+    excluded from the percentages; their per-row detail shows only with verbose.
+    """
+    total_executed = 0
     total_pass = 0
     total_fail = 0
     total_warn = 0
+    total_skip = 0
     durations = durations or {}
 
     print("\n" + "=" * 80)
@@ -951,21 +967,29 @@ def print_results(all_results: dict, durations: dict = None, verbose: bool = Fal
             print(f"\n  {test_file}: No results returned")
             continue
 
-        # Count by status
+        # Count by status; split WARN into expected schema skips vs real warnings
         pass_count = sum(1 for r in results if r.get('STATUS') == 'PASS')
         fail_count = sum(1 for r in results if r.get('STATUS') == 'FAIL')
-        warn_count = sum(1 for r in results if r.get('STATUS') == 'WARN')
+        skips = [r for r in results if r.get('STATUS') == 'WARN' and r.get('WARN_KIND') == 'schema_absent']
+        warns = [r for r in results if r.get('STATUS') == 'WARN' and r.get('WARN_KIND') != 'schema_absent']
+        executed = pass_count + fail_count
 
-        total_tests += len(results)
+        total_executed += executed
         total_pass += pass_count
         total_fail += fail_count
-        total_warn += warn_count
+        total_warn += len(warns)
+        total_skip += len(skips)
 
         # Test header
-        status_icon = "FAIL" if fail_count else ("WARN" if warn_count and not pass_count else "PASS")
+        status_icon = "FAIL" if fail_count else ("WARN" if warns and not pass_count else "PASS")
         dur = f" ({durations[test_file]:.1f}s)" if test_file in durations else ""
         print(f"\n[{status_icon}] {test_file}{dur}")
-        print(f"   PASS: {pass_count} | FAIL: {fail_count}" + (f" | WARN: {warn_count}" if warn_count else ""))
+        counts = f"   PASS: {pass_count} | FAIL: {fail_count}"
+        if warns:
+            counts += f" | WARN: {len(warns)}"
+        if skips:
+            counts += f" | SKIPPED: {len(skips)}"
+        print(counts)
 
         # Show failures
         failures = [r for r in results if r.get('STATUS') == 'FAIL']
@@ -996,24 +1020,38 @@ def print_results(all_results: dict, durations: dict = None, verbose: bool = Fal
                 for k, v in _extra_columns(p).items():
                     print(f"       {k}: {v}")
 
-        # Show warnings
-        warnings = [r for r in results if r.get('STATUS') == 'WARN']
-        if warnings:
+        # Show real warnings (compile errors / unexpected skips)
+        if warns:
             print("\n   Warnings:")
-            for w in warnings:
+            for w in warns:
                 table = w.get('TABLE_NAME', 'N/A')
                 subject = w.get('TEST_SUBJECT', 'N/A')
                 print(f"   - {table}.{subject}")
+
+        # Schema-incompatible checks: expected on this build, collapsed by default
+        if skips:
+            print(f"\n   Skipped {len(skips)} schema-incompatible check(s) (columns/tables not in this build)")
+            if verbose:
+                for s in skips:
+                    table = s.get('TABLE_NAME', 'N/A')
+                    subject = s.get('TEST_SUBJECT', 'N/A')
+                    print(f"   - {table}.{subject}")
 
     # Summary
     print("\n" + "=" * 80)
     print("SUMMARY")
     print("=" * 80)
-    print(f"Total checks: {total_tests}")
-    print(f"Passed: {total_pass} ({100*total_pass/total_tests:.1f}%)" if total_tests else "Passed: 0")
-    print(f"Failed: {total_fail} ({100*total_fail/total_tests:.1f}%)" if total_tests else "Failed: 0")
+    print(f"Executed checks: {total_executed}")
+    if total_executed:
+        print(f"Passed: {total_pass} ({100*total_pass/total_executed:.1f}%)")
+        print(f"Failed: {total_fail} ({100*total_fail/total_executed:.1f}%)")
+    else:
+        print("Passed: 0")
+        print("Failed: 0")
     if total_warn:
         print(f"Warnings: {total_warn}")
+    if total_skip:
+        print(f"Skipped (schema-incompatible, not in this build): {total_skip}")
 
     if total_fail:
         overall = f"{total_fail} TESTS FAILED"
@@ -1164,11 +1202,15 @@ def main():
                 all_durations[test_file.name] = duration
                 passed = sum(1 for r in results if r.get('STATUS') == 'PASS')
                 failed = sum(1 for r in results if r.get('STATUS') == 'FAIL')
-                warned = sum(1 for r in results if r.get('STATUS') == 'WARN')
+                skipped = sum(1 for r in results if r.get('STATUS') == 'WARN' and r.get('WARN_KIND') == 'schema_absent')
+                warned = sum(1 for r in results if r.get('STATUS') == 'WARN' and r.get('WARN_KIND') != 'schema_absent')
+                executed = passed + failed
                 icon = "FAIL" if failed else ("WARN" if warned and not passed else "PASS")
-                summary = f"[{icon}] {len(results)} checks: {passed} passed, {failed} failed"
+                summary = f"[{icon}] {executed} checks: {passed} passed, {failed} failed"
                 if warned:
                     summary += f", {warned} warnings"
+                if skipped:
+                    summary += f", {skipped} skipped"
                 print(f"  -> {summary} ({duration:.1f}s)")
             except Exception as e:
                 duration = time.time() - test_start

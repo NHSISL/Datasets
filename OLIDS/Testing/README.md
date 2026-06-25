@@ -55,7 +55,7 @@ uv run run_tests.py --strict-schema
 
 By default the runner auto-detects schema names, including dbt/Snowflake OLIDS releases where all tables live in one physical schema such as `OLIDS_PCD` or `OLIDS_PSEUDO`. In that layout it maps the legacy logical schemas (`OLIDS_MASKED`, `OLIDS_COMMON`, `OLIDS_TERMINOLOGY`) to the discovered schema. If discovery ever needs help, set `OLIDS_SCHEMA=OLIDS_PCD` in `.env`, or pass `--olids-schema`.
 
-The runner also prunes individual `UNION` check blocks that reference OLIDS tables or columns missing from the target database. This keeps the Synapse-aligned tests runnable against the dbt/Snowflake rewrite where some legacy columns/tables no longer exist. Pruned checks are reported as `WARN` rows.
+The runner also prunes individual `UNION` check blocks that reference OLIDS tables or columns missing from the target database. This keeps the Synapse-aligned tests runnable against the dbt/Snowflake rewrite where some legacy columns/tables no longer exist. Pruned checks are reported as `SKIPPED` (collapsed to a count; full list with `--verbose`) and excluded from the pass/fail percentages, which are calculated over executed checks (`PASS` + `FAIL`) only. Blocks that fail to compile after pruning are still reported as `WARN`.
 
 For normal test runs, compatible `UNION` check blocks are executed independently. This makes each table/column relationship behave more like its own test: one incompatible block can be skipped without preventing the rest of the file from running. `--run` mode still executes the requested SQL file as a single query for investigation use.
 
