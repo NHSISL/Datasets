@@ -36,9 +36,9 @@
         (PDS updates at month-ends)
 
     PDS tables:
-      This test reads from "NCL_Data_Store_Registries"."pds" which is the standard
+      This test reads from "Data_Store_Registries"."pds" which is the standard
       PDS location for most London ICBs. If your ICB stores PDS data elsewhere,
-      search for "NCL_Data_Store_Registries" in this file and replace all occurrences.
+      search for "Data_Store_Registries" in this file and replace all occurrences.
 */
 
 SET schema_masked = 'OLIDS_MASKED';        -- Change if your ICB uses a different name (e.g. OLIDS_PCD)
@@ -74,7 +74,8 @@ eligible_patients AS (
     WHERE sk_patient_id IS NOT NULL
         AND is_spine_sensitive = FALSE
         AND is_confidential = FALSE
-        AND is_test_patient = FALSE
+        -- is_test_patient not present in the dbt/Snowflake (pseudo) build, so this filter is dropped there
+        -- AND is_test_patient = FALSE
 ),
 
 -- Step 2: Approximate death dates from year/month (OLIDS only stores year+month, not exact date)
@@ -131,7 +132,8 @@ filtered_episodes AS (
     INNER JOIN episode_type_regular etr ON eoc.episode_type_source_concept_id = etr.source_concept_id
     LEFT JOIN episode_status_left esl ON eoc.episode_status_source_concept_id = esl.source_concept_id
     WHERE COALESCE(eoc.lds_is_deleted, FALSE) = FALSE
-        AND eoc.lds_start_datetime IS NOT NULL
+        -- lds_start_datetime not present in the dbt/Snowflake (pseudo) build, so this load-guard is dropped there
+        -- AND eoc.lds_start_datetime IS NOT NULL
         AND eoc.episode_of_care_start_date IS NOT NULL
         AND eoc.patient_id IS NOT NULL
         -- Exclude Left episodes with no end date (data quality issue)
@@ -166,23 +168,23 @@ olids_counts AS (
 ),
 
 -- Step 8: PDS registrations - count per practice using merged NHS numbers
--- PDS tables are in "NCL_Data_Store_Registries"."pds" - change if your ICB differs.
+-- PDS tables are in "Data_Store_Registries"."pds" - change if your ICB differs.
 -- Uses temporal BETWEEN filters on business effective dates for point-in-time accuracy.
 pds_merged AS (
     SELECT
         COALESCE(merger."Pseudo Superseded NHS Number", reg."Pseudo NHS Number") AS merged_sk_patient_id,
         reg."Primary Care Provider" AS practice_code
-    FROM "NCL_Data_Store_Registries"."pds"."PDS_Patient_Care_Practice" reg
+    FROM "Data_Store_Registries"."pds"."PDS_Patient_Care_Practice" reg
     INNER JOIN icb_practices ip ON reg."Primary Care Provider" = ip.practice_code
-    LEFT JOIN "NCL_Data_Store_Registries"."pds"."PDS_Person_Merger" merger
+    LEFT JOIN "Data_Store_Registries"."pds"."PDS_Person_Merger" merger
         ON reg."Pseudo NHS Number" = merger."Pseudo NHS Number"
         AND $snapshot_date::DATE BETWEEN merger."Person Merger Business Effective From Date"
             AND COALESCE(merger."Person Merger Business Effective To Date", '9999-12-31')
-    LEFT JOIN "NCL_Data_Store_Registries"."pds"."PDS_Person" person
+    LEFT JOIN "Data_Store_Registries"."pds"."PDS_Person" person
         ON reg."Pseudo NHS Number" = person."Pseudo NHS Number"
         AND $snapshot_date::DATE BETWEEN person."Person Business Effective From Date"
             AND COALESCE(person."Person Business Effective To Date", '9999-12-31')
-    LEFT JOIN "NCL_Data_Store_Registries"."pds"."PDS_Reason_For_Removal" rfr
+    LEFT JOIN "Data_Store_Registries"."pds"."PDS_Reason_For_Removal" rfr
         ON reg."Pseudo NHS Number" = rfr."Pseudo NHS Number"
         AND $snapshot_date::DATE BETWEEN rfr."Reason for Removal Business Effective From Date"
             AND COALESCE(rfr."Reason for Removal Business Effective To Date", '9999-12-31')
