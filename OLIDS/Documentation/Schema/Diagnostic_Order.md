@@ -1,5 +1,11 @@
 # Diagnostic_Order
 
+- [Diagnostic\_Order](#diagnostic_order)
+  - [Overview](#overview)
+  - [Columns](#columns)
+  - [Entity relations](#entity-relations)
+  - [Notes](#notes)
+
 ## Overview
 
 A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
@@ -9,10 +15,11 @@ This represents an order or proposal or plan to perform a diagnostic or other se
 The resource allows requesting only a single procedure. If a workflow requires requesting multiple procedures simultaneously, this is done using multiple instances of this resource.
 
 ## Columns
+
 | Column Name | Data Type (Size) | Description | PK/FK |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `ID` | `UUID` | Unique business identifier for the diagnostic order record. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform |  |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform | |
 | `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID |
 | `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID |
 | `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id). | FK -> [Organisation](Organisation.md).ID |
@@ -21,29 +28,32 @@ The resource allows requesting only a single procedure. If a workflow requires r
 | `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID |
 | `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
 | `PARENT_OBSERVATION_ID` | `UUID` | parent observation id. | FK -> [OBSERVATION](Observation.md).ID |
-| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. |  |
-| `DATE_PRECISION_RAW` | `VARCHAR` | date precision raw. |  |
+| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | |
+| `DATE_PRECISION_RAW` | `VARCHAR` | date precision raw. | |
 | `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | source concept id for date precision. | [CONCEPT](Concept.md).ID |
-| `RESULT_VALUE` | `DOUBLE` | result value. |  |
+| `RESULT_VALUE` | `DOUBLE` | result value. | |
 | `RESULT_MEASUREMENT_UNITS_SOURCE_CONCEPT_ID` | `UUID` | source concept id for result measurementunits. | [CONCEPT](Concept.md).ID |
-| `RESULT_DATE` | `DATE` | result date. |  |
-| `RESULT_TEXT` | `INTEGER` | result text. |  |
-| `IS_PROBLEM` | `BOOLEAN` | is problem. |  |
-| `IS_REVIEW` | `BOOLEAN` | is review. |  |
-| `PROBLEM_END_DATE` | `DATE` | problem end date. |  |
+| `RESULT_DATE` | `DATE` | result date. | |
+| `RESULT_TEXT` | `INTEGER` | result text. | |
+| `IS_PROBLEM` | `BOOLEAN` | is problem. | |
+| `IS_REVIEW` | `BOOLEAN` | is review. | |
+| `PROBLEM_END_DATE` | `DATE` | problem end date. | |
 | `DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID` | `UUID` | source concept id for the diagnostic order. | [CONCEPT](Concept.md).ID |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. |  |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. |  |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. |  |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | |
 | `EPISODICITY_SOURCE_CONCEPT_ID` | `UUID` | source concept id for episodicity. | [CONCEPT](Concept.md).ID |
-| `IS_PRIMARY` | `BOOLEAN` | is primary. |  |
-| `DATE_RECORDED` | `TIMESTAMP` | date recorded. |  |
-| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. |  |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. |  |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | The timestamp when the record was supplied to, or acquired by, LDS. |  |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. |  |
+| `IS_PRIMARY` | `BOOLEAN` | is primary. | |
+| `DATE_RECORDED` | `TIMESTAMP` | date recorded. | |
+| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | The timestamp when the record was supplied to, or acquired by, LDS. | |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | |
 
 ## Entity relations
+
+> [!NOTE]
+> Diagrams below are currently indicative. The precise optional/mandatory nature of certain relationships remains to be clarified.
 
 ```mermaid
 erDiagram
@@ -73,21 +83,19 @@ erDiagram
     DIAGNOSTIC_ORDER }o--|| ORG_AUTH: author_organisation_id
 ```
 
-## Immediate Entity Relationships
 | Related Table | Relationship Type | Local Key | Related Key | Notes |
-|---|---|---|---|---|
-| [Person](Person.md) | FK | PERSON_ID | ID |  |
-| [Patient](Patient.md) | FK | PATIENT_ID | ID |  |
-| [Encounter](Encounter.md) | FK | ENCOUNTER_ID | ID |  |
-| [Practitioner](Practitioner.md) | FK | PRACTITIONER_ID | ID |  |
-| [Observation](Observation.md) | FK | PARENT_OBSERVATION_ID | ID |  |
-| [Concept](Concept.md) | FK | CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID | ID |  |
-| [Concept](Concept.md) | FK | PARENT_RESULT_MEASUREMENT_UNITS_SOURCE_CONCEPT_IDOBSERVATION_ID | ID |  |
-| [Concept](Concept.md) | FK | DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID | ID |  |
-| [Concept](Concept.md) | FK | EPISODICITY_SOURCE_CONCEPT_ID | ID |  |
-| [Medication_Order](Medication_Order.md) | FK | ID | DIAGNOSTIC_ORDER_ID |  |
-| [Medication_Statement](Medication_Statement.md) | FK | ID | DIAGNOSTIC_ORDER_ID |  |
+| --- | --- | --- | --- | --- |
+| [Person](Person.md) | FK | PERSON_ID | ID | |
+| [Patient](Patient.md) | FK | PATIENT_ID | ID | |
+| [Encounter](Encounter.md) | FK | ENCOUNTER_ID | ID | |
+| [Practitioner](Practitioner.md) | FK | PRACTITIONER_ID | ID | |
+| [Observation](Observation.md) | FK | PARENT_OBSERVATION_ID | ID | |
+| [Concept](Concept.md) | FK | CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID | ID | |
+| [Concept](Concept.md) | FK | PARENT_RESULT_MEASUREMENT_UNITS_SOURCE_CONCEPT_IDOBSERVATION_ID | ID | |
+| [Concept](Concept.md) | FK | DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID | ID | |
+| [Concept](Concept.md) | FK | EPISODICITY_SOURCE_CONCEPT_ID | ID | |
+| [Medication_Order](Medication_Order.md) | FK | ID | DIAGNOSTIC_ORDER_ID | |
+| [Medication_Statement](Medication_Statement.md) | FK | ID | DIAGNOSTIC_ORDER_ID | |
 | [Organisation]
 
 ## Notes
-

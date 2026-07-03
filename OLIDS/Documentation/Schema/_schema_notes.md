@@ -1,10 +1,25 @@
 # Schema notes
 
-- [Provider, Author, Publisher Organisation ID](#provider-author-publisher-organisation-id)
+- [Schema notes](#schema-notes)
+  - [Standards](#standards)
+    - ["datetime" or "date time"](#datetime-or-date-time)
+    - [source concept ID](#source-concept-id)
+  - [Provider, Author, Publisher Organisation ID](#provider-author-publisher-organisation-id)
     - [Publisher Organisation](#publisher-organisation)
     - [Author Organisation](#author-organisation)
     - [Provider Organisation](#provider-organisation)
     - [Supplier Organisation](#supplier-organisation)
+  - [Patient Ages](#patient-ages)
+
+## Standards
+
+### "datetime" or "date time"
+
+This schema uses a standard of "DATETIME" (one word) rather than "DATE TIME" (two words)
+
+### source concept ID
+
+OLIDS objects will store the source systems code or concept, mapping can then be applied locally on demand by the consumer. To clarify this behaviour all such encoded concepts are noted as "SOURCE" concept identifiers. This is to clear denote that they are representative of the value as supplied by the source system.
 
 ## Provider, Author, Publisher Organisation ID
 
@@ -42,3 +57,19 @@ A provider organisation is the organisation responsible for the delivery or mana
 A supplier is a controller or processor organisation, that delivers the data to the London Data Service. A supplier may be either a controller or processing organisation. In cases where the supplier is a controller, they will often be a publisher and/or author as well. However in cases where the supplier is a processor only, they cannot be the record author or record publisher due to their role as a processor.
 
 Suppliers may be a healthcare system supplier as well. An example of this is in the Primary Care EMIS / Optum dataset. In this scenario, EMIS/Optum are the supplier of the data. They orchestrate the extraction of data from individual primary care services (who are the record authors and record publishers in this scenario), and supply those extractions to the London Data Service through a secure file transfer service.
+
+## Patient Ages
+
+Ages shown in the OLIDS dataset for de-identified (also known as "masked" or "pseudonymised") data are shown in:
+
+- whole integer years
+- age brackets aligned to HES child ages
+- days since birth up to 27 days for neonates
+
+This is aligned with the Hospital Episode Statistics age categorisation as below:
+
+| OLIDS Column | HES column | Definitions | Values |
+| :--- | :--- | :--- | :--- |
+| `AGE_AT_EVENT` | `age` | **HES:** <br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. <br><br>**OLIDS:**<br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. | nnn = Age in years |
+| `AGE_AT_EVENT_BABY` | `ENDAGE` and `STARTAGE` (APC) <br> `APPTAGE` (OP) <br> `ARRIVALAGE` (AE) | **HES:**<br>The patient's age, in completed years, at the end of a finished episode. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply.<br><br>**OLIDS:**<br>The patient's age, in completed years, at the end of an event. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply. | nnn = Age in years<br> 120 = 120 years or more<br> 7001 = Less than 1 day  <br> 7002 = 1 to 6 days  <br> 7003 = 7 to 28 days  <br> 7004 = 29 to 90 days (under 3 months)  <br> 7005 = 91 to 181 days (approximately 3 months to under 6  months)  <br> 7006 = 182 to 272 days (approximately 6 months to under 9 months)  <br> 7007 = 273 to <1 year (approximately 9 months to under 1 year)  <br> Null = Not applicable (other maternity event) or not known <br> [See HES Data Dictionary](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/hospital-episode-statistics/hospital-episode-statistics-data-dictionary)|
+| `AGE_AT_EVENT_NEONATE` | `NEODUR` (APC) | **HES:** <br>The age in days of a baby admitted as a patient. It is derived from the Admission Date (ADMIDATE) and Date of Birth (DOB). <br>If the baby is older than 27 days, NEODUR is not calculated. <br><br>**OLIDS:** <br>The age of a patient at the end of an event where the patient is under 28 days old.<br> If the baby is older than 27 days, no age in days is given. | 2n = Age of patient in days from 0 to 27. <br> `NULL` = Not applicable. Patient is older than 27 days. |

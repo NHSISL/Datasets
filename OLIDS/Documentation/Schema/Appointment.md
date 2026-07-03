@@ -1,5 +1,11 @@
 # Appointment
 
+- [Appointment](#appointment)
+  - [Overview](#overview)
+  - [Columns](#columns)
+  - [Entity relationships](#entity-relationships)
+  - [Notes](#notes)
+
 ## Overview
 
 A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
@@ -9,11 +15,13 @@ Appointment resources are used to provide information about a planned meeting th
 This definition takes the concepts of appointments in a clinical setting and also extends them to be relevant in the community healthcare space, and to ease exposure to other appointment / calendar standards widely used outside of healthcare.
 
 > [!IMPORTANT]
-> The LDS now correctly ignores vacant appointment slots. Slots as an entity is not currently surfaced within OLIDS but may be added in future.
+> The LDS now correctly ignores vacant appointment slots supplied by EMIS.
+> Slots as an entity is not currently surfaced within OLIDS but may be added in future.
 
 ## Columns
+
 | Column Name | Data Type (Size) | Description | PK/FK |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `ID` | `VARCHAR` | id. | PK |
 | `LDS_SOURCE_RECORD_ID` | `VARCHAR` | lds record id. |  |
 | `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID |
@@ -24,34 +32,37 @@ This definition takes the concepts of appointments in a clinical setting and als
 | `SLOT_ID` | `UUID` | linked identifier for the slot | <not yet linked> |
 | `PRACTITIONER_IN_ROLE_ID` | `UUID` | practitioner in role id. | FK -> [Practitioner_In_Role](Practitioner_In_Role.md).ID |
 | `SCHEDULE_ID` | `UUID` | schedule id. | FK -> [Schedule](Schedule.md).ID |
-| `START_DATE` | `TIMESTAMP` | start date. |  |
-| `PLANNED_DURATION_MINS` | `NUMBER` | planned duration. |  |
-| `ACTUAL_DURATION_MINS` | `NUMBER` | actual duration. |  |
-| `APPOINTMENT_STATUS_SOURCE_CONCEPT_ID` | `UUID` | appointment status concept id. | FK -> [CONCEPT](concept.md).ID |
-| `PATIENT_WAIT_MINS` | `NUMBER` | patient wait. |  |
-| `PATIENT_DELAY_MINS` | `NUMBER` | patient delay. |  |
-| `DATE_TIME_BOOKED` | `TIMESTAMP_NTZ` | date time booked. |  |
-| `DATE_TIME_SENT_IN` | `TIMESTAMP_NTZ` | date time sent in. |  |
-| `DATE_TIME_LEFT` | `TIMESTAMP_NTZ` | date time left. |  |
-| `CANCELLED_DATE` | `VARCHAR` (SHOULD BE DATE) | cancelled date. |  |
-| `APPOINTMENT_TYPE` | `VARCHAR` | type of appointment. |  |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at date of event. |  |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at date of event. NULL where patient is over 1 years old. |  |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at date of event. NULL where patient is over 27 days old. |  |
-| `BOOKING_METHOD_SOURCE_CONCEPT_ID` | `UUID` | booking method concept id. | FK -> [CONCEPT](concept.md).ID |
-| `CONTACT_MODE_SOURCE_CONCEPT_ID` | `UUID` | contact mode concept id. | FK -> [CONCEPT](concept.md).ID |
-| `IS_BLOCKED` | `BOOLEAN` | is blocked. |  |
-| `NATIONAL_SLOT_CATEGORY_NAME` | `VARCHAR` | national slot category name. |  |
-| `CONTEXT_TYPE` | `VARCHAR` | context type. |  |
-| `SERVICE_SETTING` | `VARCHAR` | service setting. |  |
-| `NATIONAL_SLOT_CATEGORY_DESCRIPTION` | `VARCHAR` | national slot category description. |  |
-| `CSDS_CARE_CONTACT_IDENTIFIER` | `VARCHAR` | csds care contact identifier. |  |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. |  |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. |  |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. |  |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. |  |
+| `START_DATE` | `TIMESTAMP` | start date. | |
+| `PLANNED_DURATION_MINS` | `NUMBER` | planned duration. | |
+| `ACTUAL_DURATION_MINS` | `NUMBER` | actual duration. | |
+| `APPOINTMENT_STATUS_SOURCE_CONCEPT_ID` | `UUID` | appointment status concept id. | FK -> [CONCEPT](concept.md).ID|
+| `PATIENT_WAIT_MINS` | `NUMBER` | patient wait. | |
+| `PATIENT_DELAY_MINS` | `NUMBER` | patient delay. | |
+| `DATETIME_BOOKED` | `TIMESTAMP_NTZ` | date time booked. | |
+| `DATETIME_SENT_IN` | `TIMESTAMP_NTZ` | date time sent in. | |
+| `DATETIME_LEFT` | `TIMESTAMP_NTZ` | date time left. | |
+| `CANCELLED_DATE` | `VARCHAR` (SHOULD BE DATE) | cancelled date. | |
+| `APPOINTMENT_TYPE` | `VARCHAR` | type of appointment. | |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at date of event. | |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at date of event. NULL where patient is over 1 years old. | |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at date of event. NULL where patient is over 27 days old. | |
+| `BOOKING_METHOD_SOURCE_CONCEPT_ID` | `UUID` | booking method concept id. | FK -> [CONCEPT](concept.md).ID|
+| `CONTACT_MODE_SOURCE_CONCEPT_ID` | `UUID` | contact mode concept id. | FK -> [CONCEPT](concept.md).ID|
+| `IS_BLOCKED` | `BOOLEAN` | is blocked. | |
+| `NATIONAL_SLOT_CATEGORY_NAME` | `VARCHAR` | national slot category name. | |
+| `CONTEXT_TYPE` | `VARCHAR` | context type. | |
+| `SERVICE_SETTING` | `VARCHAR` | service setting. | |
+| `NATIONAL_SLOT_CATEGORY_DESCRIPTION` | `VARCHAR` | national slot category description. | |
+| `CSDS_CARE_CONTACT_IDENTIFIER` | `VARCHAR` | csds care contact identifier. | |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes th data. |  |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | |
 
 ## Entity relationships
+
+> [!NOTE]
+> Diagrams below are currently indicative. The precise optional/mandatory nature of certain relationships remains to be clarified.
 
 ```mermaid
 erDiagram
@@ -76,17 +87,15 @@ erDiagram
     APPOINTMENT }o--|| CONCEPT_MODE: contact_mode_concept_id
 ```
 
-## Immediate Entity Relationships
 | Related Table | Relationship Type | Local Key | Related Key | Notes |
-|---|---|---|---|---|
-| [Organisation](Organisation.md) | Join | LDS_BUSINESS_ID_ORGANISATION | ID |  |
-| [Patient](Patient.md) | Join | LDS_BUSINESS_ID_PATIENT | ID |  |
-| [Patient_Person](Patient_Person.md) | Join | LDS_BUSINESS_ID_PATIENT | PATIENT_ID |  |
-| [Person](Person.md) | FK | PERSON_ID | ID |  |
-| [Patient](Patient.md) | FK | PATIENT_ID | ID |  |
-| [Practitioner_In_Role](Practitioner_In_Role.md) | FK | PRACTITIONER_IN_ROLE_ID | ID |  |
-| [Organisation](Organisation.md) | FK | ORGANISATION_ID | ID |  |
+| --- | --- | --- | --- | --- |
+| [Organisation](Organisation.md) | Join | LDS_BUSINESS_ID_ORGANISATION | ID | |
+| [Patient](Patient.md) | Join | LDS_BUSINESS_ID_PATIENT | ID | |
+| [Patient_Person](Patient_Person.md) | Join | LDS_BUSINESS_ID_PATIENT | PATIENT_ID | |
+| [Person](Person.md) | FK | PERSON_ID | ID | |
+| [Patient](Patient.md) | FK | PATIENT_ID | ID | |
+| [Practitioner_In_Role](Practitioner_In_Role.md) | FK | PRACTITIONER_IN_ROLE_ID | ID | |
+| [Organisation](Organisation.md) | FK | ORGANISATION_ID | ID | |
 | [Schedule](Schedule.md) | FK | SCHEDULE_ID | ID | |
 
 ## Notes
-
