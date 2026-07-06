@@ -1,80 +1,95 @@
 # OLIDS filtering rules
 
+**Last Updated**: 18 February 2026
+
+- [OLIDS filtering rules](#olids-filtering-rules)
+  - [Overview](#overview)
+  - [Current Filtering Rules](#current-filtering-rules)
+    - [Exclusion of patients with PDS (Person Demographics Services) sensitive flag](#exclusion-of-patients-with-pds-person-demographics-services-sensitive-flag)
+  - [Previous filtering rules (no longer applied)](#previous-filtering-rules-no-longer-applied)
+    - [Exclusion of sensitive conditions](#exclusion-of-sensitive-conditions)
+  - [Change Decisions](#change-decisions)
+    - [Removal of Sensitive Condition Filtering](#removal-of-sensitive-condition-filtering)
+      - [Changes to Data Flows](#changes-to-data-flows)
+        - [Non-Identifiable Feeds: ICB Data Teams (SEL, SWL, NCL, NEL)](#non-identifiable-feeds-icb-data-teams-sel-swl-ncl-nel)
+        - [Identifiable Feeds: NWL ICB and NWL-LAP](#identifiable-feeds-nwl-icb-and-nwl-lap)
+    - [Scope of Change](#scope-of-change)
+    - [Data Protection Safeguards](#data-protection-safeguards)
+    - [Implementation](#implementation)
+    - [Related Documentation](#related-documentation)
+  - [Future Policy Considerations](#future-policy-considerations)
+
 ## Overview
 
-The One London Integrated Data Set (OLIDS) is subjected to filtering rules before distribution to the London Data Fabric and onward sharing to subscribers.
+The One London Integrated Data Set (OLIDS) is subjected to filtering rules before distribution to subscribers.
 
 The filtering rules are approved by the One London Board and applied based on their determination.
 
-**Last Updated**: 18 February 2026
-
----
-
 ## Current Filtering Rules
 
-As of February 2026, the following filtering rule remains in effect:
+The following filtering rule remains in effect:
 
 ### Exclusion of patients with PDS (Person Demographics Services) sensitive flag
 
-**Status**: Active
+![status:active](https://img.shields.io/badge/status-active:_filters_apply-green)
 
 The decision to exclude all records relating to persons with a PDS sensitivity flag will remove any and all records that relate to a person who is marked with a PDS sensitivity flag. Such patients will have all of their records filtered out before the Engine service discloses data to the One London Data Environment services.
 
 For more information on the PDS flags, please see:
+
 - "Sensitive Flags" at [NHS England - Personal Demographic Service](https://www.england.nhs.uk/long-read/personal-demographic-service-pds/)
 - [NHS Digital - Restricting Access to a Patient's Demographic Record](https://digital.nhs.uk/services/personal-demographics-service/restricting-access-to-a-patients-demographic-record)
 
----
+## Previous filtering rules (no longer applied)
 
-## Policy Change: Removal of Sensitive Condition Filtering (February 2026)
+### Exclusion of sensitive conditions
 
-### Previous Rule: Exclusion of sensitive conditions
+![status:removed](https://img.shields.io/badge/status-retracted:_passed_unfiltered-red)
 
-**Status**: REMOVED (Decision: 9 February 2026, Implementation: TBC)
-
-**Previous Implementation**: 
+**Previous Implementation**:
 The exclusion of events encoded with sensitive conditions removed individual event records (such as observation records) where they contained a sensitive condition. This did not remove other related event records that did not contain the clinically encoded value. For example, the appointment record in which a diagnosis of a sensitive condition was the subject may still have been present, but the observation record of that sensitive condition was not shared.
 
 **Previous Filtering Criteria**:
 The filtering used the following SNOMED reference sets:
-- SCTID: 999004351000000109: General practice summary data sharing exclusion for gender related issues
-- SCTID: 999004371000000100: General practice summary data sharing exclusion for assisted fertilisation
-- SCTID: 999004361000000107: General practice summary data sharing exclusion for termination of pregnancy
-- SCTID: 999004381000000103: General practice summary data sharing exclusion for sexually transmitted disease
+
+- `SCTID:999004351000000109`: General practice summary data sharing exclusion for gender related issues
+- `SCTID:999004371000000100`: General practice summary data sharing exclusion for assisted fertilisation
+- `SCTID:999004361000000107`: General practice summary data sharing exclusion for termination of pregnancy
+- `SCTID:999004381000000103`: General practice summary data sharing exclusion for sexually transmitted disease
 
 **Other reference sets not included in this filtering**:
-- SCTID: 1955841000000104: National Health Service secondary use data exclusions due to Human Fertilisation and Embryology Act 2008
-- SCTID: 1955851000000101: National Health Service secondary use data exclusions due to Gender Recognition Act 2004
 
----
+- `SCTID:1955841000000104`: National Health Service secondary use data exclusions due to Human Fertilisation and Embryology Act 2008
+- `SCTID:1955851000000101`: National Health Service secondary use data exclusions due to Gender Recognition Act 2004
 
-### Decision to Remove Sensitive Condition Filtering
+## Change Decisions
 
-**Decision Date**: 9 February 2026
+### Removal of Sensitive Condition Filtering
 
-**Decision Made By**: OneLondon Health Data Board (unanimous approval)
+| | |
+| --- | --- |
+| Decision date | 9th February 2026 |
+| Decision made by | OneLondon Health Data Board (unanimous approval) |
+| Endorsed by | - BI User Group (10-13 February 2026, e-mail consultation)<br>- London IG Steering Group (12 February 2026) |
+| Applies to | All subscriptions (pseudonymised and identifiable) |
+| Decision status | ![status:agreed](https://img.shields.io/badge/status-agreed:_to_enact_-green) |
+| Implementation status | ![status:active](https://img.shields.io/badge/status-active:_filters_apply-green) |
 
-**Endorsed By**:
-- BI User Group (10-13 February 2026, e-mail consultation)
-- London IG Steering Group (12 February 2026)
+#### Changes to Data Flows
 
-**Implementation Status**: Approved - timing to be agreed with Clinical Validation workstream and ICB data teams
-
----
-
-### Changes to Data Flows
-
-#### Non-Identifiable Feeds: ICB Data Teams (SEL, SWL, NCL, NEL)
+##### Non-Identifiable Feeds: ICB Data Teams (SEL, SWL, NCL, NEL)
 
 **Change**: Standardised data flow specifications amended - legally restricted codes changed from 'exclude' to 'include'
 
 **Affected Recipients**:
+
 - South East London ICB (SEL ICB)
 - South West London ICB (SWL ICB)
 - North Central London ICB (NCL ICB)
 - North East London ICB (NEL ICB)
 
 **Data Format**: Pseudonymised using standard LDS Column Masker configuration:
+
 - NHS number: Hashed
 - Postcode: Hashed
 - Date of Birth: Generalised
@@ -85,18 +100,19 @@ The filtering used the following SNOMED reference sets:
 
 ---
 
-#### Identifiable Feeds: NWL ICB and NWL-LAP
+##### Identifiable Feeds: NWL ICB and NWL-LAP
 
 **Change**: Standardised data flow specifications amended - legally restricted codes changed from 'exclude' to 'include'
 
 **Affected Recipients**:
+
 - North West London ICB (NWL ICB-specific flows)
 - North West London Local Analytics Platform (NWL-LAP)
 
 **Data Handling Controls**:
 
 | Purpose | Format | Legally Restricted Codes |
-|---------|--------|--------------------------|
+| --- | --- | --- |
 | Secondary use (research, planning, analysis) | Pseudonymised | Included in persisted data |
 | Direct care (patient treatment) | Identifiable | Filtered out or suitably restricted |
 
@@ -109,9 +125,11 @@ The filtering used the following SNOMED reference sets:
 ### Scope of Change
 
 **Applies To**:
+
 - LDS GP OLIDS dataflows only
 
 **Does Not Apply To**:
+
 - CSDS (Community Services Data Set)
 - SUS / Faster SUS (Secondary Uses Service)
 - MHSDS (Mental Health Services Data Set)
@@ -123,12 +141,14 @@ These datasets were assessed and found to contain records that would fall within
 ### Data Protection Safeguards
 
 **Local Analytics Platform (LAP)**:
+
 - All data processed in accordance with Data Processing Agreements (DPAs)
 - LAP processing designed to minimise disclosure risk
 - Access controls and audit mechanisms unchanged
 - NWL ICB implements differential controls for secondary vs direct care use
 
 **Ongoing Protections**:
+
 - Non-identifiable feeds remain pseudonymised (hashed identifiers, generalised DOB)
 - User authorisation requirements unchanged
 - Compliance monitoring continues
@@ -143,16 +163,16 @@ These datasets were assessed and found to contain records that would fall within
 **Authority**: LDS Delivery team authorised to manage transition and agree implementation timing with user base
 
 **Coordination Required**:
+
 - Clinical Validation workstream (timing)
 - All ICB data teams (readiness and timing)
 - NWL ICB (control implementation and Compliance Notice)
 - OneLondon Health Data Board representative (NWL Compliance Notice wording)
 
----
-
 ### Related Documentation
 
 For full details of this policy change, including decision history, implementation steps, and technical specifications, see:
+
 - [Decision Record: Reversal of Restricted Code Filtering](./decision-record-restricted-code-filtering-reversal.md)
 - OneLondon Health Data Board Decision (9 February 2026)
 - BI User Group Review (10-13 February 2026)
@@ -163,8 +183,7 @@ For full details of this policy change, including decision history, implementati
 ## Future Policy Considerations
 
 **Important Note**: Should any future policy require the implementation of code filtering:
+
 - Dataflows will need to be suspended
 - Significant resources will be required to assess, develop, test, and deploy filtering mechanisms
 - Historical data may require reprocessing
-
----
