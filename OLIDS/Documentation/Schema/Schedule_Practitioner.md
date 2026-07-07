@@ -17,19 +17,19 @@ If the schedule needed to be consulted, then there would be one created covering
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. |  |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `SCHEDULE_ID` | `UUID` | schedule id. | FK -> [Schedule](Schedule.md).ID |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | |
-| `LDS_TRANSFORM_DATE_TIME` | `TIMESTAMP_LTZ` | lds transform date time. | |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | PK | -- |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. |  | -- |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `SCHEDULE_ID` | `UUID` | schedule id. | FK -> [Schedule](Schedule.md).ID | -- |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | | -- |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_TRANSFORM_DATE_TIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 ## Entity Relationships
 

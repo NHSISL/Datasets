@@ -14,35 +14,35 @@ A patient encounter is further characterized by the setting in which it takes pl
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | Unique business identifier for the entity. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform | <MISSING> |
-| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID |
-| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id). | FK -> [Organisation](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisation id. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `EPISODE_OF_CARE_ID` | `UUID` | episode of care id. | FK -> [Episode_Of_Care](Episode_Of_Care.md).ID |
-| `APPOINTMENT_ID` | `UUID` | appointment id. | FK -> [Appointment](Appointment.md).ID |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `LOCATION` | `VARCHAR` | location. | |
-| `ENCOUNTER_SOURCE_CONCEPT_ID` | `UUID` | encounter source concept id. | FK -> [Concept](Concept.md).ID |
-| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK -> [Concept](Concept.md).ID |
-| `CONSULTATION_TYPE` | `VARCHAR` | consultation type. | |
-| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | |
-| `DATE_RECORDED` | `TIMESTAMP` | date recorded. | |
-| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | |
-| `TYPE` | `VARCHAR` | type. | |
-| `SUBTYPE` | `VARCHAR` | subtype. | |
-| `ADMISSION_METHOD` | `VARCHAR` | admission method. | |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | Unique business identifier for the entity. | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform | <MISSING> | -- |
+| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | `patient_id` |
+| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id). | FK -> [Organisation](Organisation.md).ID | `organisation_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `service_provider_organisation_id` |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisation id. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `EPISODE_OF_CARE_ID` | `UUID` | episode of care id. | FK -> [Episode_Of_Care](Episode_Of_Care.md).ID | `episode_of_care_id` |
+| `APPOINTMENT_ID` | `UUID` | appointment id. | FK -> [Appointment](Appointment.md).ID | `appointment_id` |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
+| `LOCATION` | `VARCHAR` | location. | | `institution_location_id` |
+| `ENCOUNTER_SOURCE_CONCEPT_ID` | `UUID` | encounter source concept id. | FK -> [Concept](Concept.md).ID | `non_core_concept_id` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK -> [Concept](Concept.md).ID | `date_precision_concept_id` |
+| `CONSULTATION_TYPE` | `VARCHAR` | consultation type. | | -- |
+| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | | `clinical_effective_date` |
+| `DATE_RECORDED` | `TIMESTAMP` | date recorded. | | `date_recorded` |
+| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | | -- |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | | -- |
+| `TYPE` | `VARCHAR` | type. | | `type` |
+| `SUBTYPE` | `VARCHAR` | subtype. | | `sub_type` |
+| `ADMISSION_METHOD` | `VARCHAR` | admission method. | | `admission_method` |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | | `organization_id` |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 ## Entity relationship
 

@@ -14,23 +14,23 @@ A Patient may have multiple ways to be contacted with different uses or applicab
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK | Masking policy |
-| --- | --- | --- | --- | --- |
-| `ID` | `UUID` | id. | |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. | | |
-| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | |
-| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id publisher. | | |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | organisation id provider. | | |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id author. | | |
-| `CONTACT_TYPE_SOURCE_CONCEPT_ID` | `UUID` | contact type concept id. | FK -> [Concept](Concept.md).ID | |
-| `VALUE` | `VARCHAR` | value. | available in PID views only | ❌ column removed |
-| `START_DATE` | `DATE` | start date. | | |
-| `END_DATE` | `DATE` | end date. | | |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | |
+| Column Name | Data Type (Size) | Description | PK/FK | Masking policy | Compass Equivalent |
+| --- | --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | | | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. | | | -- |
+| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | | `patient_id` |
+| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id publisher. | | | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | organisation id provider. | | | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id author. | | | `organization_id` |
+| `CONTACT_TYPE_SOURCE_CONCEPT_ID` | `UUID` | contact type concept id. | FK -> [Concept](Concept.md).ID | | `type_concept_id` |
+| `VALUE` | `VARCHAR` | value. | available in PID views only | ❌ column removed | `value` |
+| `START_DATE` | `DATE` | start date. | | | `start_date` |
+| `END_DATE` | `DATE` | end date. | | | `end_date` |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | | | `organization_id` |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | | -- |
 
 ## Entity Relationships
 

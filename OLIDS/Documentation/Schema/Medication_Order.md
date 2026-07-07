@@ -22,44 +22,44 @@ The MedicationRequest resource allows requesting only a single medication. If a 
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | |
-| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID |
-| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher^1^. | FK -> [Organisation](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | organisation id of the care provider^1^. | FK -> [Organisation](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author^1^. | FK -> [Organisation](Organisation.md).ID |
-| `MEDICATION_STATEMENT_ID` | `UUID` | medication statement id. | FK -> [Medication_Statement](Medication_Statement.md).ID |
-| `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `OBSERVATION_ID` | `UUID` | observation id. | FK -> [Observation](Observation.md).ID |
-| `ALLERGY_INTOLERANCE_ID` | `UUID` | allergy intolerance id. | FK -> [Allergy_Intolerance](Allergy_Intolerance.md).ID |
-| `DIAGNOSTIC_ORDER_ID` | `UUID` | diagnostic order id. | FK -> [Diagnostic_Order](Diagnostic_Order.md).ID |
-| `REFERRAL_REQUEST_ID` | `UUID` | referral request id. | FK -> [Referral_Request](Referral_Request.md).ID |
-| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | |
-| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK -> [Concept](Concept.md).ID |
-| `DOSE` | `VARCHAR` | dose. | |
-| `QUANTITY_VALUE` | `FLOAT` | quantity value. | |
-| `QUANTITY_VALUE_DESCRIPTION` | `VARCHAR` | quantity value description. | |
-| `QUANTITY_UNIT` | `VARCHAR` | quantity unit. | |
-| `DURATION_DAYS` | `NUMBER` | duration days. | |
-| `ESTIMATED_COST` | `NUMBER` | estimated cost. | |
-| `MEDICATION_NAME` | `VARCHAR` | medication name. | |
-| `MEDICATION_ORDER_SOURCE_CONCEPT_ID` | `UUID` | medication order source concept id. | FK -> [Concept](Concept.md).ID |
-| `BNF_REFERENCE` | `VARCHAR` | bnf reference. | |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | |
-| `ISSUE_METHOD` | `VARCHAR` | issue method. | |
-| `DATE_RECORDED` | `TIMESTAMP_NTZ` | date recorded. | |
-| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | |
-| `ISSUE_METHOD_DESCRIPTION` | `VARCHAR` | issue method description. | |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | | -- |
+| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | `patient_id` |
+| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher^1^. | FK -> [Organisation](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | organisation id of the care provider^1^. | FK -> [Organisation](Organisation.md).ID | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author^1^. | FK -> [Organisation](Organisation.md).ID | `organization_id` |
+| `MEDICATION_STATEMENT_ID` | `UUID` | medication statement id. | FK -> [Medication_Statement](Medication_Statement.md).ID | `medication_statement_id` |
+| `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID | -- |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
+| `OBSERVATION_ID` | `UUID` | observation id. | FK -> [Observation](Observation.md).ID | -- |
+| `ALLERGY_INTOLERANCE_ID` | `UUID` | allergy intolerance id. | FK -> [Allergy_Intolerance](Allergy_Intolerance.md).ID | -- |
+| `DIAGNOSTIC_ORDER_ID` | `UUID` | diagnostic order id. | FK -> [Diagnostic_Order](Diagnostic_Order.md).ID | -- |
+| `REFERRAL_REQUEST_ID` | `UUID` | referral request id. | FK -> [Referral_Request](Referral_Request.md).ID | -- |
+| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK -> [Concept](Concept.md).ID | `date_precision_concept_id` |
+| `DOSE` | `VARCHAR` | dose. | | `dose` |
+| `QUANTITY_VALUE` | `FLOAT` | quantity value. | | `quantity_value` |
+| `QUANTITY_VALUE_DESCRIPTION` | `VARCHAR` | quantity value description. | | -- |
+| `QUANTITY_UNIT` | `VARCHAR` | quantity unit. | | `quantity_unit` |
+| `DURATION_DAYS` | `NUMBER` | duration days. | | `duration_days` |
+| `ESTIMATED_COST` | `NUMBER` | estimated cost. | | `estimated_cost` |
+| `MEDICATION_NAME` | `VARCHAR` | medication name. | | -- |
+| `MEDICATION_ORDER_SOURCE_CONCEPT_ID` | `UUID` | medication order source concept id. | FK -> [Concept](Concept.md).ID | `non_core_concept_id` |
+| `BNF_REFERENCE` | `VARCHAR` | bnf reference. | | `bnf_reference` |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | | -- |
+| `ISSUE_METHOD` | `VARCHAR` | issue method. | | `issue_method` |
+| `DATE_RECORDED` | `TIMESTAMP_NTZ` | date recorded. | | `date_recorded` |
+| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | | -- |
+| `ISSUE_METHOD_DESCRIPTION` | `VARCHAR` | issue method description. | | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | | `organization_id` |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 1. See the [schema notes section on publisher, provider, author organisation definitions](_schema_notes.md#provider-author-publisher-organisation-id)
 

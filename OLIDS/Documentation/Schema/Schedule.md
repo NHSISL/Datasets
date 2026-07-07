@@ -18,25 +18,25 @@ The schedule does not provide any information about actual appointments. This se
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `LOCATION_ID` | `UUID` | location id. | FK -> [Location](Location.md).ID |
-| `LOCATION_NAME` | `VARCHAR` | location. | |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `START_DATETIME` | `TIMESTAMP` | start date. | |
-| `END_DATETIME` | `TIMESTAMP` | end date. | |
-| `TYPE` | `VARCHAR` | type. | |
-| `NAME` | `VARCHAR` | name. | |
-| `IS_PRIVATE` | `BOOLEAN` | is private. | |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | | -- |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `LOCATION_ID` | `UUID` | location id. | FK -> [Location](Location.md).ID | -- |
+| `LOCATION_NAME` | `VARCHAR` | location. | | `location` |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
+| `START_DATETIME` | `TIMESTAMP` | start date. | | `start_date` |
+| `END_DATETIME` | `TIMESTAMP` | end date. | | -- |
+| `TYPE` | `VARCHAR` | type. | | `type` |
+| `NAME` | `VARCHAR` | name. | | `name` |
+| `IS_PRIVATE` | `BOOLEAN` | is private. | | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | | -- |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - | -- |
 
 ## Entity Relationships
 
