@@ -27,8 +27,8 @@ PDS responses will always be used over an source system stub where both exist fo
 | `OTHER_GIVEN_NAME` | `VARCHAR` | Additional given names. Sourced from PDS OTHER_GIVEN_NAME or EMIS MIDDLE_NAMES. | | ❌ column removed | -- |
 | `GENDER` | `VARCHAR` | Administrative gender. Populated from PDS response. NULL for EMIS stub rows as EMIS does not supply a gender field in the same format. | | | -- |
 | `DATE_OF_BIRTH` | `VARCHAR` | Patient's date of birth. | | 📅 truncated to 1st of month | -- |
-| `DATE_OF_BIRTH_YEAR` | `BIGINT` | Year component of DATE_OF_BIRTH. | | | `birth_year` |
-| `DATE_OF_BIRTH_MONTH` | `BIGINT` | Month component of DATE_OF_BIRTH. | | | `birth_month` |
+| `DATE_OF_BIRTH_YEAR` | `BIGINT` | Year component of DATE_OF_BIRTH. | | | -- |
+| `DATE_OF_BIRTH_MONTH` | `BIGINT` | Month component of DATE_OF_BIRTH. | | | -- |
 | `DATE_OF_BIRTH_DAY` | `BIGINT` | Day component of DATE_OF_BIRTH. | | ❌ column removed | -- |
 | `DATE_OF_BIRTH_TIME` | `TIME` | Time component of DATE_OF_BIRTH. Always NULL — neither PDS nor EMIS provides a time-of-birth value. | | ❌ column removed | -- |
 | `DATE_OF_DEATH` | `VARCHAR` | Patient's date of death. NULL if the patient is living. | | 📅 truncated to 1st of month | -- |

@@ -50,9 +50,9 @@ The data in the Resource covers the "who" information about the patient: its att
 | `LAST_NAME` | `VARCHAR` | last name. | | ❌ column removed | `last_name` |
 | `GENDER_SOURCE_CONCEPT_ID` | `Unknown` | gender concept id. | FK -> [Concept](Concept.md).ID | | -- |
 | `BIRTH_DATE` | `DATE` | birth date. | | 📅 date generalised | `date_of_birth` |
-| `BIRTH_YEAR` | `BIGINT` | birth year. | | | `birth_year` |
-| `BIRTH_MONTH` | `BIGINT` | birth month. | | | `birth_month` |
-| `BIRTH_WEEK_ISO` | `BIGINT` | birth week iso. | | | `birth_week` |
+| `BIRTH_YEAR` | `BIGINT` | birth year. | | | -- |
+| `BIRTH_MONTH` | `BIGINT` | birth month. | | | -- |
+| `BIRTH_WEEK_ISO` | `BIGINT` | birth week iso. | | | -- |
 | `BIRTH_DAY` | `BIGINT` | birth day. | | ❌ column removed | -- |
 | `DEATH_DATE` | `DATE` | death date. | | 📅 date generalised | `date_of_death` |
 | `DEATH_YEAR` | `BIGINT` | death year. | | | -- |

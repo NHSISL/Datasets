@@ -27,7 +27,7 @@ Substances include, but are not limited to: a therapeutic substance administered
 | `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
 | `PRACTITIONER_ID` | `UUID` | linked practitioner id. | FK -> [PRACTITIONER](Practitioner.md).ID | `practitioner_id` |
 | `ENCOUNTER_ID` | `UUID` | linked encounter id. | FK -> [ENCOUNTER](Encounter.md).ID | `encounter_id` |
-| `CLINICAL_STATUS` | `VARCHAR` | clinical status. | - | `clinical_status` |
+| `CLINICAL_STATUS` | `VARCHAR` | clinical status. | - | -- |
 | `VERIFICATION_STATUS` | `VARCHAR` | verification status. | - | -- |
 | `CATEGORY` | `VARCHAR` | category. | - | -- |
 | `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | - | `clinical_effective_date` |

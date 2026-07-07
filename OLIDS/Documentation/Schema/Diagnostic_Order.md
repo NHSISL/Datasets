@@ -32,16 +32,16 @@ The resource allows requesting only a single procedure. If a workflow requires r
 | `DATE_PRECISION_RAW` | `VARCHAR` | date precision raw. | | -- |
 | `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | source concept id for date precision. | [CONCEPT](Concept.md).ID | `date_precision_concept_id` |
 | `RESULT_VALUE` | `DOUBLE` | result value. | | `result_value` |
-| `RESULT_MEASUREMENT_UNITS_SOURCE_CONCEPT_ID` | `UUID` | source concept id for result measurementunits. | [CONCEPT](Concept.md).ID | `result_value_units_concept_id` |
+| `RESULT_MEASUREMENT_UNITS_SOURCE_CONCEPT_ID` | `UUID` | source concept id for result measurementunits. | [CONCEPT](Concept.md).ID | `result_value_units` |
 | `RESULT_DATE` | `DATE` | result date. | | `result_date` |
 | `RESULT_TEXT` | `INTEGER` | result text. | | `result_text` |
 | `IS_PROBLEM` | `BOOLEAN` | is problem. | | `is_problem` |
 | `IS_REVIEW` | `BOOLEAN` | is review. | | `is_review` |
 | `PROBLEM_END_DATE` | `DATE` | problem end date. | | `problem_end_date` |
-| `DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID` | `UUID` | source concept id for the diagnostic order. | [CONCEPT](Concept.md).ID | `raw_concept_id` |
+| `DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID` | `UUID` | source concept id for the diagnostic order. | [CONCEPT](Concept.md).ID | `non_core_concept_id` |
 | `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | | `age_at_event` |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | | `age_at_event_baby` |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | | `age_at_event_neonate` |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | | -- |
 | `EPISODICITY_SOURCE_CONCEPT_ID` | `UUID` | source concept id for episodicity. | [CONCEPT](Concept.md).ID | `episodicity_concept_id` |
 | `IS_PRIMARY` | `BOOLEAN` | is primary. | | `is_primary` |
 | `DATE_RECORDED` | `TIMESTAMP` | date recorded. | | `date_recorded` |

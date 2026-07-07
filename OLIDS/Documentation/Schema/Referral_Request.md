@@ -50,11 +50,11 @@ ReferralRequest is also intended for use when there is a complete and more perma
 | `RECIPIENT_ORGANISATION_ID` | `UUID` | recipient organisation id. | [ORANGANISATION](Organisation.md).ID | `recipient_organization_id` |
 | `REFERRAL_REQUEST_PRIORITY_SOURCE_CONCEPT_ID` | `UUID` | referral request priority concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `referral_request_priority_concept_id` |
 | `REFERRAL_REQUEST_TYPE_SOURCE_CONCEPT_ID` | `UUID` | referral request type concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `referral_request_type_concept_id` |
-| `REFERRAL_REQUEST_SPECIALTY_SOURCE_CONCEPT_ID` | `UUID` | referral request specialty concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `referral_request_specialty_concept_id` |
+| `REFERRAL_REQUEST_SPECIALTY_SOURCE_CONCEPT_ID` | `UUID` | referral request specialty concept id. | FK->[Concept](Concept.md).CONCEPT_ID | -- |
 | `MODE` | `VARCHAR` | mode. | | `mode` |
 | `IS_OUTGOING_REFERRAL` | `BOOLEAN` | is outgoing referral. | | `outgoing_referral` |
 | `IS_REVIEW` | `BOOLEAN` | is review. | | `is_review` |
-| `REFERRAL_REQUEST_SOURCE_CONCEPT_ID` | `UUID` | referral request source concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `raw_concept_id` |
+| `REFERRAL_REQUEST_SOURCE_CONCEPT_ID` | `UUID` | referral request source concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `non_core_concept_id` |
 | `AGE_AT_EVENT` | `NUMBER` | age at event. | | `age_at_event` |
 | `AGE_AT_EVENT_BABY` | `NUMBER` | age at event baby. | | -- |
 | `AGE_AT_EVENT_NEONATE` | `NUMBER` | age at event neonate. | | -- |

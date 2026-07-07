@@ -38,7 +38,7 @@ Uses for the Observation resource include:
 | `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | | `clinical_effective_date` |
 | `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK --> [Concept](Concept.md).ID | `date_precision_concept_id` |
 | `RESULT_VALUE` | `FLOAT` | result value. | | `result_value` |
-| `RESULT_VALUE_UNITS_SOURCE_CONCEPT_ID` | `UUID` | result value unit concept id. | FK --> [Concept](Concept.md).ID | `result_value_units_concept_id` |
+| `RESULT_VALUE_UNITS_SOURCE_CONCEPT_ID` | `UUID` | result value unit concept id. | FK --> [Concept](Concept.md).ID | `result_value_units` |
 | `RESULT_DATE` | `DATE` | result date. | | `result_date` |
 | `RESULT_TEXT` | `VARCHAR` | result text. | | `result_text` |
 | `IS_PROBLEM` | `BOOLEAN` | is problem. | | `is_problem` |
@@ -47,7 +47,7 @@ Uses for the Observation resource include:
 | `OBSERVATION_SOURCE_CONCEPT_ID` | `UUID` | observation source concept id. | FK --> [Concept](Concept.md).ID | `non_core_concept_id` |
 | `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | | `age_at_event` |
 | `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event.<sup>2</sup> | | -- |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date.<sup>2</sup> | | `age_at_event_neonate` |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date.<sup>2</sup> | | -- |
 | `EPISODICITY_SOURCE_CONCEPT_ID` | `UUID` | episodicity concept id. | FK --> [Concept](Concept.md).ID | `episodicity_concept_id` |
 | `IS_PRIMARY` | `BOOLEAN` | is primary. | | `is_primary` |
 | `DATE_RECORDED` | `TIMESTAMP_NTZ` | date recorded. | | `date_recorded` |
