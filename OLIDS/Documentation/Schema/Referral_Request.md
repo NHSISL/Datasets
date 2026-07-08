@@ -32,39 +32,39 @@ ReferralRequest is also intended for use when there is a complete and more perma
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - |
-| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID |
-| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `UNIQUE_BOOKING_REFERENCE_NUMBER` | `VARCHAR` | unique booking reference number. | |
-| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | |
-| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK->[Concept](Concept.md).CONCEPT_ID |
-| `REQUESTER_ORGANISATION_ID` | `UUID` | requester organisation id. | [ORANGANISATION](Organisation.md).ID |
-| `RECIPIENT_ORGANISATION_ID` | `UUID` | recipient organisation id. | [ORANGANISATION](Organisation.md).ID |
-| `REFERRAL_REQUEST_PRIORITY_SOURCE_CONCEPT_ID` | `UUID` | referral request priority concept id. | FK->[Concept](Concept.md).CONCEPT_ID |
-| `REFERRAL_REQUEST_TYPE_SOURCE_CONCEPT_ID` | `UUID` | referral request type concept id. | FK->[Concept](Concept.md).CONCEPT_ID |
-| `REFERRAL_REQUEST_SPECIALTY_SOURCE_CONCEPT_ID` | `UUID` | referral request specialty concept id. | FK->[Concept](Concept.md).CONCEPT_ID |
-| `MODE` | `VARCHAR` | mode. | |
-| `IS_OUTGOING_REFERRAL` | `BOOLEAN` | is outgoing referral. | |
-| `IS_REVIEW` | `BOOLEAN` | is review. | |
-| `REFERRAL_REQUEST_SOURCE_CONCEPT_ID` | `UUID` | referral request source concept id. | FK->[Concept](Concept.md).CONCEPT_ID |
-| `AGE_AT_EVENT` | `NUMBER` | age at event. | |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | age at event baby. | |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | age at event neonate. | |
-| `RECORDED_DATE` | `TIMESTAMP` | recorded date. | |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - |
-| `VALUE` | `DOUBLE` | value. | |
-| `CODE_ID` | `VARCHAR` | code id. | |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - | -- |
+| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | `patient_id` |
+| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID | `encounter_id` |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
+| `UNIQUE_BOOKING_REFERENCE_NUMBER` | `VARCHAR` | unique booking reference number. | | -- |
+| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `date_precision_concept_id` |
+| `REQUESTER_ORGANISATION_ID` | `UUID` | requester organisation id. | [ORANGANISATION](Organisation.md).ID | `requester_organization_id` |
+| `RECIPIENT_ORGANISATION_ID` | `UUID` | recipient organisation id. | [ORANGANISATION](Organisation.md).ID | `recipient_organization_id` |
+| `REFERRAL_REQUEST_PRIORITY_SOURCE_CONCEPT_ID` | `UUID` | referral request priority concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `referral_request_priority_concept_id` |
+| `REFERRAL_REQUEST_TYPE_SOURCE_CONCEPT_ID` | `UUID` | referral request type concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `referral_request_type_concept_id` |
+| `REFERRAL_REQUEST_SPECIALTY_SOURCE_CONCEPT_ID` | `UUID` | referral request specialty concept id. | FK->[Concept](Concept.md).CONCEPT_ID | -- |
+| `MODE` | `VARCHAR` | mode. | | `mode` |
+| `IS_OUTGOING_REFERRAL` | `BOOLEAN` | is outgoing referral. | | `outgoing_referral` |
+| `IS_REVIEW` | `BOOLEAN` | is review. | | `is_review` |
+| `REFERRAL_REQUEST_SOURCE_CONCEPT_ID` | `UUID` | referral request source concept id. | FK->[Concept](Concept.md).CONCEPT_ID | `non_core_concept_id` |
+| `AGE_AT_EVENT` | `NUMBER` | age at event. | | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | age at event baby. | | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | age at event neonate. | | -- |
+| `RECORDED_DATE` | `TIMESTAMP` | recorded date. | | `date_recorded` |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | | -- |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - | -- |
+| `VALUE` | `DOUBLE` | value. | | -- |
+| `CODE_ID` | `VARCHAR` | code id. | | -- |
 
 ## Entity Relationships
 

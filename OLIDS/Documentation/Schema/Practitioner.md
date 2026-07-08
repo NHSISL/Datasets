@@ -38,22 +38,22 @@ The Practitioner resource is used for anyone involved in the provision of care o
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher^1^. | FK -> [Organisation](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author^1^. | FK -> [Organisation](Organisation.md).ID |
-| `GMC_CODE` | `VARCHAR` | general medical council code | - |
-| `TITLE` | `VARCHAR` | practitioners title. | - |
-| `FIRST_NAME` | `VARCHAR` | practitioners first/given name. | - |
-| `SURNAME` | `VARCHAR` | practitioners surname. | - |
-| `NAME` | `VARCHAR` | practitioners full name. | - |
-| `IS_OBSOLETE` | `BOOLEAN` | is practitioner record obsolete. | - |
-| `LDS_IS_DELETED` | `BOOLEAN` | is the practitioner record deleted in the source system. | - |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The ODS<sup>1<\sup> code of the organisation (data controller) who publishes the data. | - |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | - |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | the timestamp when the transform process that generated this record. | - |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - | -- |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher^1^. | FK -> [Organisation](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author^1^. | FK -> [Organisation](Organisation.md).ID | -- |
+| `GMC_CODE` | `VARCHAR` | general medical council code | - | `gmc_code` |
+| `TITLE` | `VARCHAR` | practitioners title. | - | -- |
+| `FIRST_NAME` | `VARCHAR` | practitioners first/given name. | - | `name` |
+| `SURNAME` | `VARCHAR` | practitioners surname. | - | `name` |
+| `NAME` | `VARCHAR` | practitioners full name. | - | -- |
+| `IS_OBSOLETE` | `BOOLEAN` | is practitioner record obsolete. | - | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | is the practitioner record deleted in the source system. | - | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The ODS<sup>1<\sup> code of the organisation (data controller) who publishes the data. | - | -- |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | - | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | the timestamp when the transform process that generated this record. | - | -- |
 
 ## Entity Relationships
 

@@ -25,30 +25,30 @@ The ProcedureRequest resource allows requesting only a single procedure. If a wo
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id. | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - |
-| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID |
-| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisation id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisation id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisation id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID |
-| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | - |
-| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | [Concept](Concept.md).CONCEPT_ID |
-| `DATE_RECORDED` | `TIMESTAMP` | date recorded. | - |
-| `DESCRIPTION` | `VARCHAR` | description. | - |
-| `PROCEDURE_REQUEST_SOURCE_CONCEPT_ID` | `UUID` | procedure request source concept id. | [Concept](Concept.md).CONCEPT_ID |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | - |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | - |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | - |
-| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | - |
-| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | - |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | - |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | - |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id. | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - | -- |
+| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | `patient_id` |
+| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisation id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisation id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisation id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
+| `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID | `encounter_id` |
+| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | - | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | [Concept](Concept.md).CONCEPT_ID | `date_precision_concept_id` |
+| `DATE_RECORDED` | `TIMESTAMP` | date recorded. | - | `date_recorded` |
+| `DESCRIPTION` | `VARCHAR` | description. | - | -- |
+| `PROCEDURE_REQUEST_SOURCE_CONCEPT_ID` | `UUID` | procedure request source concept id. | [Concept](Concept.md).CONCEPT_ID | `non_core_concept_id` |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | - | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | - | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | - | -- |
+| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | - | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | - | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | - | -- |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | - | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - | -- |
 
 ## Entity relationships
 

@@ -36,22 +36,22 @@ For use cases where an organisation has activities where a practitioner is not d
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `VARCHAR` | id. | |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. | |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID |
-| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `EMPLOYER_ORGANISATION_ID` | `UUID` | organisation id of the employing organisation for this record. | FK -> [Organisation](Organisation.md).ID |
-| `ROLE_CODE` | `VARCHAR` | role code. | |
-| `ROLE` | `VARCHAR` | role. | |
-| `DATE_EMPLOYMENT_START` | `DATE` | date employment start. | |
-| `DATE_EMPLOYMENT_END` | `DATE` | date employment end. | |
-| `LDS_IS_DELETED` | `BOOLEAN` | True if the record has been marked as deleted. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | ODS code of the owning organisation for this record. | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | Timestamp extracted from source file name indicating extraction time. | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `VARCHAR` | id. | | -- |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. | | -- |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID | -- |
+| `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | -- |
+| `EMPLOYER_ORGANISATION_ID` | `UUID` | organisation id of the employing organisation for this record. | FK -> [Organisation](Organisation.md).ID | -- |
+| `ROLE_CODE` | `VARCHAR` | role code. | | -- |
+| `ROLE` | `VARCHAR` | role. | | -- |
+| `DATE_EMPLOYMENT_START` | `DATE` | date employment start. | | -- |
+| `DATE_EMPLOYMENT_END` | `DATE` | date employment end. | | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | True if the record has been marked as deleted. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | ODS code of the owning organisation for this record. | | -- |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | Timestamp extracted from source file name indicating extraction time. | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 ## Entity Relationships
 

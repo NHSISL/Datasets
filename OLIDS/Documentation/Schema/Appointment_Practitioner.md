@@ -16,22 +16,22 @@ List of practitioner participants involved in an appointment.
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | unique and consistent identifier for the entity | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform. | |
-| `PATIENT_ID` | `UUID` | linked patient identifier | FK -> [Patient](Patient.md).ID |
-| `PERSON_ID` | `UUID` | linked person identifier | FK -> [Person](Person.md).ID |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `APPOINTMENT_ID` | `UUID` | linked appointment id. | FK -> [Appointment](Appointment.md).ID |
-| `PRACTITIONER_ID` | `UUID` | linked practitioner id. | FK -> [Practitioner](Practitioner.md).ID |
-| `LDS_SOURCE_RECORD_ID_PRACTITIONER` | `UUID` | A unique identifier denoting the originating base-record prior to transform. | |
-| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data | |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | LDS transform date time. | |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | unique and consistent identifier for the entity | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform. | | -- |
+| `PATIENT_ID` | `UUID` | linked patient identifier | FK -> [Patient](Patient.md).ID | -- |
+| `PERSON_ID` | `UUID` | linked person identifier | FK -> [Person](Person.md).ID | -- |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `APPOINTMENT_ID` | `UUID` | linked appointment id. | FK -> [Appointment](Appointment.md).ID | -- |
+| `PRACTITIONER_ID` | `UUID` | linked practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
+| `LDS_SOURCE_RECORD_ID_PRACTITIONER` | `UUID` | A unique identifier denoting the originating base-record prior to transform. | | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data | | `organization_id` |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | LDS transform date time. | | -- |
 
 ## Entity relationship
 

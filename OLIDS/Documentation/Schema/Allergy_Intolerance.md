@@ -16,35 +16,35 @@ Substances include, but are not limited to: a therapeutic substance administered
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK |
-| --- | --- | --- | --- |
-| `ID` | `UUID` | id | PK |
-| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform | - |
-| `PATIENT_ID` | `UUID` | linked patient identifier | FK -> [PATIENT](Patient.md).ID |
-| `PERSON_ID` | `UUID` | linked person id. | FK -> [PERSON](Person.md).ID |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID |
-| `PRACTITIONER_ID` | `UUID` | linked practitioner id. | FK -> [PRACTITIONER](Practitioner.md).ID |
-| `ENCOUNTER_ID` | `UUID` | linked encounter id. | FK -> [ENCOUNTER](Encounter.md).ID |
-| `CLINICAL_STATUS` | `VARCHAR` | clinical status. | - |
-| `VERIFICATION_STATUS` | `VARCHAR` | verification status. | - |
-| `CATEGORY` | `VARCHAR` | category. | - |
-| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | - |
-| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | lds concept id date precision. | FK -> [CONCEPT](concept.md).ID |
-| `IS_REVIEW` | `BOOLEAN` | is review. | - |
-| `MEDICATION_NAME` | `VARCHAR` | medication name. | - |
-| `MULTI_LEX_ACTION` | `VARCHAR` | multi lex action. | - |
-| `ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID` | `UUID` | allergy intolerance source concept id. | FK -> [CONCEPT](concept.md).ID |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | - |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | - |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | - |
-| `DATE_RECORDED` | `TIMESTAMP_NTZ` | date recorded. | - |
-| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | - |
-| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | - |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | - |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | - |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - |
+| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | `UUID` | id | PK | `id` |
+| `LDS_SOURCE_RECORD_ID` | `UUID` | A unique identifier denoting the originating base-record prior to transform | - | -- |
+| `PATIENT_ID` | `UUID` | linked patient identifier | FK -> [PATIENT](Patient.md).ID | `patient_id` |
+| `PERSON_ID` | `UUID` | linked person id. | FK -> [PERSON](Person.md).ID | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
+| `PRACTITIONER_ID` | `UUID` | linked practitioner id. | FK -> [PRACTITIONER](Practitioner.md).ID | `practitioner_id` |
+| `ENCOUNTER_ID` | `UUID` | linked encounter id. | FK -> [ENCOUNTER](Encounter.md).ID | `encounter_id` |
+| `CLINICAL_STATUS` | `VARCHAR` | clinical status. | - | -- |
+| `VERIFICATION_STATUS` | `VARCHAR` | verification status. | - | -- |
+| `CATEGORY` | `VARCHAR` | category. | - | -- |
+| `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | - | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | lds concept id date precision. | FK -> [CONCEPT](concept.md).ID | `date_precision_concept_id` |
+| `IS_REVIEW` | `BOOLEAN` | is review. | - | `is_review` |
+| `MEDICATION_NAME` | `VARCHAR` | medication name. | - | -- |
+| `MULTI_LEX_ACTION` | `VARCHAR` | multi lex action. | - | -- |
+| `ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID` | `UUID` | allergy intolerance source concept id. | FK -> [CONCEPT](concept.md).ID | `non_core_concept_id` |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at clinical effective date of event. | - | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | - | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | - | -- |
+| `DATE_RECORDED` | `TIMESTAMP_NTZ` | date recorded. | - | `date_recorded` |
+| `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | - | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | - | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | - | `organization_id` |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | - | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - | -- |
 
 ## Entity relationships
 
