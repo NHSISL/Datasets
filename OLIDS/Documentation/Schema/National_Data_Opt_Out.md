@@ -12,9 +12,8 @@
     - [Scope](#scope)
     - [Filtering](#filtering)
 
-
 > [!NOTE]
-> This table currently holds only the patient data sharing data choices for the National Data Opt-Out **only** - hence its current name. 
+> This table currently holds only the patient data sharing data choices for the National Data Opt-Out **only** - hence its current name.
 > <br>It is anticipated that this table will be extended to include the Local Data Opt-Out, at which point an object name change will be required.
 > <br>Candidate names under consideration are:
 >
@@ -59,8 +58,8 @@ A national data opt-out continues to be maintained and applied for an individual
 | --- | --- | --- | --- | --- | --- |
 | `LDS_BUSINESS_ID` | `UUID` | unique identifier | PK | | |
 | `LDS_RECORD_ID` | `UUID` | source record identifier | | | |
-| `SK_PATIENT_ID` | `NUMBER` | nhs number pseudonym | FK -> [Patient](Patient.md).SK_PATIENT_ID | visible for pseudo views only | |
-| `NHS_NUMBER` | `NUMBER` | patients nhs number | FK -> [Patient](Patient.md).NHS_NUMBER | visible for pid views only | |
+| `SK_PATIENT_ID` | `NUMBER` | NHS number pseudonym | FK -> [Patient](Patient.md).SK_PATIENT_ID | visible for pseudo views only | |
+| `NHS_NUMBER` | `NUMBER` | patients NHS number | FK -> [Patient](Patient.md).NHS_NUMBER | visible for pid views only | |
 | `PREFERENCE_TYPE` | `VARCHAR` | The category / type of data opt-out or sharing exclusion | | | |
 | `PREFERENCE_STATUS` | `VARCHAR` | The patient selected choice within that opt-out choice / exclusion | | | |
 | `LDS_IS_DELETED` | `BOOLEAN` | true where records is soft-deleted | | | |
@@ -101,7 +100,6 @@ erDiagram
     PATIENT_pid |o--o{ NDOO_3: NHS_NUMBER
     PERSON_pid |o--o{ NDOO_4: NHS_NUMBER
 ```
-
 
 ## Using the opt-out register
 
