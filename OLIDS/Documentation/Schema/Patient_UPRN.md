@@ -8,7 +8,7 @@ Provides a resolved Unique Property Reference Number (or pseudonym thereof) agai
 
 | Column Name | Data Type (Size) | Description | PK/FK | masking policy | Compass equivalent |
 | --- | --- | --- | --- | --- | --- |
-| `PARTIENT_ADDRESS_ID` | `UUID` | the patient address id | FK ->[Patient_Address](Patient_Address).ID | | `patient_address.id` |
+| `PATIENT_ADDRESS_ID` | `UUID` | the patient address id | FK ->[Patient_Address](Patient_Address).ID | | `patient_address.id` |
 | `STATUS` | `VARCHAR` | (Success/Null) Whether the attempt to match the uprn was a success (does not indicate whether the match to a uprn was a success, only the attempt) | | | `status`<sup>1</sup> |
 | `MATCHED` | `VARCHAR` | (True/False) Whether a UPRN match was found | | | |
 | `UPRN` | `VARCHAR` | The unique property reference number | | #️⃣ hashed | `uprn`<sup>1</sup> |
