@@ -1,7 +1,12 @@
 # Patient_UPRN
 
-## Overview
+- [Patient\_UPRN](#patient_uprn)
+  - [Overview](#overview)
+  - [Columns](#columns)
+  - [Entity Relationships](#entity-relationships)
+  - [Notes](#notes)
 
+## Overview
 Provides a resolved Unique Property Reference Number (or pseudonym thereof) against the patient address.
 
 ## Columns
@@ -11,9 +16,9 @@ Provides a resolved Unique Property Reference Number (or pseudonym thereof) agai
 | `PATIENT_ADDRESS_ID` | `UUID` | the patient address id | FK -> [Patient_Address](Patient_Address.md).ID | | `patient_address.id` |
 | `STATUS` | `VARCHAR` | (Success/Null) Whether the attempt to match the uprn was a success (does not indicate whether the match to a uprn was a success, only the attempt) | | | `status`<sup>1</sup> |
 | `MATCHED` | `VARCHAR` | (True/False) Whether a UPRN match was found | | | |
-| `UPRN` | `VARCHAR` | The unique property reference number | | #️⃣ hashed | `uprn`<sup>1</sup> |
+| `UPRN` | `VARCHAR` | The unique property reference number | | #️⃣hashed | `uprn`<sup>1</sup> |
 | `POSTCODE_QUALITY` | `VARCHAR` | The quality of the postcode within the supplied input address | | | |
-| `QUALIFIER` | `VARCHAR` | AddressBase Premiums encoding for the type of matched address (residential, child) | | | `qualifier`<sup>1</sup> |
+| `QUALIFIER` | `VARCHAR` | AddressBase Premium encoding for the type of matched address (residential, child) | | | `qualifier`<sup>1</sup> |
 | `CLASSIFICATION` | `VARCHAR` | AddressBase Premium encoding for the property classification<sup>2</sup> | | | `uprn_property_classification`<sup>1</sup> |
 | `ALGORITHM` | `VARCHAR` | the algorithm used to achieve the best address match | | | `match_rule`<sup>1</sup> |
 | `MATCH_PATTERN` | `VARCHAR` | the matched pattern structure | | | `match_pattern...`<sup>3</sup> |

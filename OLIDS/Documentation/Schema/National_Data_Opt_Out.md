@@ -54,17 +54,17 @@ A national data opt-out continues to be maintained and applied for an individual
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK | masking policy | Compass equivalent |
+| Column Name | Data Type (Size) | Description | PK/FK | Masking policy | Compass Equivalent |
 | --- | --- | --- | --- | --- | --- |
 | `LDS_BUSINESS_ID` | `UUID` | unique identifier | PK | | |
 | `LDS_RECORD_ID` | `UUID` | source record identifier | | | |
 | `SK_PATIENT_ID` | `NUMBER` | NHS number pseudonym | FK -> [Patient](Patient.md).SK_PATIENT_ID | visible for pseudo views only | |
-| `NHS_NUMBER` | `NUMBER` | patients NHS number | FK -> [Patient](Patient.md).NHS_NUMBER | visible for pid views only | |
+| `NHS_NUMBER` | `NUMBER` | patient's NHS number | FK -> [Patient](Patient.md).NHS_NUMBER | visible for pid views only | |
 | `PREFERENCE_TYPE` | `VARCHAR` | The category / type of data opt-out or sharing exclusion | | | |
 | `PREFERENCE_STATUS` | `VARCHAR` | The patient selected choice within that opt-out choice / exclusion | | | |
-| `LDS_IS_DELETED` | `BOOLEAN` | true where records is soft-deleted | | | |
-| `EFFECTIVE_FROM` | `TIMESTAMP_NTZ` | The datetime from which this patients choice is known to be effective from | | | |
-| `EFFECTIVE_TO` | `TIMESTAMP_NTZ` | The datetime from which this patients choice is known to be effective to (replaced/altered) | | | |
+| `LDS_IS_DELETED` | `BOOLEAN` | true where the record is soft-deleted | | | |
+| `EFFECTIVE_FROM` | `TIMESTAMP_NTZ` | The datetime from which this patient's choice is known to be effective | | | |
+| `EFFECTIVE_TO` | `TIMESTAMP_NTZ` | The datetime to which this patient's choice is known to be effective (replaced/altered) | | | |
 | `IS_LATEST` | `BOOLEAN` | true where this status is the latest for the patient and preference type | | | |
 
 ### Preference Type
