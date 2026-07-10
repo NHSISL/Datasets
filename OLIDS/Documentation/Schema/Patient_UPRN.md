@@ -6,9 +6,9 @@ Provides a resolved Unique Property Reference Number (or pseudonym thereof) agai
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK | masking policy | Compass equivalent |
+| Column Name | Data Type (Size) | Description | PK/FK | Masking policy | Compass Equivalent |
 | --- | --- | --- | --- | --- | --- |
-| `PATIENT_ADDRESS_ID` | `UUID` | the patient address id | FK ->[Patient_Address](Patient_Address).ID | | `patient_address.id` |
+| `PATIENT_ADDRESS_ID` | `UUID` | the patient address id | FK -> [Patient_Address](Patient_Address.md).ID | | `patient_address.id` |
 | `STATUS` | `VARCHAR` | (Success/Null) Whether the attempt to match the uprn was a success (does not indicate whether the match to a uprn was a success, only the attempt) | | | `status`<sup>1</sup> |
 | `MATCHED` | `VARCHAR` | (True/False) Whether a UPRN match was found | | | |
 | `UPRN` | `VARCHAR` | The unique property reference number | | #️⃣ hashed | `uprn`<sup>1</sup> |
@@ -21,10 +21,10 @@ Provides a resolved Unique Property Reference Number (or pseudonym thereof) agai
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The publisher of the linked patient address record | | | |
 
 1. Compass equivalent table `patient_address_match`
-1. For address clasification codes see: [OS Docs, Address Classification Code Value](https://docs.os.uk/osngd/code-lists/code-lists-overview/addressclassificationcodevalue)
-1. `MATCH_PATTERN` contains json construction of assign `match_pattern_` prefixed columns
+2. For address classification codes see: [OS Docs, Address Classification Code Value](https://docs.os.uk/osngd/code-lists/code-lists-overview/addressclassificationcodevalue)
+3. `MATCH_PATTERN` contains a JSON construction of `match_pattern_`-prefixed columns
 
-## Entity Relations
+## Entity Relationships
 
 ```mermaid
 erDiagram

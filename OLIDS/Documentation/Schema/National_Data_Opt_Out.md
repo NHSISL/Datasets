@@ -22,14 +22,14 @@
 > - patient_privacy_choices
 
 > [!WARNING]
-> The records in this table are presented as a status over time, similar to a type-2 slowly changing dimension, allowing for a fully auditable picture of the patients opt-out choices.
-> <br>**For the purposes of applying opt-outs you must only use the latest status of a patients choice** (using `IS_LATEST=true`)
-> <br>The history is provided to faciliate audit checks on what was disclosed to an onward consumer on a given date only.
+> The records in this table are presented as a status over time, similar to a type-2 slowly changing dimension, allowing for a fully auditable picture of the patients' opt-out choices.
+> <br>**For the purposes of applying opt-outs you must only use the latest status of a patient's choice** (using `IS_LATEST=true`)
+> <br>The history is provided to facilitate audit checks on what was disclosed to an onward consumer on a given date only.
 
 ## Overview
 
 > [!NOTE]
-> Please see related articles on the National Data OPt-Out and its application for your use case:
+> Please see related articles on the National Data Opt-Out and its application for your use case:
 >
 > - [National Data Opt Out (NHS Digital)](https://digital.nhs.uk/services/national-data-opt-out)
 > - [Operational Policy Guidance (NHS Digital)](https://digital.nhs.uk/services/national-data-opt-out/operational-policy-guidance-document)
@@ -104,11 +104,11 @@ erDiagram
 ## Using the opt-out register
 
 > [!TIP]
-> Please review the national guidance on the National Data Opt-Out and seek local IG advise for your specific use case. The advise below is highly generalised and will not reflect your local nuances.
+> Please review the national guidance on the National Data Opt-Out and seek local IG advice for your specific use case. The advice below is highly generalised and will not reflect your local nuances.
 
 The national data opt-out applies at the point of disclosure of data to another purpose, or to another entity. The other entity does not need to be a different organisation, but may have access to other datasets or would apply other processes or operations to the data than the disclosing party.
 
-The patients status at the time of disclosure is the defining attribute. When determnining which patients should be excluded from disclosures, users are advised to only consider the `IS_LATEST=true` set as of the date of disclosure - **and not of the date of the recorded event being disclosed**
+The patient's status at the time of disclosure is the defining attribute. When determining which patients should be excluded from disclosures, users are advised to only consider the `IS_LATEST=true` set as of the date of disclosure - **and not of the date of the recorded event being disclosed**
 
 ## Notes
 
@@ -120,11 +120,11 @@ Users must not retain their own cache of this data for onward use, nor share the
 
 ### Scope
 
-The list of patients within the National Data Opt Out table represents registered patients across london from participating practices within the LDS GP data extraction service.
+The list of patients within the National Data Opt-Out table represents registered patients across London from participating practices within the LDS GP data extraction service.
 
 It will **not** include:
 
-- Patients recieving secondary care within the London service who are registered outside of London
+- Patients receiving secondary care within the London service who are registered outside of London
 - Patients registered with London GP Practices who are not supplying data to the GP data processing services
 - Patients within London who are unregistered
 
@@ -136,4 +136,4 @@ An example of this could be using this NDOO register against a commissioning dat
 
 The national opt out data is supplied to consumers as a declared state without filtering by consuming commissioner.
 
-The accepted rationale is that this preference should be applied (where appropriate and required) to any record, whereever that record may reside, and if commissioners are in receipt of a record relating to this patient - for whatever reason - the patient choice should be honored.
+The accepted rationale is that this preference should be applied (where appropriate and required) to any record, wherever that record may reside, and if commissioners are in receipt of a record relating to this patient - for whatever reason - the patient choice should be honored.
