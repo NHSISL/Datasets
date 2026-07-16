@@ -6,11 +6,9 @@ This folder is the central location for OLIDS release notes.
 
 This location provides a single place to review changes across the OLIDS delivery stack.
 
-Typical users include both technical and non-technical stakeholders, so release notes should be clear, concise, and understandable without deep repository knowledge.
-
 ## Structure
 
-Release notes are grouped by repository because OLIDS is delivered as a linked set of dbt projects with dependencies:
+Release notes are grouped by repository as OLIDS is delivered as a linked set of dbt projects with package dependencies:
 
 - **1_OLIDS_Share**: Core engine repository containing shared macros and common components.
 - **2_EMIS_OLIDS**: Dataset-specific repository containing logic to ingest, sequence, and model EMIS data into the OLIDS structure.
@@ -28,7 +26,6 @@ flowchart LR
     id1 --> id2
     id1 --> id3
     id2 --> id3
-
 ```
 
 ## Release Note Source
