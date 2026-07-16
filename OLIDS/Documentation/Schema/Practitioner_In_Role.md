@@ -49,7 +49,6 @@ For use cases where an organisation has activities where a practitioner is not d
 | `DATE_EMPLOYMENT_START` | `DATE` | date employment start. | | -- |
 | `DATE_EMPLOYMENT_END` | `DATE` | date employment end. | | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | True if the record has been marked as deleted. | | -- |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | ODS code of the owning organisation for this record. | | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | Timestamp extracted from source file name indicating extraction time. | | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
