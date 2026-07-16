@@ -51,7 +51,6 @@ The Practitioner resource is used for anyone involved in the provision of care o
 | `NAME` | `VARCHAR` | practitioners full name. | - | -- |
 | `IS_OBSOLETE` | `BOOLEAN` | is practitioner record obsolete. | - | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | is the practitioner record deleted in the source system. | - | -- |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The ODS<sup>1<\sup> code of the organisation (data controller) who publishes the data. | - | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | the timestamp when the transform process that generated this record. | - | -- |
 
