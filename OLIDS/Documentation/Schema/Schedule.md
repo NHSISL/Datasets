@@ -8,7 +8,7 @@
 
 ## Overview
 
-Related FHIR component: [Schedule](https://build.fhir.org/schedule.html)
+Linked FHIR resource: [🔥 Schedule](https://build.fhir.org/schedule.html)
 
 A container for slots of time that may be available for booking appointments
 

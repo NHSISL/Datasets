@@ -8,6 +8,8 @@
 
 ## Overview
 
+Linked FHIR resource: [🔥 Episode of Care](https://hl7.org/fhir/episodeofcare.html)
+
 An association between a patient and an organisation / healthcare provider(s) during which time encounters may occur. The managing organisation assumes a level of responsibility for the patient during this time.
 
 ## Columns

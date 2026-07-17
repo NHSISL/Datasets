@@ -8,6 +8,8 @@
 
 ## Overview
 
+Linked FHIR resource: [🔥 Schedule.Actor](https://hl7.org/fhir/schedule-definitions.html#Schedule.actor)
+
 The schedule belongs to a single instance of a service or resource. This is normally a HealthcareService, Practitioner, Location or Device. In the case where a single resource can provide different services, potentially at different location, then the schedulable resource is considered the composite of the actors.
 
 For example, if a practitioner can provide services at multiple locations, they might have one schedule per location, where each schedule includes both the practitioner and location actors. When booking an appointment with multiple schedulable resources, multiple schedules may need to be checked depending on the configuration of the system.

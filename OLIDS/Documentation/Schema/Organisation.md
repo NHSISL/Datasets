@@ -8,7 +8,8 @@
 
 ## Overview
 
-Linked FHIR resource: [🔥 Organization](https://build.fhir.org/organization.html)
+Linked FHIR resource: [🔥 Organization](https://hl7.org/fhir/organization.html)
+
 The Organisation resource is used for collections of people that have come together to achieve an objective. The Group resource is used to identify a collection of people (or animals, devices, etc.) that are gathered for the purpose of analysis or acting upon, but are not expected to act themselves.
 
 In the context of service provision, the Organisation provides the services, the HealthcareService describes the services provided, and the Location describes the place where the service(s) are offered/available.

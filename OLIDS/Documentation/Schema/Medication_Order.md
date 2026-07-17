@@ -8,7 +8,7 @@
 
 ## Overview
 
-Linked FHIR resource: [🔥 Medication Request](https://build.fhir.org/medicationrequest.html)
+Linked FHIR resource: [🔥 Medication Request](https://hl7.org/fhir/medicationrequest.html)
 
 This resource covers all type of orders for medications for a patient. This includes inpatient medication orders as well as community orders (whether filled by the prescriber or by a pharmacy). It also includes orders for over-the-counter medications (e.g., Aspirin), total parenteral nutrition and diet/vitamin supplements. It may be used to support the order of medication-related devices e.g., prefilled syringes such as patient-controlled analgesia (PCA) syringes, or syringes used to administer other types of medications. e.g., insulin, narcotics. It can can also be used to order medication or substances NOT be taken.
 

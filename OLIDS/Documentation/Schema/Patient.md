@@ -8,7 +8,7 @@
 
 ## Overview
 
-Related FHIR resource: [🔥 Patient](https://build.fhir.org/patient.html)
+Related FHIR resource: [🔥 Patient](https://hl7.org/fhir/patient.html)
 
 This Resource covers data about patients involved in a wide range of health-related activities, including:
 

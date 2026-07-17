@@ -20,6 +20,8 @@
   
 ## Overview
 
+Linked FHIR resource: [🔥 Practitioner](https://hl7.org/fhir/practitioner.html)
+
 Practitioner covers all individuals who are engaged in the healthcare process and healthcare-related services as part of their formal responsibilities and this Resource is used for attribution of activities and responsibilities to these individuals. Practitioners include (but are not limited to):
 
 - physicians, dentists, pharmacists

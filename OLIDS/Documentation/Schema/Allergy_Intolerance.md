@@ -8,6 +8,8 @@
 
 ## Overview
 
+Linked FHIR resource: [🔥 Allergy Intolerance](https://hl7.org/fhir/allergyintolerance.html)
+
 Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance. A record of a clinical assessment of an allergy or intolerance; a propensity, or a potential risk to an individual, to have an adverse reaction on future exposure to the specified substance, or class of substance.
 
 Where a propensity is identified, to record information or evidence about a reaction event that is characterised by any harmful or undesirable physiological response that is specific to the individual and triggered by exposure of an individual to the identified substance or class of substance.
