@@ -5,6 +5,7 @@
   - [Columns](#columns)
   - [Entity relationships](#entity-relationships)
   - [Notes](#notes)
+    - [Appointments for historical deducted patients](#appointments-for-historical-deducted-patients)
 
 ## Overview
 
@@ -101,3 +102,14 @@ erDiagram
 | [Schedule](Schedule.md) | FK | SCHEDULE_ID | ID | |
 
 ## Notes
+
+### Appointments for historical deducted patients
+
+Please note that due to the manner in which EMIS data is supplied, appointments will exist for patients that have been deducted well before the 'look back' period included in the initial bulk with the practice (five years).
+
+As a result users will see appointments that will include a `PATIENT_ID` that does not exist in the `PATIENT` table.
+
+Users should not expect all `PATIENT_ID` values contained in the `APPOINTMENT` table to exist in the `PATIENT` table.
+
+- Users should expect all appointments **within five years of the initial practice bulk** to relate to `PATIENT_ID` values that are present within the `PATIENT` table.
+- Users should expect appointments five or more years prior to the initial bulk may contain `PATIENT_ID` values that do not exist in the `PATIENT` table.
