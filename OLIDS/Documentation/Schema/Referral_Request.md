@@ -39,7 +39,6 @@ ReferralRequest is also intended for use when there is a complete and more perma
 | `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | `patient_id` |
 | `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | `person_id` |
 | `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
 | `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisaiton id author. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
 | `ENCOUNTER_ID` | `UUID` | encounter id. | FK -> [Encounter](Encounter.md).ID | `encounter_id` |
 | `PRACTITIONER_ID` | `UUID` | practitioner id. | FK -> [Practitioner](Practitioner.md).ID | `practitioner_id` |
@@ -58,13 +57,12 @@ ReferralRequest is also intended for use when there is a complete and more perma
 | `AGE_AT_EVENT` | `NUMBER` | age at event. | | `age_at_event` |
 | `AGE_AT_EVENT_BABY` | `NUMBER` | age at event baby. | | -- |
 | `AGE_AT_EVENT_NEONATE` | `NUMBER` | age at event neonate. | | -- |
-| `RECORDED_DATE` | `TIMESTAMP` | recorded date. | | `date_recorded` |
+| `RECORDED_DATETIME` | `TIMESTAMP` | recorded date. | | `date_recorded` |
+| `VALUE` | `DOUBLE` | value. | | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - | -- |
-| `VALUE` | `DOUBLE` | value. | | -- |
-| `CODE_ID` | `VARCHAR` | code id. | | -- |
 
 ## Entity Relationships
 
