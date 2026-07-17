@@ -40,9 +40,8 @@ The data in the Resource covers the "who" information about the patient: its att
 | `PROVIDER_ORGANISATION_ID` | `UUID` | organisation id of the care provider<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID | | -- |
 | `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID | | -- |
 | `REGISTERED_PRACTICE_ORGANISATION_ID` | `UUID` | registered practice id. | FK -> [Organisation](Organisation.md).ID | | -- |
-| `DATE_OF_REGISTRATION` | `DATE` | date of registration. | | | -- |
-| `DATE_OF_DEACTIVATION` | `DATE` | date of deactivation. | | | -- |
-| `NHS_NUMBER` | `VARCHAR` | nhs number. | | ❌ column removed | `nhs_number` |
+| `LOCAL_PATIENT_ID` | `UUID` | The local administration system identifier for the patient | | | |
+| `NHS_NUMBER` | `VARCHAR` | NHS number. | | ❌ column removed | `nhs_number` |
 | `SK_PATIENT_ID` | `NUMBER` | sk patient id. | | ℹ️ pseudo view only | -- |
 | `TITLE` | `VARCHAR` | title. | | | `title` |
 | `FIRST_NAME` | `VARCHAR` | first name. | | ❌ column removed | `first_names` |

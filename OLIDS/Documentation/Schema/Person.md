@@ -3,6 +3,7 @@
 - [Person](#person)
   - [Overview](#overview)
   - [Columns](#columns)
+    - [columns to be added](#columns-to-be-added)
   - [Entity relationships](#entity-relationships)
   - [Notes](#notes)
 
@@ -29,13 +30,13 @@ PDS responses will always be used over an source system stub where both exist fo
 | `DATE_OF_BIRTH` | `VARCHAR` | Patient's date of birth. | | 📅 truncated to 1st of month | -- |
 | `DATE_OF_BIRTH_YEAR` | `BIGINT` | Year component of DATE_OF_BIRTH. | | | -- |
 | `DATE_OF_BIRTH_MONTH` | `BIGINT` | Month component of DATE_OF_BIRTH. | | | -- |
-| `DATE_OF_BIRTH_DAY` | `BIGINT` | Day component of DATE_OF_BIRTH. | | ❌ column removed | -- |
-| `DATE_OF_BIRTH_TIME` | `TIME` | Time component of DATE_OF_BIRTH. Always NULL — neither PDS nor EMIS provides a time-of-birth value. | | ❌ column removed | -- |
+| `DATE_OF_BIRTH_DAY` | `BIGINT` | Day component of DATE_OF_BIRTH. | | 📅 truncated to 1st of month | -- |
+| `DATE_OF_BIRTH_TIME` | `TIME` | Time component of DATE_OF_BIRTH. Always NULL — neither PDS nor EMIS provides a time-of-birth value. | | 📅 nullified | -- |
 | `DATE_OF_DEATH` | `VARCHAR` | Patient's date of death. NULL if the patient is living. | | 📅 truncated to 1st of month | -- |
 | `DATE_OF_DEATH_YEAR` | `BIGINT` | Year component of DATE_OF_DEATH. | | | -- |
 | `DATE_OF_DEATH_MONTH` | `BIGINT` | Month component of DATE_OF_DEATH. | | | -- |
-| `DATE_OF_DEATH_DAY` | `BIGINT` | Day component of DATE_OF_DEATH. | | ❌ column removed | -- |
-| `DATE_OF_DEATH_TIME` | `TIME` | Time component of DATE_OF_DEATH. Always NULL — neither PDS nor EMIS provides a time-of-death value. | | ❌ column removed | -- |
+| `DATE_OF_DEATH_DAY` | `BIGINT` | Day component of DATE_OF_DEATH. | | 📅 truncated to 1st of month | -- |
+| `DATE_OF_DEATH_TIME` | `TIME` | Time component of DATE_OF_DEATH. Always NULL — neither PDS nor EMIS provides a time-of-death value. | | 📅 nullified | -- |
 | `DEATH_NOTIFICATION_STATUS` | `VARCHAR` | PDS death notification status code. NULL for EMIS stub rows. | | | -- |
 | `ADDRESS_LINE1` | `VARCHAR` | First line of the patient's address. NULL for EMIS stub rows. | | ❌ column removed | -- |
 | `ADDRESS_LINE2` | `VARCHAR` | Second line of the patient's address. NULL for EMIS stub rows. | | ❌ column removed | -- |
@@ -57,12 +58,18 @@ PDS responses will always be used over an source system stub where both exist fo
 | `MOBILE_NUMBER` | `VARCHAR` | Patient's mobile number from PDS. NULL for EMIS stub rows. | | ❌ column removed | -- |
 | `EMAIL_ADDRESS` | `VARCHAR` | Patient's email address from PDS. NULL for EMIS stub rows. | | ❌ column removed | -- |
 | `MPS_ID` | `VARCHAR` | Master Patient Service identifier from PDS. NULL for EMIS stub rows. | | | -- |
-| `SENSITIVITY_FLAG` | `VARCHAR` | Always NULL in this model. The source SENSITIVITY_FLAG from PDS is intentionally overridden with CAST(NULL AS VARCHAR(1)) to prevent accidental disclosure of sensitive flagging in downstream consumers. | | | -- |
+| `PATIENT_FLAGGED_SENSITIVE` | `BOOLEAN` | True where patient is flagged as sensitive. | | | -- |
 | `ERROR_SUCCESS_CODE` | `VARCHAR` | PDS response error_success code (sourced from the ERROR_SUCCESS_CODE column in PDS_DATA_MASKED). For EMIS stub rows, set to '92' when SPINE_SENSITIVE is TRUE; otherwise NULL. | | | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | Indicates whether the source record has been logically deleted. Always FALSE for PDS rows (the PDS source has no deleted column). Inherited from the Admin_Patient source for EMIS stub rows. | | | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | The timestamp when the source record was acquired or supplied to LDS | | | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP` | The timestamp when the source record was transformed by LDS | | | -- |
-| `Source` | `VARCHAR` | Indicates the origin of the person record. 'Person' for records sourced from PDS (Person_Sequenced); 'EMIS' for stub records sourced from Admin_Patient_Sequenced where no PDS response exists. | | | -- |
+
+### columns to be added
+
+| Column Name | Data Type (Size) | Description | PK/FK | Masking Policy | Compass Equivalent |
+| --- | --- | --- | --- | --- | --- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | Indicates the origin of the person record. 'Person' for records sourced from PDS (Person_Sequenced); 'EMIS' for stub records sourced from Admin_Patient_Sequenced where no PDS response exists. | | | -- |
+| `IS_PATIENT_FLAGGED_SENSITIVE` | `BOOLEAN` | will replace/rename `PATIENT_FLAGGED_SENSITIVE`. | | | -- |
 
 ## Entity relationships
 

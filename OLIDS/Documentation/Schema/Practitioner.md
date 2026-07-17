@@ -42,8 +42,8 @@ The Practitioner resource is used for anyone involved in the provision of care o
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | id. | PK | `id` |
 | `LDS_SOURCE_RECORD_ID` | `UUID` | lds record id. | - | -- |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher^1^. | FK -> [Organisation](Organisation.md).ID | -- |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author^1^. | FK -> [Organisation](Organisation.md).ID | -- |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | organisation id of the record publisher<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID | -- |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | organisation id record author<sup>1</sup>. | FK -> [Organisation](Organisation.md).ID | -- |
 | `GMC_CODE` | `VARCHAR` | general medical council code | - | `gmc_code` |
 | `TITLE` | `VARCHAR` | practitioners title. | - | -- |
 | `FIRST_NAME` | `VARCHAR` | practitioners first/given name. | - | `name` |
