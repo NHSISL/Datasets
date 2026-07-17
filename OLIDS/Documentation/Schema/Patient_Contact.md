@@ -8,7 +8,7 @@
 
 ## Overview
 
-Related FHIR resource [🔥 Patient.telecom](https://build.fhir.org/patient-definitions.html#Patient.telecom)
+Related FHIR resource [🔥 Patient.telecom](https://hl7.org/fhir/patient-definitions.html#Patient.telecom)
 
 A Patient may have multiple ways to be contacted with different uses or applicable periods. May need to have options for contacting the person urgently and also to help with identification. The address might not go directly to the individual, but may reach another party that is able to proxy for the patient (i.e. home phone, or pet owner's phone).
 

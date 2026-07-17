@@ -8,7 +8,7 @@
 
 ## Overview
 
-Linked FHIR resource [🔥 PractitionerRole](https://build.fhir.org/practitionerrole.html)
+Linked FHIR resource [🔥 PractitionerRole](https://hl7.org/fhir/practitionerrole.html)
 
 A specific set of Roles/Locations/specialties/services that a practitioner may perform at an organisation for a period of time
 

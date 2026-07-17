@@ -7,6 +7,7 @@
   - [Notes](#notes)
 
 ## Overview
+
 Provides a resolved Unique Property Reference Number (or pseudonym thereof) against the patient address.
 
 ## Columns

@@ -9,7 +9,7 @@
 
 ## Overview
 
-Related FHIR resource: [🔥 Patient.address](https://build.fhir.org/patient-definitions.html#Patient.address)
+Related FHIR resource: [🔥 Patient.address](https://hl7.org/fhir/patient-definitions.html#Patient.address)
 
 Patient addresses with different uses or applicable periods.
 

@@ -9,6 +9,8 @@
 
 ## Overview
 
+Linked FHIR resource: [🔥 Appointment.Participant](https://hl7.org/fhir/appointment-definitions.html#Appointment.participant)
+
 List of practitioner participants involved in an appointment.
 
 > [!NOTE]

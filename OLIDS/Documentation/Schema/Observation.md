@@ -2,6 +2,8 @@
 
 ## Overview
 
+Linked FHIR resource: [🔥 Observation](https://hl7.org/fhir/observation.html)
+
 Measurements and simple assertions made about a patient, device or other subject
 
 Observations are a central element in healthcare, used to support diagnosis, monitor progress, determine baselines and patterns and even capture demographic characteristics, as well as capture results of tests performed on products, substances, and environments. Most observations are simple name/value pair assertions with some metadata, but some observations group other observations together logically, or even are multi-component observations. Note that the DiagnosticReport resource provides a clinical or workflow context for a set of observations and the Observation resource is referenced by DiagnosticReport to represent laboratory, imaging, and other clinical and diagnostic data to form a complete report.
