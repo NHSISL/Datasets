@@ -113,3 +113,25 @@ Users should not expect all `PATIENT_ID` values contained in the `APPOINTMENT` t
 
 - Users should expect all appointments **within five years of the initial practice bulk** to relate to `PATIENT_ID` values that are present within the `PATIENT` table.
 - Users should expect appointments five or more years prior to the initial bulk may contain `PATIENT_ID` values that do not exist in the `PATIENT` table.
+
+The query below is shown as a guide to visualising the impact of this issue:
+
+```sql
+SELECT
+  YEAR(START_DATE) AS APPOINTMENT_YEAR
+, MONTH(START_DATE) AS APPOINTMENT_MONTH
+, COUNT_IF(P.ID IS NULL) AS UNMATCHED_COUNT
+, COUNT_IF(P.ID IS NOT NULL) AS MATCHED_COUNT
+, COUNT(A.PATIENT_ID) AS PATIENT_COUNT
+
+FROM OLIDS_PSEUDO.APPOINTMENT AS A
+LEFT JOIN OLIDS_PSEUDO.PATIENT AS P
+    ON A.PATIENT_ID = P.ID
+
+GROUP BY 
+  YEAR(START_DATE)
+, MONTH(START_DATE)
+ORDER BY APPOINTMENT_YEAR DESC, APPOINTMENT_MONTH DESC;
+```
+
+Users will see the number of `UNMATCHED_COUNT` results increase significantly around five years prior to the commencement of services depending upon when practices signed up to the service (therefore anytime between 2020 and 2021).
