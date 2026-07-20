@@ -13,6 +13,10 @@ Related FHIR resource: [🔥 Patient.address](https://hl7.org/fhir/patient-defin
 
 Patient addresses with different uses or applicable periods.
 
+> [!NOTE]
+> The Patient Address table now includes historical addresses.
+> <br>Users should expect to see multiple rows per patient. These rows appear for every change in the address input fields, even minor ones that correct spelling errors etc. As a result users may see the multiple records for what appears to be the same address and same patient where minor address corrections have changed, or where records alternate between ways of expressing the same address 
+
 ## Columns
 
 ### pseudo view
