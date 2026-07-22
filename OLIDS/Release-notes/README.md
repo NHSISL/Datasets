@@ -5,8 +5,8 @@ This location provides a single place to review changes across the OLIDS deliver
 ## Latest releases:
 
 - OLIDS_Share: [v1.1.0](./1_OLIDS_Share/v1.1.0.md)
-- EMIS_OLIDS: [v1.1.0](./2_EMIS_OLIDS/v1.1.0.md)
-- OLIDS_Enrichment: [v1.1.0](./3_OLIDS_Enrichment/v1.1.0.md)
+- EMIS_OLIDS: [v1.2.0](./2_EMIS_OLIDS/v1.2.0.md)
+- OLIDS_Enrichment: [v1.2.0](./3_OLIDS_Enrichment/v1.2.0.md)
 
 ## Structure
 
