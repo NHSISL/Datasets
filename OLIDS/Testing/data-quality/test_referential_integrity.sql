@@ -798,6 +798,28 @@ WITH fk_checks AS (
         SUM(CASE WHEN c.practitioner_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
     FROM OLIDS_COMMON.SCHEDULE_PRACTITIONER c
     LEFT JOIN OLIDS_COMMON.PRACTITIONER p ON c.practitioner_id = p.id
+
+    UNION ALL
+
+    -- FLAG -> PATIENT
+    SELECT 'FLAG', 'patient_id', 'PATIENT',
+        COUNT(DISTINCT c.patient_id),
+        SUM(CASE WHEN c.patient_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN c.patient_id END),
+        SUM(CASE WHEN c.patient_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.FLAG c
+    LEFT JOIN OLIDS_MASKED.PATIENT p ON c.patient_id = p.id
+
+    UNION ALL
+
+    -- FLAG -> PERSON
+    SELECT 'FLAG', 'person_id', 'PERSON',
+        COUNT(DISTINCT c.person_id),
+        SUM(CASE WHEN c.person_id IS NOT NULL THEN 1 ELSE 0 END),
+        COUNT(DISTINCT CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN c.person_id END),
+        SUM(CASE WHEN c.person_id IS NOT NULL AND p.id IS NULL THEN 1 ELSE 0 END)
+    FROM OLIDS_COMMON.FLAG c
+    LEFT JOIN OLIDS_MASKED.PERSON p ON c.person_id = p.id
 )
 
 -- A relationship passes if no orphans OR >99% of distinct FK values resolve.
