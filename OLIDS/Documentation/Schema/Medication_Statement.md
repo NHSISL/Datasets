@@ -16,6 +16,9 @@ The primary difference between a medicationstatement and a medicationadministrat
 
 ## Columns
 
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | id. | PK | `id` |

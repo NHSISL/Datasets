@@ -18,6 +18,9 @@ List of practitioner participants involved in an appointment.
 
 ## Columns
 
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | unique and consistent identifier for the entity | PK | `id` |

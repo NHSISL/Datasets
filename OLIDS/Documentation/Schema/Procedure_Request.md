@@ -25,6 +25,9 @@ The ProcedureRequest resource allows requesting only a single procedure. If a wo
 
 ## Columns
 
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | id. | PK | `id` |
@@ -45,6 +48,7 @@ The ProcedureRequest resource allows requesting only a single procedure. If a wo
 | `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at clinical effective date of event. NULL where patient is over 1 years old. | - | -- |
 | `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at clinical effective date. NULL where patient is over 27 days old. | - | -- |
 | `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | - | -- |
+| `STATUS_SOURCE_CONCEPT_ID` | `UUID` | The status of the procedure request | - | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | - | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | - | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | - | -- |
