@@ -18,6 +18,9 @@ Substances include, but are not limited to: a therapeutic substance administered
 
 ## Columns
 
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | id | PK | `id` |

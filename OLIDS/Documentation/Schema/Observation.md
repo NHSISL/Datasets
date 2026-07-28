@@ -25,6 +25,10 @@ Uses for the Observation resource include:
 <sup>1</sup>_The boundaries between clinical findings and disorders remain a challenge in medical ontology._
 
 ## Columns
+
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | id. | PK | `id` |

@@ -16,6 +16,9 @@ A patient encounter is further characterized by the setting in which it takes pl
 
 ## Columns
 
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | Unique business identifier for the entity. | PK | `id` |

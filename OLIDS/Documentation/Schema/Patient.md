@@ -47,18 +47,18 @@ The data in the Resource covers the "who" information about the patient: its att
 | `FIRST_NAME` | `VARCHAR` | first name. | | ❌ column removed | `first_names` |
 | `MIDDLE_NAME` | `VARCHAR` | middle name. | | ❌ column removed | -- |
 | `LAST_NAME` | `VARCHAR` | last name. | | ❌ column removed | `last_name` |
-| `GENDER_SOURCE_CONCEPT_ID` | `Unknown` | gender concept id. | FK -> [Concept](Concept.md).ID | | -- |
+| `GENDER_SOURCE_CONCEPT_ID` | `UUID` | gender concept id. | FK -> [Concept](Concept.md).ID | | -- |
 | `BIRTH_DATE` | `DATE` | birth date. | | 📅 date generalised | `date_of_birth` |
 | `BIRTH_YEAR` | `BIGINT` | birth year. | | | -- |
 | `BIRTH_MONTH` | `BIGINT` | birth month. | | | -- |
 | `BIRTH_WEEK_ISO` | `BIGINT` | birth week iso. | | | -- |
-| `BIRTH_DAY` | `BIGINT` | birth day. | | ❌ column removed | -- |
+| `BIRTH_DAY` | `BIGINT` | birth day. | | set to 1 | -- |
 | `DEATH_DATE` | `DATE` | death date. | | 📅 date generalised | `date_of_death` |
 | `DEATH_YEAR` | `BIGINT` | death year. | | | -- |
 | `DEATH_MONTH` | `BIGINT` | death month. | | | -- |
 | `DEATH_WEEK_ISO` | `BIGINT` | death week iso. | | | -- |
 | `IS_CONFIDENTIAL` | `BOOLEAN` | is confidential. | | | -- |
-| `IS_TEST_PATIENT` | `Unknown` | is test patient. | | | -- |
+| `IS_TEST_PATIENT` | `BOOLEAN` | is test patient. | | | -- |
 | `IS_SPINE_SENSITIVE` | `BOOLEAN` | is spine sensitive. | | | -- |
 | `LDS_SOURCE_DATASET` | `VARCHAR` | name of the source dataset | | | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | | -- |

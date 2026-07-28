@@ -23,44 +23,46 @@ This definition takes the concepts of appointments in a clinical setting and als
 
 ## Columns
 
-| Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
-| --- | --- | --- | --- | --- |
-| `ID` | `VARCHAR` | id. | PK | `id` |
-| `LDS_SOURCE_RECORD_ID` | `VARCHAR` | lds record id. |  | -- |
-| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | `patient_id` |
-| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | `person_id` |
-| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id). | FK -> [Organisation](Organisation.md).ID | `organization_id` |
-| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | `organization_id` |
-| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisation id. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | -- |
-| `SLOT_ID` | `UUID` | linked identifier for the slot | <not yet linked> | -- |
-| `PRACTITIONER_IN_ROLE_ID` | `UUID` | practitioner in role id. | FK -> [Practitioner_In_Role](Practitioner_In_Role.md).ID | `practitioner_id` |
-| `SCHEDULE_ID` | `UUID` | schedule id. | FK -> [Schedule](Schedule.md).ID | `schedule_id` |
-| `START_DATE` | `TIMESTAMP` | start date. | | `start_date` |
-| `PLANNED_DURATION_MINS` | `NUMBER` | planned duration. | | `planned_duration` |
-| `ACTUAL_DURATION_MINS` | `NUMBER` | actual duration. | | `actual_duration` |
-| `APPOINTMENT_STATUS_SOURCE_CONCEPT_ID` | `UUID` | appointment status concept id. | FK -> [CONCEPT](concept.md).ID| `appointment_status_concept_id` |
-| `PATIENT_WAIT_MINS` | `NUMBER` | patient wait. | | `patient_wait` |
-| `PATIENT_DELAY_MINS` | `NUMBER` | patient delay. | | `patient_delay` |
-| `DATETIME_BOOKED` | `TIMESTAMP_NTZ` | date time booked. | | -- |
-| `DATETIME_SENT_IN` | `TIMESTAMP_NTZ` | date time sent in. | | `date_time_sent_in` |
-| `DATETIME_LEFT` | `TIMESTAMP_NTZ` | date time left. | | `date_time_left` |
-| `CANCELLED_DATE` | `VARCHAR` (SHOULD BE DATE) | cancelled date. | | `cancelled_date` |
-| `APPOINTMENT_TYPE` | `VARCHAR` | type of appointment. | | -- |
-| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at date of event. | | -- |
-| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at date of event. NULL where patient is over 1 years old. | | -- |
-| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at date of event. NULL where patient is over 27 days old. | | -- |
-| `BOOKING_METHOD_SOURCE_CONCEPT_ID` | `UUID` | booking method concept id. | FK -> [CONCEPT](concept.md).ID| -- |
-| `CONTACT_MODE_SOURCE_CONCEPT_ID` | `UUID` | contact mode concept id. | FK -> [CONCEPT](concept.md).ID| -- |
-| `IS_BLOCKED` | `BOOLEAN` | is blocked. | | -- |
-| `NATIONAL_SLOT_CATEGORY_NAME` | `VARCHAR` | national slot category name. | | -- |
-| `CONTEXT_TYPE` | `VARCHAR` | context type. | | -- |
-| `SERVICE_SETTING` | `VARCHAR` | service setting. | | -- |
-| `NATIONAL_SLOT_CATEGORY_DESCRIPTION` | `VARCHAR` | national slot category description. | | -- |
-| `CSDS_CARE_CONTACT_IDENTIFIER` | `VARCHAR` | csds care contact identifier. | | -- |
-| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
-| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes th data. |  | `organization_id` |
-| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
-| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
+| Column Name | Data Type (Size) | Description | PK/FK | Masking policy | Compass Equivalent |
+| --- | --- | --- | --- | --- | --- |
+| `ID` | `VARCHAR` | id. | PK | | `id` |
+| `LDS_SOURCE_RECORD_ID` | `VARCHAR` | lds record id. |  | | -- |
+| `PATIENT_ID` | `UUID` | patient id. | FK -> [Patient](Patient.md).ID | | `patient_id` |
+| `PERSON_ID` | `UUID` | person id. | FK -> [Person](Person.md).ID | | `person_id` |
+| `PUBLISHER_ORGANISATION_ID` | `UUID` | linked organisaiton id publisher. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id). | FK -> [Organisation](Organisation.md).ID | | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | `UUID` | linked organisaiton id provider. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | `UUID` | linked organisation id. see [schema notes: publisher, provider, author](_schema_notes.md#provider-author-publisher-organisation-id) | FK -> [ORANGANISATION](Organisation.md).ID | | -- |
+| `SLOT_ID` | `UUID` | linked identifier for the slot | <not yet linked> | | -- |
+| `PRACTITIONER_IN_ROLE_ID` | `UUID` | practitioner in role id. | FK -> [Practitioner_In_Role](Practitioner_In_Role.md).ID | | `practitioner_id` |
+| `SCHEDULE_ID` | `UUID` | schedule id. | FK -> [Schedule](Schedule.md).ID | | `schedule_id` |
+| `START_DATE` | `TIMESTAMP` | start date. | | | `start_date` |
+| `PLANNED_DURATION_MINS` | `NUMBER` | planned duration. | | | `planned_duration` |
+| `ACTUAL_DURATION_MINS` | `NUMBER` | actual duration. | | | `actual_duration` |
+| `APPOINTMENT_STATUS_SOURCE_CONCEPT_ID` | `UUID` | appointment status concept id. | FK -> [CONCEPT](concept.md).ID| | `appointment_status_concept_id` |
+| `SLOT_STATUS_RAW` | `VARCHAR` | appointment slot status description as supplied in source dataset | | ❌ Column removed | |
+| `APPOINTMENT_STATUS_DDS` | `VARCHAR` | calculated appointment status from logic | | ❌ Column removed | |
+| `PATIENT_WAIT_MINS` | `NUMBER` | patient wait. | | | `patient_wait` |
+| `PATIENT_DELAY_MINS` | `NUMBER` | patient delay. | | | `patient_delay` |
+| `DATETIME_BOOKED` | `TIMESTAMP_NTZ` | date time booked. | | | -- |
+| `DATETIME_SENT_IN` | `TIMESTAMP_NTZ` | date time sent in. | | | `date_time_sent_in` |
+| `DATETIME_LEFT` | `TIMESTAMP_NTZ` | date time left. | | | `date_time_left` |
+| `CANCELLED_DATE` | `VARCHAR` (SHOULD BE DATE) | cancelled date. | | | `cancelled_date` |
+| `APPOINTMENT_TYPE` | `VARCHAR` | type of appointment. | | | -- |
+| `AGE_AT_EVENT` | `NUMBER` | patient age, in whole years, at date of event. | | | -- |
+| `AGE_AT_EVENT_BABY` | `NUMBER` | patient age, in categorised groups for ages under 1 year, at date of event. NULL where patient is over 1 years old. | | | -- |
+| `AGE_AT_EVENT_NEONATE` | `NUMBER` | patient age, in days under 27 days old, at date of event. NULL where patient is over 27 days old. | | | -- |
+| `BOOKING_METHOD_SOURCE_CONCEPT_ID` | `UUID` | booking method concept id. | FK -> [CONCEPT](concept.md).ID| | -- |
+| `CONTACT_MODE_SOURCE_CONCEPT_ID` | `UUID` | contact mode concept id. | FK -> [CONCEPT](concept.md).ID| | -- |
+| `IS_BLOCKED` | `BOOLEAN` | is blocked. | | | -- |
+| `NATIONAL_SLOT_CATEGORY_NAME` | `VARCHAR` | national slot category name. | | | -- |
+| `CONTEXT_TYPE` | `VARCHAR` | context type. | | | -- |
+| `SERVICE_SETTING` | `VARCHAR` | service setting. | | | -- |
+| `NATIONAL_SLOT_CATEGORY_DESCRIPTION` | `VARCHAR` | national slot category description. | | | -- |
+| `CSDS_CARE_CONTACT_IDENTIFIER` | `VARCHAR` | csds care contact identifier. | | | -- |
+| `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | | -- |
+| `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes th data. | |  | `organization_id` |
+| `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | | -- |
+| `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | | -- |
 
 ## Entity relationships
 

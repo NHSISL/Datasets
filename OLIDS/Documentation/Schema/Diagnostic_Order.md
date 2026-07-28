@@ -18,6 +18,9 @@ The resource allows requesting only a single procedure. If a workflow requires r
 
 ## Columns
 
+> [!NOTE]
+> Table schema is identical across pseudonynmised ('pseudo') and identifiable ('PID') schema
+
 | Column Name | Data Type (Size) | Description | PK/FK | Compass Equivalent |
 | --- | --- | --- | --- | --- |
 | `ID` | `UUID` | Unique business identifier for the diagnostic order record. | PK | `id` |
