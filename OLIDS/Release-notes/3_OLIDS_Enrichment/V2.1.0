@@ -1,0 +1,36 @@
+> [!NOTE]
+> The below is a summary of the changes since the previous release [v2.0.0](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/releases/tag/releases%2Fv2.0.0).
+## Summary
+This release introduces several updates to the enrichment pipeline, including enhanced support for the UPRN_Exchange model and improved tagging for correct model sequencing. A new field is now available in the PDS_Trace_Request output, and package revisions have been updated for EMIS_OLIDS and OLIDS_Share. These changes improve data processing accuracy, pipeline flexibility, and overall maintainability.
+
+### New Features
+- Add `LDS_SOURCE_DATASET` to `PDS_Trace_Request` output. [PR: #50](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/50)
+  > ✨ ***Feature:*** Enables downstream processes to access the `LDS_SOURCE_DATASET` field, improving traceability and data completeness.
+
+### Improvements
+- Updates to UPRN File tags and Pipeline to correct running order. [PR: #51](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/51)
+  > 🎯 ***Impact:*** The pipeline now supports the `UPRN_Exchange` model, with updated parameters and tagging to ensure models run in the intended sequence. Default behaviors are more predictable, reducing unnecessary runs and improving clarity for users.
+
+- Update package revisions for EMIS_OLIDS and OLIDS_Share. [PR: #52](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/52)
+  > 🎯 ***Impact:*** Keeps dependencies up to date, ensuring compatibility and benefiting from the latest enhancements and fixes in upstream packages.
+
+### Inputs
+
+This changelog was automatically produced from:
+
+- 3 Pull Requests
+- 0 Issues
+- 0 WorkItems
+- 8 Commits
+
+## Full Details
+
+Pull Requests included in this release:
+- [PR #50](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/50): Add LDS_SOURCE_DATASET to PDS_Trace_Request
+  - No linked issues.
+- [PR #51](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/51): Updates to UPRN File tags and Pipeline to correct running order
+  - No linked issues.
+- [PR #52](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/52): Update package revisions for EMIS_OLIDS and OLIDS_Share
+  - No linked issues.
+
+[View the diff between v2.0.0 and v2.1.0](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/compare/releases%2Fv2.0.0...releases%2Fv2.1.0)
