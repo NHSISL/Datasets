@@ -1,0 +1,32 @@
+> [!NOTE]
+> The below is a summary of the changes since the previous release [v2.0.0](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/releases/tag/releases%2Fv2.0.0).
+## Summary
+
+This release introduces a new derived cancellation date field to the Medication Statement output, ensuring parity with the legacy DDS Java logic and improving the accuracy of medication end dates. Additionally, organisation lookup logic has been standardised across key models, aligning with upstream data model changes and enhancing data consistency. These updates improve the reliability and maintainability of the transformation pipeline.
+
+### New Features
+- Add `CANCELLATION_DATE_DERIVED` column to Medication Statement, implementing DDS Java parity logic for cancellation date inference. *[PR: [#111](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/pull/111), Issue: [#110](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/issues/110)]*
+  > ✨ ***Feature:*** Enables side-by-side comparison with legacy Java outputs and ensures more accurate and consistent medication end dates, especially for active and inactive medications.
+
+### Refactoring
+- Update organisation lookup in `PC_EMIS_PDS_Request`, `PC_EMIS_Patient_Person_Details`, and `PC_EMIS_Person` to use the new `PC_EMIS_Organisation` table, replacing the previous sequenced source and updating all related unit tests and column references. *[PR: [#112](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/pull/112)]*
+  > ♻️ ***Refactor:*** Ensures consistency with upstream data models, simplifies SQL joins, and aligns tests with production logic for improved maintainability.
+
+### Inputs
+
+This changelog was automatically produced from:
+
+- 2 Pull Requests
+- 1 Issues
+- 0 WorkItems
+- 10 Commits
+
+## Full Details
+
+Pull Requests included in this release:
+- [PR #111](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/pull/111): Add CANCELLATION_DATE_DERIVED column to Medication Statement with DDS Java parity logic
+  - [Issue #110](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/issues/110): Add new column with DDS logic to Medication Statement output
+- [PR #112](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/pull/112): Repoint PC_EMIS_PDS_Request, PC_EMIS_Patient_Person_Details, PC_EMIS_…
+  - No linked issues.
+
+[View the diff between v2.0.0 and v2.1.0](https://github.com/NHSISL/LondonDataservices.Transform.EMIS_OLIDS/compare/releases%2Fv2.0.0...releases%2Fv2.1.0)
