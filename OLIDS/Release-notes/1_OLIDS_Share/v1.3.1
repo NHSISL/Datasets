@@ -1,0 +1,25 @@
+> [!NOTE]
+> The below is a summary of the changes since the previous release [v1.3.0](https://github.com/NHSISL/LondonDataServices.OLIDS_Share/releases/tag/releases%2Fv1.3.0).
+## Summary
+This release addresses a minor but important bug affecting the `date_add` macro for DuckDB. The update ensures that expressions passed as the interval quantity are now correctly interpreted, improving calculation accuracy and compatibility. No new features or breaking changes are included in this patch.
+
+### Bug Fixes
+- Fix date_add macro to handle interval correctly ([#16](https://github.com/NHSISL/LondonDataServices.OLIDS_Share/pull/16), Issues: [#15](https://github.com/NHSISL/LondonDataServices.OLIDS_Share/issues/15))
+  > 🐞 ***Fix:*** Ensures the `date_add` macro wraps the interval quantity in round brackets for DuckDB, so expressions are evaluated correctly. This resolves calculation errors when using expressions as the quantity, improving reliability for DuckDB users.
+
+### Inputs
+
+This changelog was automatically produced from:
+
+- 1 Pull Requests
+- 1 Issues
+- 0 WorkItems
+- 2 Commits
+
+## Full Details
+
+Pull Requests included in this release:
+- [PR #16](https://github.com/NHSISL/LondonDataServices.OLIDS_Share/pull/16): Fix date_add macro to handle interval correctly
+  - [Issue #15](https://github.com/NHSISL/LondonDataServices.OLIDS_Share/issues/15): Bug: `date_add` quantity not wrapped in round brackets (DuckDB)
+
+[View the diff between v1.3.0 and v1.3.1](https://github.com/NHSISL/LondonDataServices.OLIDS_Share/compare/releases%2Fv1.3.0...releases%2Fv1.3.1)
