@@ -49,6 +49,7 @@ Substances include, but are not limited to: a therapeutic substance administered
 | `LDS_IS_DELETED` | `BOOLEAN` | standardised representation of soft-deletes. | - | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | - | `organization_id` |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | The timestamp when the record was supplied to, or acquired by, LDS. | - | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_NTZ` | The timestamp when the record was transformed by LDS into OLIDS. | - | -- |
 
 ## Entity relationships

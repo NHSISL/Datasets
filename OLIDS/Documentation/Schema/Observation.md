@@ -62,6 +62,7 @@ Uses for the Observation resource include:
 | `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | | `organization_id` |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 1. See the [schema notes section on publisher, provider, author organisation definitions](_schema_notes.md#provider-author-publisher-organisation-id)

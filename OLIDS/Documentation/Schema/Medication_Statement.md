@@ -3,8 +3,10 @@
 - [Medication\_Statement](#medication_statement)
   - [Overview](#overview)
   - [Columns](#columns)
+    - [Cancellation date derived](#cancellation-date-derived)
   - [Entity Relationships](#entity-relationships)
   - [Notes](#notes)
+
 
 ## Overview
 
@@ -36,7 +38,8 @@ The primary difference between a medicationstatement and a medicationadministrat
 | `REFERRAL_REQUEST_ID` | `UUID` | referral request id. | FK -> [Referral_Request](Referral_Request.md).ID | -- |
 | `CLINICAL_EFFECTIVE_DATE` | `DATE` | clinical effective date. | | `clinical_effective_date` |
 | `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | `UUID` | date precision concept id. | FK -> [Concept](Concept.md).ID | `date_precision_concept_id` |
-| `CANCELLATION_DATE` | `DATE` | cancellation date. | | `cancellation_date` |
+| `CANCELLATION_DATE` | `DATE` | supplied cancellation date. | | - |
+| `CANCELLATION_DATE_DERIVED` | `DATE` | cancellation date derived using logic (See below) | | `cancellation_date` |
 | `DOSE` | `VARCHAR` | dose. | | `dose` |
 | `QUANTITY_VALUE_DESCRIPTION` | `VARCHAR` | quantity value description. | | -- |
 | `QUANTITY_VALUE` | `DOUBLE` | quantity value. | | `quantity_value` |
@@ -56,9 +59,39 @@ The primary difference between a medicationstatement and a medicationadministrat
 | `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | The Organisation Data Service (ODS) code of the organisation who, acting as the data controller, publishes the data. | | `organization_id` |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 1. See the [schema notes section on publisher, provider, author organisation definitions](_schema_notes.md#provider-author-publisher-organisation-id)
+
+### Cancellation date derived
+
+The `CANCELLATION_DATE_DERIVED` column has been added to this model to allow for parity with prior systems that used logic to determine the cancellation date of a medication statement, rather than the supplied value alone. As we do not wish to hide or obfuscate supplied values, we have chosen to supplement the table with an additional derived value for parity.
+
+The logic is as below:
+
+- For EMIS:
+  - If the drug record is marked as active then it must not be cancelled -> set cancellation_date_derived to `null`
+  - If the drug record cancellation date is populated then use this date -> set cancellation_date_derived to the supplied `cancellation_date`
+  - If the drug record cancellation date is null then:
+    - if the latest issue of the corresponding medication is not null, use the latest issue date plus the expected course duration according to the latest issue
+    - if there is no latest issue of the corresponding medication, then simply use the 'effective date' of the statement
+  
+```sql
+, CASE
+    WHEN PDR1.IS_ACTIVE = TRUE
+        THEN NULL                                          -- Java explicitly nulls active med cancellation dates
+    WHEN PDR1.CANCELLATION_DATE IS NOT NULL
+        THEN PDR1.CANCELLATION_DATE                        -- use source value if present
+    WHEN LI.EFFECTIVE_DATE IS NOT NULL
+        THEN DATEADD(
+            DAY,
+            COALESCE(LI.COURSE_DURATION_IN_DAYS, 0),
+            LI.EFFECTIVE_DATE                              -- infer: latest issue date + course duration
+        )
+    ELSE PDR1.EFFECTIVE_DATE                               -- fallback: DrugRecord EffectiveDate
+END AS CANCELLATION_DATE_DERIVED
+```
 
 ## Entity Relationships
 

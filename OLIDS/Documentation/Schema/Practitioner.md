@@ -54,6 +54,7 @@ The Practitioner resource is used for anyone involved in the provision of care o
 | `IS_OBSOLETE` | `BOOLEAN` | is practitioner record obsolete. | - | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | is the practitioner record deleted in the source system. | - | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | - | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | the timestamp when the transform process that generated this record. | - | -- |
 
 ## Entity Relationships

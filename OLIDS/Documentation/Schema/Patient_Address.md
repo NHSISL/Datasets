@@ -3,7 +3,6 @@
 - [Patient\_Address](#patient_address)
   - [Overview](#overview)
   - [Columns](#columns)
-    - [pseudo view](#pseudo-view)
   - [Entity Relationships](#entity-relationships)
   - [Notes](#notes)
 
@@ -18,8 +17,6 @@ Patient addresses with different uses or applicable periods.
 > <br>Users should expect to see multiple rows per patient. These rows appear for every change in the address input fields, even minor ones that correct spelling errors etc. As a result users may see the multiple records for what appears to be the same address and same patient where minor address corrections have changed, or where records alternate between ways of expressing the same address 
 
 ## Columns
-
-### pseudo view
 
 | Column Name | Data Type (Size) | Description | PK/FK | Masking Policy | Compass Equivalent |
 | --- | --- | --- | --- | --- | --- |
@@ -43,6 +40,7 @@ Patient addresses with different uses or applicable periods.
 | `LDS_IS_DELETED` | `BOOLEAN` | True if the record has been marked as deleted. | | | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | ODS code of the organisation who, acting as the data controller, permitted the release of data. | | | `organization_id` |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | Timestamp extracted from source file name indicating extraction time. | | | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- | - |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP` WITH TIME ZONE | lds transform date time. | | | -- |
 
 ## Entity Relationships

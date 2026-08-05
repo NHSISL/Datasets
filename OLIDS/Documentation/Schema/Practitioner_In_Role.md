@@ -50,6 +50,7 @@ For use cases where an organisation has activities where a practitioner is not d
 | `DATE_EMPLOYMENT_END` | `DATE` | date employment end. | | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | True if the record has been marked as deleted. | | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | Timestamp extracted from source file name indicating extraction time. | | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 ## Entity Relationships
