@@ -39,6 +39,7 @@ A Location includes both incidental locations (a place which is used for healthc
 | `IS_OBSOLETE` | `BOOLEAN` | is obsolete. | | -- |
 | `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | source extraction date. | | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 ## Entity Relationships

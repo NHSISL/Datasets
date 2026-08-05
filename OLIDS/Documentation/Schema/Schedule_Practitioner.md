@@ -31,6 +31,7 @@ If the schedule needed to be consulted, then there would be one created covering
 | `LDS_IS_DELETED` | `BOOLEAN` | lds is deleted. | | -- |
 | `PUBLISHER_ORGANISATION_CODE` | `VARCHAR` | record owner organisation code. | | -- |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP` | source extraction date. | | -- |
+| `LDS_SOURCE_DATASET` | `VARCHAR` | The name of the source dataset (or system) that the record is obtained from | - | -- |
 | `LDS_TRANSFORM_DATETIME` | `TIMESTAMP_LTZ` | lds transform date time. | | -- |
 
 ## Entity Relationships
