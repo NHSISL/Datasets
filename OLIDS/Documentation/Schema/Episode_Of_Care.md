@@ -5,6 +5,10 @@
   - [Columns](#columns)
   - [Entity relationships](#entity-relationships)
   - [Notes](#notes)
+    - [Episode of Care History](#episode-of-care-history)
+      - [Questions on Episode of Care History](#questions-on-episode-of-care-history)
+        - [Does this change affect historic clinical events?](#does-this-change-affect-historic-clinical-events)
+        - [How does this change affect population count comparissons?](#how-does-this-change-affect-population-count-comparissons)
 
 ## Overview
 
@@ -79,3 +83,25 @@ erDiagram
 | [Practitioner_In_Role](Practitioner_In_Role.md) | FK | USUAL_GP_PRACTITIONER_IN_ROLE_ID | ID | |
 
 ## Notes
+
+### Episode of Care History
+
+As of [v3.0.1](../../Release-notes/3_OLIDS_Enrichment/v3.0.1.md), the episode of care (`EPISODE_OF_CARE_V2`) table incorporates historic registration data available from the EMIS source object `admin_patient_history`.
+
+The inclusion of this data allows us to close a gap whereby patients who left and rejoined a practice one or more times prior to the first bulk ever taken from the practice would only have their most recent registration period noted within the Episode of Care table. This led to a small variance in the number of registered patients when looking for registered population counts prior to the first bulk, a variance which grew in size the further back prior to the first bulk you looked.
+
+The fix will close the gap up to the maximum limit of five (5) years prior to the first bulk date, as patients who were deducted more than five (5) years prior to the first bulk are not possible to include in the EMIS IM1 extracts.
+
+Users will still see a variance between referenced population when counting the total population as of a date that is more than 5 years prior to the first bulk (typically around 2020/2021).
+
+#### Questions on Episode of Care History
+
+##### Does this change affect historic clinical events?
+
+No. this change only impacts the count of episodes of care.
+
+Clinical event data such as medications, observations, referrals, and allergies are unaffected by this change. These will continue to hold all records for patients who are currently registered, or were registered within the preceeding five (5) years prior to the first bulk date of the practice.
+
+##### How does this change affect population count comparissons?
+
+This change will increase the number of registered regular patients for periods that are up to five (5) years prior to the date of the first bulk from the practice
