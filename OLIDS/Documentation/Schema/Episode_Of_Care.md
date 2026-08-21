@@ -8,7 +8,7 @@
     - [Episode of Care History](#episode-of-care-history)
       - [Questions on Episode of Care History](#questions-on-episode-of-care-history)
         - [Does this change affect historic clinical events?](#does-this-change-affect-historic-clinical-events)
-        - [How does this change affect population count comparissons?](#how-does-this-change-affect-population-count-comparissons)
+        - [How does this change affect population count comparisons?](#how-does-this-change-affect-population-count-comparisons)
 
 ## Overview
 
@@ -98,10 +98,10 @@ Users will still see a variance between referenced population when counting the 
 
 ##### Does this change affect historic clinical events?
 
-No. this change only impacts the count of episodes of care.
+No, this change only impacts the count of episodes of care.
 
-Clinical event data such as medications, observations, referrals, and allergies are unaffected by this change. These will continue to hold all records for patients who are currently registered, or were registered within the preceeding five (5) years prior to the first bulk date of the practice.
+Clinical event data such as medications, observations, referrals, and allergies are unaffected by this change. These will continue to hold all records for patients who are currently registered, or were registered within the preceding five (5) years prior to the first bulk date of the practice.
 
-##### How does this change affect population count comparissons?
+##### How does this change affect population count comparisons?
 
 This change will increase the number of registered regular patients for periods that are up to five (5) years prior to the date of the first bulk from the practice

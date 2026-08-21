@@ -22,7 +22,7 @@ A Location includes both incidental locations (a place which is used for healthc
 | `LDS_SOURCE_RECORD_ID` | `UUID` | Unique record identifier including file row number for deduplication. | | -- |
 | `LOCATION_ID` | `UUID` | the id of the linked location for this contact | FK -> [`LOCATION`](Location.md).`ID` | |
 | `IS_PRIMARY_CONTACT` | `BOOLEAN` | True where the contact is noted as the primary contact for the location. False where not. Not all locations will denote a primary contact. | | |
-| `CONTACT_TYPE_SOURCE_CONCEPT_ID` | `UUID` | The Concept ID for the type of contact (phone/email etc) | FK -> [`CONCEPT`](Concept.md).`ID` | |
+| `CONTACT_TYPE_SOURCE_CONCEPT_ID` | `UUID` | The Concept ID for the type of contact (phone/email etc) | FK -> [`CONCEPT`](Concept.md).`CONCEPT_ID` | |
 | `CONTACT_TYPE` | `VARCHAR` | The type of contact (phone / email etc) | | |
 | `VALUE` | `VARCHAR` | The contact number/information | | |
 | `SOURCE_EXTRACTION_DATE` | `TIMESTAMP_NTZ` | source extraction date. | | -- |
