@@ -38,9 +38,10 @@ This definition takes the concepts of appointments in a clinical setting and als
 | `START_DATE` | `TIMESTAMP` | start date. | | | `start_date` |
 | `PLANNED_DURATION_MINS` | `NUMBER` | planned duration. | | | `planned_duration` |
 | `ACTUAL_DURATION_MINS` | `NUMBER` | actual duration. | | | `actual_duration` |
-| `APPOINTMENT_STATUS_SOURCE_CONCEPT_ID` | `UUID` | appointment status concept id. | FK -> [CONCEPT](concept.md).ID| | `appointment_status_concept_id` |
-| `SLOT_STATUS_RAW` | `VARCHAR` | appointment slot status description as supplied in source dataset | | ❌ Column removed | |
-| `APPOINTMENT_STATUS_DDS` | `VARCHAR` | calculated appointment status from logic | | ❌ Column removed | |
+| `APPOINTMENT_STATUS_SOURCE_CONCEPT_ID` | `UUID` | appointment status concept id. | FK -> [CONCEPT](Concept.md).`CONCEPT_ID`| | `appointment_status_concept_id` |
+| `SLOT_STATUS_RAW` | `VARCHAR` | (⚠️ **deprecated**) appointment slot status description as supplied in source dataset | | ❌ Column removed | |
+| `APPOINTMENT_STATUS_DDS` | `VARCHAR` | (⚠️ **deprecated**) calculated appointment status from logic | | ❌ Column removed | |
+| `APPOINTMENT_STATUS_DERIVED` | `VARCHAR` | calculated appointment status from logic | | | |
 | `PATIENT_WAIT_MINS` | `NUMBER` | patient wait. | | | `patient_wait` |
 | `PATIENT_DELAY_MINS` | `NUMBER` | patient delay. | | | `patient_delay` |
 | `DATETIME_BOOKED` | `TIMESTAMP_NTZ` | date time booked. | | | -- |
