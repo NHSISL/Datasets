@@ -1,0 +1,26 @@
+> [!NOTE]
+> The below is a summary of the changes since the previous release 
+## Summary
+
+This release focuses on improving the reliability and clarity of concept mapping within the platform. The Concept_Map_V2 table has been removed based on user group feedback, and the Concept_Map table has been refined to ensure only a single, active mapping is present for each concept. These changes reduce confusion, prevent duplicate mappings, and streamline data management for users.
+
+### Improvements
+- Remove `Concept_Map_V2` and ensure `Concept_Map` only contains a single, active mapping per concept. Tests updated to reflect these changes. [PR: #97](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/97)
+  > 🎯 ***Impact:*** Simplifies concept mapping by eliminating redundant tables and preventing duplicate entries, making data usage more reliable and easier to maintain.
+
+### Inputs
+
+This changelog was automatically produced from:
+
+- 1 Pull Requests
+- 0 Issues
+- 0 WorkItems
+- 4 Commits
+
+## Full Details
+
+Pull Requests included in this release:
+- [PR #97](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/pull/97): Remove Concept_Map_V2 and ensure Concept_Map doesn't duplicate
+  - No linked issues.
+
+[View the diff between v4.0.0 and v4.1.0](https://github.com/NHSISL/LondonDataservices.Transform.OLIDS_Enrichment/compare/releases%2Fv4.0.0...releases%2Fv4.1.0)
