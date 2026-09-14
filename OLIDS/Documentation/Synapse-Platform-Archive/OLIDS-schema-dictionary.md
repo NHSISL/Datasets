@@ -1,0 +1,1557 @@
+# OLIDS data dictionary (Synapse platform delivery)
+
+The tables below show the One London Integrated Data Set (OLIDS) schema definition.
+
+## Contents
+
+- [OLIDS data dictionary (Synapse platform delivery)](#olids-data-dictionary-synapse-platform-delivery)
+  - [Contents](#contents)
+  - [LDS\_dataset\_id](#lds_dataset_id)
+  - [`[OLIDS_COMMON]` Schema](#olids_common-schema)
+    - [allergy\_intolerance](#allergy_intolerance)
+    - [appointment](#appointment)
+    - [appointment\_practitioner](#appointment_practitioner)
+    - [diagnostic\_order](#diagnostic_order)
+    - [encounter](#encounter)
+    - [episode\_of\_care](#episode_of_care)
+    - [flag](#flag)
+    - [location](#location)
+    - [location\_contact](#location_contact)
+    - [medication\_order](#medication_order)
+    - [medication\_statement](#medication_statement)
+    - [observation](#observation)
+    - [organisation](#organisation)
+    - [patient\_person](#patient_person)
+    - [patient\_registered\_practitioner\_in\_role](#patient_registered_practitioner_in_role)
+    - [practitioner](#practitioner)
+    - [practitioner\_in\_role](#practitioner_in_role)
+    - [procedure\_request](#procedure_request)
+    - [referral\_request](#referral_request)
+    - [schedule](#schedule)
+    - [schedule\_practitioner](#schedule_practitioner)
+  - [`[OLIDS_MASKED]` schema](#olids_masked-schema)
+    - [patient (masked)](#patient-masked)
+    - [patient\_address (masked)](#patient_address-masked)
+    - [patient\_contact (masked)](#patient_contact-masked)
+    - [patient\_uprn (masked)](#patient_uprn-masked)
+    - [person (masked)](#person-masked)
+  - [`[OLIDS_PCD]` Schema](#olids_pcd-schema)
+    - [patient](#patient)
+    - [patient\_address](#patient_address)
+    - [patient\_contact](#patient_contact)
+    - [patient\_uprn](#patient_uprn)
+    - [person](#person)
+  - [`[OLIDS_TERMINOLOGY]` Schema](#olids_terminology-schema)
+    - [concept](#concept)
+    - [concept\_map](#concept_map)
+  - [`[OLIDS_GOVERNANCE]` Schema](#olids_governance-schema)
+    - [allocation](#allocation)
+  - [`[REFERENCE]` Schema](#reference-schema)
+    - [postcode\_hash](#postcode_hash)
+  - [Ages](#ages)
+
+## LDS_dataset_id
+
+>[!NOTE]
+>LDS assigned identifier for the source dataset
+
+| LDS_dataset_id                        | dataset_name              |
+|---------------------------------------|---------------------------|
+| 07F337BD-E189-484A-9350-D9C6442AA829  |PrimaryCareTPP             |
+| 6A62313A-7442-462E-B6E8-DEC541DDD0BA  | PrimaryCareEMIS           |
+| 87C94392-B46F-484D-BF01-09E97EB9E506  | RegistrarPatientRequest   |
+| E5F50BA6-32C8-482E-87D3-8EA629FACEAC  | RegistrarNDOORequest      |
+| 39188746-F9CD-4246-9799-FAF6D3895B2E  | RegistrarAddressRequest   |
+| 424ECE83-CA5E-4DFE-BB94-50F1A3BB1121  | RegistrarPatientResponse  |
+| C26B7031-750D-4B75-A048-87A722F3F712  | RegistrarNDOOResponse     |
+| 72AE46CB-F09E-4395-A977-F37EEC37916C  | RegistrarAddressResponse  |
+
+## `[OLIDS_COMMON]` Schema
+
+### allergy_intolerance
+
+> [!NOTE]
+>
+> Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance. A record of a clinical assessment of an allergy or intolerance; a propensity, or a potential risk to an individual, to have an adverse reaction on future exposure to the specified substance, or class of substance.
+>
+> Where a propensity is identified, to record information or evidence about a reaction event that is characterised by any harmful or undesirable physiological response that is specific to the individual and triggered by exposure of an individual to the identified substance or class of substance.
+>
+> Substances include, but are not limited to: a therapeutic substance administered correctly at an appropriate dosage for the individual; food; material derived from plants or animals; or venom from insect stings.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PRACTITIONER_ID` | UUID | The clinician in role that the activity is recorded against' | `practitioner_id` |
+| `ENCOUNTER_ID` | UUID | Reference to the encounter this allergy was record in | `encounter_id` |
+| `PUBLISHER_ORGANISATION_ID` | UUID | Reference to the organisation that published the source record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | Reference to the organisation that provided the care event that recorded this allergy | -- |
+| `AUTHOR_ORGANISATION_ID` | UUID | Reference to the organisation that authored the source record | -- |
+| `CLINICAL_STATUS` | TEXT | unmapped - prepared to match FHIR |  `clinical_status` |
+| `VERIFICATION_STATUS` | TEXT | unmapped - prepared to match FHIR' |  |
+| `CATEGORY` | TEXT | unmapped - prepared to match FHIR' |  |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the clinical code is recorded for | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date' | `date_precision_concept_id` |
+| `IS_REVIEW` | BOOLEAN | Is this instance of the code a review of a previous encounter | `is_review` |
+| `MEDICATION_NAME` | TEXT | Reference to the clinical name of the medication the patient has an allergy to |  |
+| `MULTI_LEX_ACTION` | TEXT |  | |
+| `ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID` | UUID | Reference to the clinical coding of the allergy provided by the supplier | `non_core_concept_id` |
+| `AGE_AT_EVENT` | NUMBER | The age the patient was at the time of this event | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER |  The age the patient was at the time of this event. NULL if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details. |  |
+| `AGE_AT_EVENT_NEONATE` | NUMBER |The age the patient was at the time of this event if less than 28 days. NULL where patient is older than 27 days. See [Ages](#ages) |  |
+| `DATE_RECORDED` | TIMESTAMP_NTZ |  The date the allergy was recorded | `date_recorded` |
+| `IS_CONFIDENTIAL` | BOOLEAN | True/False - is this allergy flagged as a confidential observation |  |
+| `LDS_ID` | UUID | Audit/debug field: LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Audit/debug field: Natural or source key for the unique event/entity of the table (unique allergy intolerance record) |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | Audit/debug field: LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | Audit/debug field: LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | Audit/debug field: LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the source record was last extracted by, received by or supplied to LDS |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | datetime that the business id value was first witnessed |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardising presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `LDS_SOURCE_RECORD_ID` | `ALLOCATION.LDS_SOURCE_RECORD_ID` | each `allergy_intolerance` can have one to many `allocation` instructions (administrative object only) |
+| `PATIENT_ID` | `PATIENT.ID` | one `patient` can have none to many `allergy_intolerance` items |
+| `PRACTITIONER_ID` | `PRACTITIONER.ID` | one `practitioner` can have none to many `allergy_intolerance` items |
+| `ENCOUNTER_ID` | `ENCOUNTER.ID` | one `encounter` can have none to many `allergy_intolerance` items |
+| `ALLERGY_INTOLERANCE_SOURCE_CONCEPT_ID` | `concept.id` | one `concept` can appear in none to many `allergy_intolerance` items |
+| `PERSON_ID` | `PERSON.ID` | one `person` can have none to many `allergy_intolerance` items |
+| `PUBLISHER_ORGANISATION_ID` | `ORGANISATION.ID` | one `organisation` can be a publisher of none to many `allergy_intolerance` items |
+| `PROVIDER_ORGANISATION_ID` | `ORGANISATION.ID` | one `organisation` can be a provider of none to many `allergy_intolerance` items |
+| `AUTHOR_ORGANISATION_ID` | `ORGANISATION.ID` | one `organisation` can be a publisher of none to many `allergy_intolerance` items |
+
+### appointment
+
+> [!NOTE]
+> A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
+> Appointment resources are used to provide information about a planned meeting that may be in the future or past. The resource only describes a single meeting, a series of repeating visits would require multiple appointment resources to be created for each instance. Examples include a scheduled surgery, a follow-up for a clinical visit, a scheduled conference call between clinicians to discuss a case (where the patient is a subject, but not a participant), the reservation of a piece of diagnostic equipment for a particular use, etc. The visit scheduled by an appointment may be in person or remote (by phone, video conference, etc.) All that matters is that the time and usage of one or more individuals, locations and/or pieces of equipment is being fully or partially reserved for a designated period of time.
+> This definition takes the concepts of appointments in a clinical setting and also extends them to be relevant in the community healthcare space, and to ease exposure to other appointment / calendar standards widely used outside of healthcare.
+> Users may wish to exclude records which represent unusued or future appointment slots by filtering records where PATIENT_ID and PRACTITIONER_ID are unpopulated, the TYPE is "Default" and the National Slot Category Description is "A planned consultation or routine follow up".
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | Organisation who published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | Organisation at which the appointment occured | `organization_id` |
+| `PRACTITIONER_IN_ROLE_ID` | UUID | The clinician the activity is recorded against | `practitioner_id` |
+| `SCHEDULE_ID` | UUID | The schedule the patient was put on to book multiple appointments. | `schedule_id` |
+| `START_DATE` | TIMESTAMP_NTZ | The start date of the appointment | `start_date` |
+| `PLANNED_DURATION_MINS` | NUMBER | The time allocated for the appointment, not necessarily the actual duration (minutes) | `planned_duration` |
+| `ACTUAL_DURATION_MINS` | NUMBER | Time between sent in and left (minutes) | `actual_duration` |
+| `STATUS_SOURCE_CONCEPT_ID` | UUID | The status of the appointment e.g. arrived/sent in/left/DNA | `appointment_status_concept_id` |
+| `PATIENT_WAIT_MINS` | NUMBER | How long the patient waited from being marked as arrived to being sent in | `patient_wait` |
+| `PATIENT_DELAY_MINS` | NUMBER | How long the patient was delayed for | `patient_delay` |
+| `DATETIME_BOOKED` | TIMESTAMP_NTZ | Date and time the appointment booking was made |  |
+| `DATETIME_SENT_IN` | TIMESTAMP_NTZ | Date and time the patient was sent into the practitioner | `date_time_sent_in` |
+| `DATETIME_LEFT` | TIMESTAMP_NTZ | Date and time the patient left the practitioner | `date_time_left` |
+| `CANCELLED_DATE` | TIMESTAMP_NTZ | Date and time the appointment was cancelled (TPP only) | `cancelled_date` |
+| `APPOINTMENT_TYPE` | TEXT | Description of the slot type |  |
+| `AGE_AT_EVENT` | NUMBER | The age the patient was at the time of this event |  |
+| `AGE_AT_EVENT_BABY` | NUMBER | The age the patient was at the time of this event categorised for babies under 1 year old, see Ages note |  |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | The age the patient was at the time of this event if less than 28 days. See Ages note |  |
+| `BOOKING_METHOD_SOURCE_CONCEPT_ID` | UUID | Method used to book the appointment |  |
+| `CONTACT_MODE_SOURCE_CONCEPT_ID` | UUID | Appointment mode of contact – e.g. telephone |  |
+| `IS_BLOCKED` | BOOLEAN | Indicates whether the appointment slot is blocked |  |
+| `NATIONAL_SLOT_CATEGORY_NAME` | TEXT | The name of the national slot category |  |
+| `CONTEXT_TYPE` | TEXT | The national slot category context type |  |
+| `SERVICE_SETTING` | TEXT | The national slot category service setting |  |
+| `NATIONAL_SLOT_CATEGORY_DESCRIPTION` | TEXT | The description of the national slot category |  |
+| `CSDS_CARE_CONTACT_IDENTIFIER` | TEXT | A link to the commissioning dataset care contact identifier for community services |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that converted the data |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted or supplied to LDS |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first received by LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardising presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `LDS_SOURCE_RECORD_ID` | `ALLOCATION.LDS_RECORD_ID` | Each `ALLERGY_INTOLERANCE` can have one to many `ALLOCATION` instructions (administrative object only) |
+| `PATIENT_ID` | `PATIENT.ID` | One `PATIENT` can have none to many `ALLERGY_INTOLERANCE` items |
+| `PRACTITIONER_IN_ROLE_ID` | `PRACTITIONER_IN_ROLE.ID` | One `PRACTITIONER_IN_ROLE` can have none to many `APPOINTMENT` items |
+| `SCHEDULE_ID` | `SCHEDULE.ID` | One `SCHEDULE` can have none to many `APPOINTMENT` items |
+| `APPOINTMENT_STATUS_CONCEPT_ID` | `CONCEPT.ID` | Each `CONCEPT` can appear in none to many `APPOINTMENT` items |
+| `BOOKING_METHOD_CONCEPT_ID` | `CONCEPT.ID` | Each `CONCEPT` can appear in none to many `APPOINTMENT` items |
+| `CONTACT_MODE_CONCEPT_ID` | `CONCEPT.ID` | Each `CONCEPT` can appear in none to many `APPOINTMENT` items |
+| `PERSON_ID` | `PERSON.ID` | Each `PERSON` can have none to many `APPOINTMENT` items |
+| `PUBLISHER_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a publisher of none to many `APPOINTMENT` items |
+| `PROVIDER_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a provider of none to many `APPOINTMENT` items |
+
+### appointment_practitioner
+
+> [!NOTE]
+> List of practitioner participants involved in the appointment
+
+> [!TIP]
+> This table has been added to OLIDS to allow for one-to-many cardinality between appointments and practitioners which was permitted in some source datasets.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | LDS assigned Unique Identifier for the business key of this table | `id` |
+| `APPOINTMENT_ID` | UUID | Unique Identifier for the appointment | `organization_id` |
+| `PRACTITIONER_ID` | UUID | The clinician the activity is recorded against | `practitioner_id` |
+| `PUBLISHER_ORGANISATION_ID` | UUID | Organisation who published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | Organisation at which the appointment occured | `organization_id` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `LDS_RECORD_ID` | `ALLOCATION.LDS_RECORD_ID` | Each `ALLERGY_INTOLERANCE` can have one to many `ALLOCATION` instructions (administrative object only) |
+| `APPOINTMENT_ID` | `APPOINTMENT.ID` | One `APPOINTMENT` can have one to many `APPOINTMENT_PRACTITIONER` items |
+| `PRACTITIONER_ID` | `PRACTITIONER.ID` | One `PRACTITIONER` can have none to many `APPOINTMENT_PRACTITIONER` items |
+| `PUBLISHER_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a publisher of none to many `APPOINTMENT_PRACTITIONER` items |
+| `PROVIDER_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a provider of none to many `APPOINTMENT_PRACTITIONER` items |
+
+### diagnostic_order
+
+> [!NOTE]
+> A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
+>
+> This represents an order or proposal or plan to perform a diagnostic or other service on or for a patient. It represents a proposal or plan or order for a service to be performed that would result in a Procedure or Diagnostic Report, which in turn may reference one or more Observations, which summarize the performance of the procedures and associated documentation such as observations, images, findings that are relevant to the treatment/management of the subject. This resource may be used to share relevant information required to support a referral or a transfer of care request from one practitioner or organization to another when a patient is required to be referred to another provider for a consultation /second opinion and/or for short term or longer term management of one or more health issues or problems.
+>
+> The resource allows requesting only a single procedure. If a workflow requires requesting multiple procedures simultaneously, this is done using multiple instances of this resource.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | LDS assigned Unique Identifier for the business key of this table (unique allergy intolerance record) | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `ENCOUNTER_ID` | UUID | Reference to the encounter the observation was recorded at | `encounter_id` |
+| `PRACTITIONER_ID` | UUID | Reference to the practitioner that recorded the order | `practitioner_id` |
+| `PUBLISHER_ORGANISATION_ID` | UUID | Organisation who published the record | `organization_id` |
+| `PARENT_OBSERVATION_ID` | UUID | Reference to the parent observation in a complex observation (e.g., systolic & diastolic BP) | `parent_observation_id` |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the diagnostic order was identified by a clinician | `clinical_effective_date` |
+| `CLINCIAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date | `date_precision_concept_id` |
+| `RESULT_VALUE` | float | The value of the result of the observation | `result_value` |
+| `RESULT_MEASUREMENT_UNITS_SOURCE_CONCEPT_ID` | UUID | Concept ID for the units of the result of the observation | `result_value_units_concept_id` |
+| `RESULT_DATE` | DATE | The date of the result | `result_date` |
+| `RESULT_TEXT` | TEXT | Any text associated with the result | `result_text` |
+| `IS_PROBLEM` | BOOLEAN | Whether the observation is marked as a problem | `is_problem` |
+| `IS_REVIEW` | BOOLEAN | Whether the observation is a review of an existing problem | `is_review` |
+| `PROBLEM_END_DATE` | TIMESTAMP_NTZ | The end date of the problem | `problem_end_date` |
+| `DIAGNOSTIC_ORDER_SOURCE_CONCEPT_ID` | UUID | Reference to the clinical coding of the result provided by the supplier | `raw_concept_id` |
+| `AGE_AT_EVENT` | NUMBER | The age of the patient at the time of the observation | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER | The age the patient was at the time of this event; categorised for babies under 1 year | `age_at_event_baby` |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | The age the patient was at the time of this event if less than 28 days | `age_at_event_neonate` |
+| `EPISODICITY_SOURCE_CONCEPT_ID` | UUID | Indicates the episodicity of the observation | `episodicity_concept_id` |
+| `IS_PRIMARY` | BOOLEAN | Will be false if the observation has a parent observation | `is_primary` |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | Date the diagnostic order was recorded in the clinical system | `date_recorded` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `LDS_RECORD_ID` | `ALLOCATION.LDS_RECORD_ID` | Each `ALLERGY_INTOLERANCE` can have one to many `ALLOCATION` instructions (administrative object only) |
+| `PATIENT_ID` | `PATIENT.ID` | One `PATIENT` can have none to many `DIAGNOSTIC_ORDER` items |
+| `ENCOUNTER_ID` | `ENCOUNTER.ID` | One `ENCOUNTER` can have none to many `DIAGNOSTIC_ORDER` items |
+| `PRACTITIONER_ID` | `PRACTITIONER.ID` | One `PRACTITIONER` can have none to many `DIAGNOSTIC_ORDER` items |
+| `PARENT_OBSERVATION_ID` | `OBSERVATION.ID` | One `OBSERVATION` can be a parent to none to many `DIAGNOSTIC_ORDER` items |
+| `DATE_PRECISION_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referred to by none to many `DIAGNOSTIC_ORDER` items |
+| `EPISODICITY_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referred to by none to many `DIAGNOSTIC_ORDER` items |
+| `PERSON_ID` | `PERSON.ID` | One `PERSON` can have none to many `DIAGNOSTIC_ORDER` items |
+| `PUBLISHER_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a publisher of none to many `APPOINTMENT_PRACTITIONER` items |
+
+### encounter
+
+> [!NOTE]
+> An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.
+>
+> A patient encounter is further characterized by the setting in which it takes place. Amongst them are ambulatory, emergency, home health, inpatient and virtual encounters. An Encounter encompasses the lifecycle from pre-admission, the actual encounter (for ambulatory encounters), and admission, stay and discharge (for inpatient encounters). During the encounter the patient may move from practitioner to practitioner and location to location.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the encounter | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PRACTITIONER_ID` | UUID | The clinician the activity is recorded against | `practitioner_id` |
+| `APPOINTMENT_ID` | UUID | Reference to the appointment this encounter took part on | `appointment_id` |
+| `EPISODE_OF_CARE_ID` | UUID | The episode of care under which this encounter occurred | `episode_of_care_id` |
+| `PUBLISHER_ORGANISATION_ID` | UUID | Reference to the organisation that published this record | `organisation_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | Reference to the service provider organisation of the encounter | `service_provider_organisation_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | Reference to the author of the event | -- |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the clinical code is recorded for | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Reference to the precision of the date of the encounter | `date_precision_concept_id` |
+| `LOCATION` | TEXT | Reference to the location that the encounter took place at | `institution_location_id` |
+| `ENCOUNTER_SOURCE_CONCEPT_ID` | UUID | Reference to the type of encounter | `non_core_concept_id` |
+| `AGE_AT_EVENT` | NUMBER | The age the patient was when this encounter took place | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER | Age in integer years if ≥1; else categorised for babies under 1 year |  |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | Age if less than 28 days; null if patient >27 days |  |
+| `TYPE` | TEXT | Reference to the type of encounter | `type` |
+| `SUB_TYPE` | TEXT | Reference to the sub-type of the encounter | `sub_type` |
+| `ADMISSION_METHOD` | TEXT | The admission method of the encounter | `admission_method` |
+| `END_DATE` | TIMESTAMP_NTZ | The end date of the encounter | `end_date` |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | The date the encounter was recorded | `date_recorded` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `PUBLISHER_ORGANSIATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `LDS_RECORD_ID` | `ALLOCATION.LDS_RECORD_ID` | Each `ENCOUNTER` can have one to many `ALLOCATION` instructions (administrative object only) |
+| `PERSON_ID` | `PERSON.ID` | One `PERSON` can have none to many `ENCOUNTER` items |
+| `PATIENT_ID` | `PATIENT.ID` | One `PATIENT` can have none to many `ENCOUNTER` items |
+| `PRACTITIONER_ID` | `PRACTITIONER.ID` | One `PRACTITIONER` can have none to many `ENCOUNTER` items |
+| `APPOINTMENT_ID` | `APPOINTMENT.ID` | One `APPOINTMENT` can have none to many `ENCOUNTER` items |
+| `EPISODE_OF_CARE_ID` | `EPISODE_OF_CARE.ID` | One `EPISODE_OF_CARE` can have none to many `ENCOUNTER` items |
+| `DATE_PRECISION_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referenced by none to many `ENCOUNTER` items |
+| `ENCOUNTER_SOURCE_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referenced by none to many `ENCOUNTER` items |
+| `PUBLISHER_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a publisher of none to many `ENCOUNTER` items |
+| `PROVIDER_ORGANISATION_ID` | `ORGANISATION.ID` | one `organisation` can be a provider of none to many `ENCOUNTER` items |
+| `AUTHOR_ORGANISATION_ID` | `ORGANISATION.ID` | one `ORGANISATION` can be a publisher of none to many `ENCOUNTER` items |
+
+
+### episode_of_care
+
+> [!NOTE]
+> An association between a patient and an organisation / healthcare provider(s) during which time encounters may occur. The managing organisation assumes a level of responsibility for the patient during this time.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the encounter event | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | data controller for the record that supplied this episode of care information. Joins to `ORGANISATION.ID` | `organization_id` |
+| `MANAGING_ORGANSIATION_ID` | UUID | organisation at which the episode of care took place / responsible for delivering the care. Joins to `ORGANISATION.ID` | |
+| `EPISODE_TYPE_SOURCE_CONCEPT_ID` | UUID | Reference to the registration type of the patient | `registration_type_concept_id` |
+| `EPISODE_STATUS_SOURCE_CONCEPT_ID` | UUID | Reference to the registration status of the patient | `registration_status_concept_id` |
+| `EPISODE_OF_CARE_START_DATE` | TIMESTAMP_NTZ | The date the episode of care started | `date_registered` |
+| `EPISODE_OF_CARE_END_DATE` | TIMESTAMP_NTZ | The date the episode of care ended | `date_registered_end` |
+| `CARE_MANAGER_PRACTITIONER_IN_ROLE_ID` | UUID | Reference to the usual GP for this episode of care | `usual_gp_practitioner_id` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `MANAGING_ORGANISATION_CODE` | TEXT | The organisation code of the care provider. |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the OLIDS record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+*Foreign keys:*
+
+| column | target | cardinality |
+| :--- | :--- | :--- |
+| `LDS_RECORD_ID` | `ALLOCATION.LDS_RECORD_ID` | Each `ENCOUNTER` can have one to many `ALLOCATION` instructions (administrative object only) |
+| `PATIENT_ID` | `PATIENT.ID` | One `PATIENT` can have none to many `EPISODE_OF_CARE` items |
+| `PERSON_ID` | `PERSON.ID` | One `PERSON` can have none to many `EPISODE_OF_CARE` items |
+| `EPISODE_TYPE_SOURCE_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referenced by none to many `EPISODE_OF_CARE` items |
+| `EPISODE_STATUS_SOURCE_CONCEPT_ID` | `CONCEPT.ID` | One `CONCEPT` can be referenced by none to many `EPISODE_OF_CARE` items |
+| `CARE_MANAGER_PRACTITIONER_ID` | `PRACTITIONER.ID` | One `PRACTITIONER` can be a care manager in none to many `EPISODE_OF_CARE` items |
+| `PUBLISHER_ORGANISATION_ID` | `ORGANISATION.ID` | One `ORGANISATION` can publish many `EPISODE_OF_CARE` events |
+| `MANAGING_ORGANISATION_ID` | `ORGANISATION.ID` | One `ORGANISATION` can manage many `EPISODE_OF_CARE` events |
+
+### flag
+
+> [!NOTE]
+> prospective warnings of potential issues when providing care to the patient
+>
+> A flag is a warning or notification of some sort presented to the user - who may be a clinician or some other person involved in patient care. It usually represents something of sufficient significance to warrant a special display of some sort - rather than just a note in the resource
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the flag | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | Reference to the organisation that published this record | `organisation_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | Reference to the author of the event | -- |
+| `EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the flag was effective from onto the patient’s record | `effective_date` |
+| `EXPIRED_DATE` | TIMESTAMP_NTZ | The expiry date of the flag |  |
+| `IS_ACTIVE` | BOOLEAN | Whether the flag is active or not | `is_active` |
+| `FLAG_TEXT` | TEXT | This is a warning set by the publisher regarding the patient | `flag_text` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATE_TIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### location
+
+>[!NOTE]
+> Details and position information for a place where services are provided and resources and participants may be stored, found, contained, or accommodated.
+>
+> A Location includes both incidental locations (a place which is used for healthcare without prior designation or authorization) and dedicated, formally appointed locations. Locations may be private, public, mobile or fixed and scale from small freezers to full hospital buildings or parking garages.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the location | `id` |
+| `NAME` | TEXT | The name of a location set by the publisher. E.g. ward, clinic, domiciliary | `name` |
+| `LOCATION_TYPE_SOURCE_CONCEPT_ID` | UUID | The type of location | `type_code` |
+| `TYPE_DESCRIPTION` | TEXT | Textual description of the type of location e.g. GP Practice | `type_desc` |
+| `IS_PRIMARY_LOCATION` | BOOLEAN | True/false - is this the primary location of the parent organisation |  |
+| `HOUSE_NAME` | TEXT | Location property name |  |
+| `HOUSE_NUMBER` | TEXT | Location property number |  |
+| `HOUSE_NAME_FLAT_NUMBER` | TEXT | Location property number |  |
+| `STREET` | TEXT | Location street/road name |  |
+| `ADDRESS_LINE_1` | TEXT | Location address line 1 |  |
+| `ADDRESS_LINE_2` | TEXT | Location address line 2 |  |
+| `ADDRESS_LINE_3` | TEXT | Location address line 3 |  |
+| `ADDRESS_LINE_4` | TEXT | Location address line 4 |  |
+| `POSTCODE` | TEXT | Location postcode | `postcode` |
+| `MANAGING_ORGANISATION_ID` | UUID | Reference to the parent organisation of the location | `managing_organization_id` |
+| `OPEN_DATE` | DATE | Location opening date |  |
+| `CLOSE_DATE` | DATE | Location closing date (if applicable) |  |
+| `IS_OBSOLETE` | BOOLEAN | True/false - is the location closed |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | Does not exist for this table but included for consistency |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### location_contact
+
+> [!NOTE]
+> The contact details of communication devices available at the location. This can include addresses, phone numbers, fax numbers, mobile numbers, email addresses and web sites.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique Identifier for this location contact |  |
+| `LOCATION_ID` | UUID | Reference to the location |  |
+| `IS_PRIMARY_CONTACT` | BOOLEAN | True/false - is this the primary contact for the location |  |
+| `CONTACT_TYPE` | TEXT | Type of contact (Telephone, Fax, Email) |  |
+| `CONTACT_TYPE_SOURCE_CONCEPT_ID` | UUID | Type of contact (Telephone, Fax, Email) |  |
+| `VALUE` | TEXT | The value of the contact information e.g., phone number, email address |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### medication_order
+
+> [!NOTE]
+> An order or request for both supply of the medication and the instructions for administration of the medication to a patient
+>
+> This resource covers all type of orders for medications for a patient. This includes inpatient medication orders as well as community orders (whether filled by the prescriber or by a pharmacy). It also includes orders for over-the-counter medications (e.g. Aspirin), total parenteral nutrition and diet/ vitamin supplements. It may be used to support the order of medication-related devices e.g., prefilled syringes such as patient-controlled analgesia (PCA) syringes, or syringes used to administer other types of medications. e.g., insulin, narcotics.
+>
+>It is not intended for use in prescribing particular diets, or for ordering non-medication-related items (eyeglasses, supplies, etc.). In addition, the MedicationRequest may be used to report orders/request from external systems that have been reported for informational purposes and are not authoritative and are not expected to be acted upon (e.g. dispensed or administered)
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the medication order | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the medication order or request and has responsibility for its activation | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `MEDICATION_STATEMENT_ID` | UUID | Reference to the medication statement. A medication statement can have many medication orders | `medication_statement_id` |
+| `ENCOUNTER_ID` | UUID | Reference to the encounter the medication order was issued in |  |
+| `PRACTITIONER_ID` | UUID | The clinician the activity is recorded against | `practitioner_id` |
+| `OBSERVATION_ID` | UUID | Reference to the observation that required the medication order |  |
+| `ALLERGY_INTOLERANCE_ID` | UUID | Reference to allergy intolerance observations attached to this medication order |  |
+| `DIAGNOSTIC_ORDER_ID` | UUID | Reference to diagnostic order observations attached to this medication order |  |
+| `REFERRAL_REQUEST_ID` | UUID | Reference to referral requests attached to this medication order |  |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the medication order was issued | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date | `date_precision_concept_id` |
+| `DOSE` | TEXT | Textual description of the dose | `dose` |
+| `QUANTITY_VALUE` | float | The value of the medication that was prescribed e.g., 50 | `quantity_value` |
+| `QUANTITY_VALUE_DESCRIPTION` | TEXT |  | -- |
+| `QUANTITY_UNIT` | TEXT | The unit of the medication that was prescribed e.g., tablets | `quantity_unit` |
+| `DURATION_DAYS` | NUMBER | How many days the medication is prescribed for | `duration_days` |
+| `ESTIMATED_COST` | float | The estimated cost of the medication | `estimated_cost` |
+| `MEDICATION_NAME` | TEXT | The name of the medication in the order |  |
+| `MEDICATION_ORDER_SOURCE_CONCEPT_ID` | UUID | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
+| `BNF_REFERENCE` | TEXT | Reference to the clinical coding of the medication | `bnf_reference` |
+| `AGE_AT_EVENT` | NUMBER | The age the patient was at the time of this event | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER | Age categorisation for babies under 1 year |  |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | Age of the patient if less than 28 days, else a calculated category |  |
+| `ISSUE_METHOD` | TEXT | The issue method of the medication e.g., handwritten | `issue_method` |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | Date the medication order was recorded | `date_recorded` |
+| `IS_CONFIDENTIAL` | BOOLEAN | True/false - is the medication order flagged as confidential |  |
+| `ISSUE_METHOD_DESCRIPTION` | varchar | Description of the issue method |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### medication_statement
+
+> [!NOTE]
+> A record of a medication that is being consumed by a patient. A Medication Statement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future. The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician. A common scenario where this information is captured is during the history taking process during a patient visit or stay. The medication information may come from sources such as the patient's memory, from a prescription bottle, or from a list of medications the patient, clinician or other party maintains.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the medication | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the medication statement and has responsibility for its activation | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `ENCOUNTER_ID` | UUID | Reference to the encounter this medication was recorded in | `encounter_id` |
+| `PRACTITIONER_ID` | UUID | The clinician the activity is recorded against | `practitioner_id` |
+| `OBSERVATION_ID` | UUID | Reference to the observation that required the medication order | |
+| `ALLERGY_INTOLERANCE_ID` | UUID | Reference to allergy intolerance observations attached to this medication order |  |
+| `DIAGNOSTIC_ORDER_ID` | UUID | Reference to diagnostic order observations attached to this medication order |  |
+| `REFERRAL_REQUEST_ID` | UUID | Reference to referral requests attached to this medication order |  |
+| `AUTHORISATION_TYPE_SOURCE_CONCEPT_ID` | UUID | Reference to the authorisation type | `authorisation_type_concept_id` |
+| `DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `MEDICATION_STATEMENT_SOURCE_CONCEPT_ID` | UUID | Reference to the clinical coding of the medication provided by the supplier | `non_core_concept_id` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date | `date_precision_concept_id` |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the medication was clinical relevant | `clinical_effective_date` |
+| `CANCELLATION_DATE` | TIMESTAMP_NTZ | The date the medication was cancelled | `cancellation_date` |
+| `DOSE` | TEXT | Textual description of the dose of the medication | `dose` |
+| `QUANTITY_VALUE_DESCRIPTION` | TEXT | The value of the medication that was prescribed eg 50 |  |
+| `QUANTITY_VALUE` | float | The value of the medication that was prescribed eg 50 | `quantity_value` |
+| `QUANTITY_UNIT` | TEXT | The unit of the medication that was prescribed eg tablets | `quantity_unit` |
+| `MEDICATION_NAME` | TEXT | The name of the medication attached to the statement |  |
+| `BNF_REFERENCE` | TEXT | A reference to the drug in the BNF dictionary | `bnf_reference` |
+| `AGE_AT_EVENT` | NUMBER | The age the patient was at the time of this event | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER | The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old | |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category |  |
+| `ISSUE_METHOD` | TEXT | The issue method of the medication eg hand written | `issue_method` |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | Date the medication statement was recorded | `date_recorded` |
+| `IS_ACTIVE` | BOOLEAN | Is the record active |  |
+| `IS_CONFIDENTIAL` | BOOLEAN | True/false - is the statement marked as confidential/sensitive |  |
+| `EXPIRY_DATE` | datetime | Expiry date of drug | |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### observation
+
+> [!NOTE]
+> Measurements and simple assertions made about a patient, device or other subject
+>
+> Observations are a central element in healthcare, used to support diagnosis, monitor progress, determine baselines and patterns and even capture demographic characteristics, as well as capture results of tests performed on products and substances. Most observations are simple name/value pair assertions with some metadata, but some observations group other observations together logically, or even are multi-component observations.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the observation | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the medication statement and has responsibility for its activation | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `ENCOUNTER_ID` | UUID | Reference to the encounter the observation was recorded at | `encounter_id` |
+| `PRACTITIONER_ID` | UUID | The clinician the activity is recorded against | `practitioner_id` |
+| `PARENT_OBSERVATION_ID` | UUID | Reference to the parent observation in a complex observation eg systolic and diastolic blood pressures will have a parent observation of Blood pressure | `parent_observation_id` |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the observation was identified by a clinician | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date to either year (1) month (2) day (5) minute (12) second (13) millisecond (14) | `date_precision_concept_id` |
+| `RESULT_VALUE` | float | The value of the result of the observation | `result_value` |
+| `RESULT_UNITS_SOURCE_CONCEPT_ID` | UUID | The units of the result of the observation | `result value units` |
+| `RESULT_DATE` | DATE | The date of the result | `result_date` |
+| `RESULT_TEXT` | TEXT | Any text associated with the result | `result_text` |
+| `IS_PROBLEM` | BOOLEAN | Whether the observation is marked as a problem | `is_problem` |
+| `IS_REVIEW` | BOOLEAN | Whether the observation is a review of an existing problem | `is_review` |
+| `PROBLEM_END_DATE` | TIMESTAMP_NTZ | The end date of the problem | `problem_end_date` |
+| `OBSERVATION_SOURCE_CONCEPT_ID` | UUID | Reference to the clinical coding of the observation provided by the supplier | `non_core_concept_id` |
+| `AGE_AT_EVENT` | NUMBER | The age of the patient at the time of the observation in whole integer years | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER | The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old | |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | The age of the patient at the time of the observation | `age_at_event` |
+| `EPISODICITY_SOURCE_CONCEPT_ID` | UUID | Reference to the episodicity of the problem eg First, review, flare | `episodicity_concept_id` |
+| `IS_PRIMARY` | BOOLEAN | Whether the observation is a primary observation | `is_primary` |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | The date the observation was recorded in the system | `date_recorded` |
+| `IS_PROBLEM_DELETED` | BOOLEAN | true/false - whether the problem relating to the observation is deleted |  |
+| `IS_CONFIDENTIAL` | BOOLEAN | true/false - is the observation marked as confidential/sensitive |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### organisation
+
+> [!NOTE]
+> A formally or informally recognized grouping of people or organisations formed for the purpose of achieving some form of collective action. Includes companies, institutions, corporations, departments, community groups, healthcare practice groups etc.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the organisation' | `id` |
+| `ORGANISATION_CODE` | TEXT | Organisation Code | `ods_code` |
+| `ORGANISATION_CODE_ASSIGNING_AUTHORITY` | TEXT | The assigning authority of the organisation code |  |
+| `NAME` | TEXT | 'Name of the organisation' | `name` |
+| `DESCRIPTION` | TEXT | 'The type of organisation' | `type_desc` |
+| `LOCATION_TYPE_SOURCE_CONCEPT_ID` | UUID | 'The type of organisation' | `type_code` |
+| `POSTCODE` | TEXT | 'The postcode of the organisation' | `postcode` |
+| `PARENT_ORGANISATION_ID` | UUID | The id of the parent organisation | `parent_organization_id` |
+| `OPEN_DATE` | DATE | Date the organisation opened (minimum of operational or legal dates) |  |
+| `CLOSE_DATE` | DATE | Date the organisation closed (maximum of operational or legal dates) |  |
+| `IS_OBSOLETE` | BOOLEAN | Is the organisation closed |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access.<br>*This will be null for this table, as this table contains shared reference data only*. | `organization_id` |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### patient_person
+
+> [!NOTE]
+> relationship bridging table between patient and person
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_REGISTRAR_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_UPDATE_ACQUIRED_PERSON` | TIMESTAMP_NTZ | Date the adjoining person record was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### patient_registered_practitioner_in_role
+
+> [!NOTE]
+> Denotes the patients registered healthcare professional responsible for their care.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique Identifier for the patient to practitioner relationship | |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | 'Owning organisation (i.e. publisher)' | |
+| `PRACTITIONER_ID` | UUID | The clinician the episode of care is registered under | |
+| `EPISODE_OF_CARE_ID` | UUID | The episode of care (registration to service provider) that the patient is recorded under with this practitioner/clinician | |
+| `START_DATE` | TIMESTAMP_NTZ | Start date of the relationship between patient and practitioner | |
+| `END_DATE` | TIMESTAMP_NTZ | End date of the relationship between patient and practitioner | |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+### practitioner
+
+> [!NOTE]
+> A person who is directly or indirectly involved in the provisioning of healthcare or related services. Practitioner covers all individuals who are engaged in the healthcare process and healthcare-related services as part of their formal responsibilities and this Resource is used for attribution of activities and responsibilities to these individuals
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the practitioner | `id` |
+| `GMC_CODE` | TEXT | The GMC code of the practitioner | `gmc_code` |
+| `TITLE` | TEXT | The title of the practitioner | |
+| `FIRST_NAME` | TEXT | The first name of the practitioner | `name` |
+| `SURNAME` | TEXT | The family name of the practitioner | `name` |
+| `NAME` | TEXT | Name of the practitioner | |
+| `IS_OBSOLETE` | BOOLEAN | True/false - is the practitioner no longer active | |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS processing event identifier for sequencing the data | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+### practitioner_in_role
+
+> [!NOTE]
+> A specific set of Roles/Locations/specialties/services that a practitioner may perform at an organization for a period of time.
+
+> [!WARNING]
+> TPP records do not relate a source `SRStaffMemberRole` to a specific organisation as record owner. As such these will be listed as owned by the Organisation under which the role occurs. This may later be altered to a static value (to be agreed with users).
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the practitioner role record | |
+| `PRACTITIONER_ID` | UUID | Unique ID of the practitioner | |
+| `EMPLOYER_ORGANISATION_ID` | UUID | The organisation under which the practitioners role takes place | |
+| `ROLE_CODE` | TEXT | The role code for the practitioner’s role | |
+| `ROLE` | TEXT | The role description for the practitioner’s role | |
+| `DATE_EMPLOYMENT_START` | TIMESTAMP_NTZ | Date from which this role was applicable to the practitioner | |
+| `DATE_EMPLOYMENT_END` | TIMESTAMP_NTZ | Date from which this role was no longer applicable to the practitioner | |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS processing event identifier for sequencing the data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | Organisation code for the organisation that owns the record | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+### procedure_request
+
+> [!NOTE]
+> A record of a request for diagnostic investigations, treatments, or operations to be performed.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the procedure request | id |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PRACTITIONER_ID` | UUID | Unique ID of the practitioner | practitioner_id |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `ENCOUNTER_ID` | UUID | Reference to the encounter the procedure was administered at | encounter_id |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | The date the procedure was administered by a clinician | clinical_effective_date |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | Identifies the precision of the clinical effectiveness date to either year (1), month (2), day (5), minute (12), second (13), millisecond (14) | date_precision_concept_id |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | The date the procedure was recorded in the source system | date_recorded |
+| `DESCRIPTION` | TEXT | Procedure request description | |
+| `PROCEDURE_REQUEST_SOURCE_CONCEPT_ID` | UUID | Reference to the clinical coding of the procedure | non_core_concept_id |
+| `STATUS_SOURCE_CONCEPT_ID` | UUID | Reference to the status of the procedure | status_concept_id |
+| `AGE_AT_EVENT` | NUMBER | The age of the patient at the time of the procedure | age_at_event |
+| `AGE_AT_EVENT_BABY` | NUMBER | Age at the time of event; integer years if ≥1, else categorized 7001-7007 for babies under 1 year | |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | Age at the time of event if less than 28 days, else categorized value | |
+| `IS_CONFIDENTIAL` | BOOLEAN | True/false - is the observation marked as confidential/sensitive | |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS processing event identifier for sequencing the data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATE_TIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+### referral_request
+
+> [!NOTE]
+> Used to record and send details about a request for referral service or transfer of a patient to the care of another provider or provider organisation
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the referral request' | id |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `REQUESTER_ORGANISATION_ID` | UUID | 'Reference to the organisation that made the referral request' | `requester_organization_id` |
+| `RECIPIENT_ORGANISATION_ID` | UUID | 'Organisation identifier of the recipient of the referral request' | `recipient_organization_id` |
+| `ENCOUNTER_ID` | UUID | 'Reference to the encounter the referral was made in' | `encounter_id` |
+| `PRACTITIONER_ID` | UUID | 'The clinician the activity is recorded against' | `practitioner_id` |
+| `UNIQUE_BOOKING_REFERENCE_NUMBER` | TEXT | 'Unique booking reference number of the referral request' | |
+| `CLINICAL_EFFECTIVE_DATE` | TIMESTAMP_NTZ | 'The date the referral was made' | `clinical_effective_date` |
+| `CLINICAL_EFFECTIVE_DATE_PRECISION_SOURCE_CONCEPT_ID` | UUID | 'Identifies the precision of the clinical effectiveness date to either year (1), month (2), day (5), minute (12), second (13), millisecond (14)' | `date_precision_concept_id` |
+| `REFERRAL_REQUEST_PRIORITY_SOURCE_CONCEPT_ID` | UUID | 'Reference to the priority of the referral' | `referral_request_priority_concept_id` |
+| `REFERRAL_REQUEST_TYPE_SOURCE_CONCEPT_ID` | UUID | 'Reference to the type of referral request' | `referral_request_type_concept_id` |
+| `REFERRAL_REQUEST_SPECIALTY_SOURCE_CONCEPT_ID` | UUID | 'Reference to the specialty of the referral' | `referral_request_specialty_concept_id` |
+| `MODE` | TEXT | 'The mode of the referral' | mode |
+| `IS_OUTGOING_REFERRAL` | BOOLEAN | 'Whether this is an outgoing referral' | `outgoing_referral` |
+| `IS_REVIEW` | BOOLEAN | 'Whether this referral is a review' | is_review |
+| `REFERRAL_REQUEST_SOURCE_CONCEPT_ID` | UUID | 'The source clinical coding of primary diagnosis provided by the supplier' | `raw_concept_id` |
+| `AGE_AT_EVENT` | NUMBER | 'The age of the patient at the time of the referral' | `age_at_event` |
+| `AGE_AT_EVENT_BABY` | NUMBER | 'The age the patient was at the time of this event. Shown in integer/whole years if the patient is one (1) years or older, else shown as a categorised (7001-7007) value representing an age category for babies under 1 years old. See [Ages](#ages) for more details.' | |
+| `AGE_AT_EVENT_NEONATE` | NUMBER | 'The age the patient was at the time of this event if less than 28 days, else a calculated value representing an age category' | |
+| `DATE_RECORDED` | TIMESTAMP_NTZ | 'The date the referral request was added to the source system' | `date_recorded` |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' | |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' | |
+| `LDS_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' | |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | 'LDS processing event identifier for sequencing the data' | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | 'Date the business id was first witnessed by, received by or supplied to LDS' | |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' | |
+
+### schedule
+
+> [!NOTE]
+> A container for slots of time that may be available for booking appointments.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the schedule' | `id` |
+| `LOCATION_ID` | UUID | 'Reference to the location of the schedule' | |
+| `LOCATION_NAME` | TEXT | 'Textual description of the location the schedule was held at' | `location` |
+| `PRACTITIONER_ID` | UUID | 'Reference to the practitioner who owns the schedule' | `practitioner_id` |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `START_DATE` | TIMESTAMP_NTZ | 'The start date of the schedule' | `start_date` |
+| `END_DATE` | TIMESTAMP_NTZ | 'The end date of the schedule' |  |
+| `TYPE` | TEXT | 'The type of schedule eg Timed Appointments' | `type` |
+| `NAME` | TEXT | 'The name of the schedule' | `name` |
+| `IS_PRIVATE` | BOOLEAN | 'True/false - is the schedule marked as private' |  |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | 'LDS processing event identifier for sequencing the data' |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' | |
+
+### schedule_practitioner
+
+> [!NOTE]
+> The relationship between a schedule and the practitioner(s) involved on the schedule.
+
+| Column Name | Data Type |  Description | Compass equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique Identifier for this practitioner to schedule relation' |  |
+| `SCHEDULE_ID` | UUID | 'Reference to the schedule' |  |
+| `PRACTITIONER_ID` | UUID | 'Reference to the practitioner' |  |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | 'LDS processing event identifier for sequencing the data' |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' | |
+
+## `[OLIDS_MASKED]` schema
+
+### patient (masked)
+
+> [!NOTE]
+> Demographics and other administrative information about an individual or animal receiving care or other health-related services.
+>
+> note that this encompasses an anonymous in context (pseudonymised) representation of patients. Additionally, a single person can exist as many patients undergoing separate episodes of care at differing healthcare provider services. A patient represents a single person undergoing care at one or more specific healthcare providers, typically assigned a local system patient identifier or patient administration system number.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique ID of the patient | `id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `NHS_NUMBER_HASH` | binary(32) | internal irreversible hash of the patient NHS number |  |
+| `SK_PATIENT_ID` | NUMBER | Consistent LDS pseudonym for secondary care planning purposes |  |
+| `LOCAL_PATIENT_ID` | TEXT | local patient administration system identifier for the patient | |
+| `TITLE` | TEXT | 'The title of the patient' |  |
+| `GENDER_SOURCE_CONCEPT_ID` | UUID | 'Reference to the gender of the patient' |  |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `REGISTERED_PRACTICE_ID` | UUID | LDS assigned identifier for patient's registered practice |  |
+| `BIRTH_YEAR` | NUMBER | year of the date of birth |  |
+| `BIRTH_MONTH` | NUMBER | month of the date of birth |  |
+| `DEATH_YEAR` | NUMBER | year of the date of death |  |
+| `DEATH_MONTH` | NUMBER | month of the date of death |  |
+| `IS_CONFIDENTIAL` | BOOLEAN | true/false - is the observation marked as confidential/sensitive |  |
+| `IS_TEST_PATIENT` | BOOLEAN | true/false - is the patient flagged or denoted as a test patient in the source system |  |
+| `IS_SPINE_SENSITIVE` | BOOLEAN | true/false - is the patient marked as spine sensitive within the source system. **Important note: This column is sourced from local practice systems, and may not reflect values held within the PDS spine service. It is not advised to use this column to inform sensitivity filtering policies.** |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access. | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS. |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### patient_address (masked)
+
+> [!NOTE]
+> An address for the individual patient
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the address' | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `ADDRESS_TYPE_SOURCE_CONCEPT_ID` | UUID | Type of address (i.e. Temporary, Correspondence only, Home) | `use_concept_id` |
+| `POSTCODE_HASH` | binary(32) | The postcode of the address - hashed | `postcode` |
+| `START_DATE` | TIMESTAMP_NTZ | The start date of this address being relevant | `start_date` |
+| `END_DATE` | TIMESTAMP_NTZ | The end date of this address being relevant | `end_date` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access. | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS. |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record. **Note this column is currently absent, but will be added in a later release**. | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### patient_contact (masked)
+
+> [!NOTE]
+> telecommunication contact details for the patient.
+>
+> note that this is the anonymous in context (pseudonymised) edition of the contact information and as a result will merely show the presence of a communication method with no details of the contact itself.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the contact' | `id` |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `CONTACT_TYPE` | TEXT | contact type description |  |
+| `CONTACT_TYPE_CONCEPT_ID` | TEXT | use of contact (e.g. mobile, home, work) (Combines type into single concept) | `use_concept_id` |
+| `START_DATE` | TEXT | 'The start date of the contact being valid' | `start_date` |
+| `END_DATE` | TEXT | 'The end date of the contact being valid' | `end_date` |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table  |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | LDS assigned identifier for the process run that conducted interchange protocol conversion of the data from incoming batch into existing held data | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access. | `organization_id` |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS. |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse |  |
+
+### patient_uprn (masked)
+
+> [!NOTE]
+> unique property reference details from address matching of the supplied patient address details
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | Unique Identifier for the patient to uprn relationship | |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PATIENT_ADDRESS_ID` | UUID | reference to the related patient address | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `MASKED_UPRN` | NUMBER | The matched unique property reference number, with hashing applied | |
+| `MASKED_USRN` | NUMBER | The matched unique street reference number, with hashing applied | |
+| `MASKED_POSTCODE` | TEXT | The masked input postcode | |
+| `ADDRESS_FORMAT_QUALITY` | TEXT | The quality of the input address (i.e. 'good') | |
+| `POSTCODE_QUALITY` | TEXT | The quality of the input postcode (i.e. 'good') | |
+| `MATCHED_WITH_ASSIGN` | TEXT | True/false - was a match possible | |
+| `QUALIFIER` | TEXT | Type of matched address (residential, child) | |
+| `CLASSIFICATION` | TEXT | <to be confirmed> | |
+| `ALGORITHM` | TEXT | <to be confirmed> | <to be confirmed> |
+| `MATCH_PATTERN` | TEXT | <to be confirmed> | <to be confirmed> |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_REGISTRAR_EVENT_ID` | UUID | LDS processing event identifier for the processing of the UPRN match | |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access.| |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+### person (masked)
+
+> [!NOTE]
+> harmonised person details extracted from person demographics services (PDS), or presented as a stub of known details where no PDS entry is found.
+
+| Column Name | Data Type | Description | Compass Equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | the person identifier | |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `ID` |  -- |
+| `PERSON_VERSION_ID` | UUID | record-version of the person. a subscriber may be limited to a description of a person up to a point in time | -- |
+| `PERSON_RECORD_TYPE` | TEXT | "STUB" or "PDS" - stub person records are generated from supplied data in advance of a PDS reponse, or where no matched response is recieved .| -- |
+| `MATCHED_NHS_NUMBER_HASH` | binary(32) | The PDS responded NHS number hashed | |
+| `SK_PATIENT_ID` | NUMBER | The LDS standard pseudonym for the NHS number that was matched in PDS | |
+| `GENDER` | TEXT | calendar gender of the person | -- |
+| `BIRTH_YEAR` | NUMBER | calendar year of birth of the person | -- |
+| `BIRTH_MONTH` | NUMBER | calendar month of birth of the person | -- |
+| `DEATH_YEAR` | NUMBER | calendar year of death of the person, if applicable | -- |
+| `DEATH_MONTH` | NUMBER | calendar month of death of the person, if applicable | -- |
+| `DEATH_NOTIFICATION_STATUS` | TEXT  | Single digit number code, 1 or 2. 1 is Informal death status where death is reported, but unconfirmed. 2 is formal death status, death has been confirmed officially | -- |
+| `POSTCODE_HASH`  | BINARY | a deterministic hash of the persons postcode of residence | -- |
+| `PREFERRED_CONTACT_METHOD`  | TEXT | Single digit number code as follows: 1=Letter, 2=Visit, 3=Phone, 4=Email, 5=TextPhone, 6=TextPhoneProxy, 7=Sign language, 8=NoPhone | -- |
+| `NOMINATED_PHARMACY`  | TEXT | Code to designate which community pharmacy is used for patient. Composed of double capital letters then 3 numbers, for example FC890 | -- |
+| `DISPENSING_DOCTOR` | TEXT | Code to designate which dispensing doctor is used for patient. Composed of first character is a capital letter followed by 5 numbers, for example N85004 | -- |
+| `MEDICAL_APPLIANCE_SUPPLIER` | TEXT | Code to designate which medical appliance supplier is used for patient. Composed of triple capital letters followed by 2 numbers, for example FFF14 | -- |
+| `GP_PRACTICE_CODE` | TEXT | Primary Care Provider GP practice code | -- |
+| `GP_REGISTRATION_DATE`  | TIMESTAMP_NTZ | Date the patient was registered with a GP. | -- |
+| `AS_AT_DATE` | TIMESTAMP_NTZ | "Ignore this field." | |
+| `SENSITIVITY_FLAG` | TEXT | The returned value of the sensitivity of the patient. Note: this value is rarely populated | |
+| `ERROR_SUCCESS_CODE` | TEXT | The PDS response success or error code | |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_DATETIME_UPDATE_ACQUIRED_PERSON` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED_PERSON` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS. May be null | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+## `[OLIDS_PCD]` Schema
+
+### patient
+
+> [!NOTE]
+> Demographics and other administrative information about an individual or animal receiving care or other health-related services.
+
+| Column Name | Data Type |  Description | Compass equivalent |
+| --- | --- | ---- | ---- | 
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `NHS_NUMBER` | char(10) | 'The NHS number of the patient' | nhs_number |
+| `TITLE` | TEXT | 'The title of the patient' | title |
+| `FIRST_NAME` | TEXT | 'The first names of the patient' | first_names |
+| `MIDDLE_NAME` | TEXT | 'The middle names of the patient' |  |
+| `LAST_NAME` | TEXT | 'The last name of the patient' | last_name |
+| `GENDER_SOURCE_CONCEPT_ID` | UUID | 'Reference to the gender of the patient' |  |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `REGISTERED_PRACTICE_ORGANISATION_ID` | UUID | LDS assigned identifier for patient's registered practice |  |
+| `BIRTH_DATE` | DATE | 'The date of birth of the patient' | date_of_birth |
+| `BIRTH_YEAR` | NUMBER | 'Birth year of the patient' | birth_year |
+| `BIRTH_MONTH` | NUMBER | 'Birth month of the patient' | birth_month |
+| `BIRTH_WEEK_ISO` | NUMBER | 'Birth week of the patient (iso standard)' | birth_week |
+| `BIRTH_DAY` | NUMBER | 'Birth day of the patient' |  |
+| `DEATH_DATE` | DATE | 'The date of death of the patient' | date_of_death |
+| `DEATH_YEAR` | NUMBER | 'Death year of the patient' |  |
+| `DEATH_MONTH` | NUMBER | 'Death month of the patient' |  |
+| `DEATH_WEEK_ISO` | NUMBER | 'Death week of the patient (iso standard)' |  |
+| `DEATH_DAY` | NUMBER | 'Death day of the patient' |  |
+| `IS_CONFIDENTIAL` | BOOLEAN | true/false - is the observation marked as confidential/sensitive |  |
+| `IS_TEST_PATIENT` | BOOLEAN | true/false - is the patient flagged or denoted as a test patient in the source system |  |
+| `IS_SPINE_SENSITIVE` | BOOLEAN | true/false - is the patient marked as spine sensitive within the source system. **Important note: This column is sourced from local practice systems, and may not reflect values held within the PDS spine service. It is not advised to use this column to inform sensitivity filtering policies.** |  |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' | |
+| `LDS_VERSIONER_EVENT_ID` | UUID | 'LDS processing event identifier for sequencing the data' |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access | |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' | |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' | |
+
+### patient_address
+
+> [!NOTE]
+> An address for the individual patient
+
+| Column Name | Data Type |  Description | Compass equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the address' | id |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `ADDRESS_TYPE_SOURCE_CONCEPT_ID` | UUID | 'Type of address (i.e. Temporary, Correspondence only, Home)' | use_concept_id |
+| `IS_HOME_ADDRESS` | BOOLEAN | 'Indicates whether this address is the patient’s home address' |  |
+| `ADDRESS_LINE_1` | TEXT | 'The first line of the address' | address_line_1 |
+| `ADDRESS_LINE_2` | TEXT | 'The second line of the address' | address_line_2 |
+| `ADDRESS_LINE_3` | TEXT | 'The third line of the address' | address_line_3 |
+| `ADDRESS_LINE_4` | TEXT | 'The fourth line of the address' | address_line_4 |
+| `CITY` | TEXT | 'The city' | city |
+| `POSTCODE` | TEXT | 'The postcode of the address' | postcode |
+| `START_DATE` | TIMESTAMP_NTZ | 'The start date of this address being relevant' | start_date |
+| `END_DATE` | TIMESTAMP_NTZ | 'The end date of this address being relevant' | end_date |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | 'LDS processing event identifier for sequencing the data' |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' |  |
+
+### patient_contact
+
+> [!NOTE]
+> telecommunication contact details for the patient.
+
+| Column Name | Data Type |  Description | Compass equivalent |
+| --- | --- | ---- | ---- |
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the patient contact' | id |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `CONTACT_TYPE` | TEXT | description of the contact type |  |
+| `CONTACT_TYPE_SOURCE_CONCEPT_ID` | UUID | 'Use of contact (e.g. mobile, home, work). Combines type into single concept' | type_concept_id |
+| `START_DATE` | TEXT | 'The start date of the contact being valid' | start_date |
+| `END_DATE` | TEXT | 'The end date of the contact being valid' | end_date |
+| `CONTACT_VALUE` | TEXT | 'The value of the contact information eg phone number, email address' | value |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
+| `LDS_VERSIONER_EVENT_ID` | UUID | 'LDS processing event identifier for sequencing the data' |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' |  |
+| `LDS_DATETIME_FIRST_ACQUIRED` | TIMESTAMP_NTZ | 'Date the business id was first witnessed by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' |  |
+
+### patient_uprn
+
+> [!NOTE]
+> unique property reference details from address matching of the supplied patient address details
+
+| Column Name | Data Type |  Description | Compass equivalent |
+| --- | --- | ---- | ---- | 
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the patient uprn match' |  |
+| `PERSON_ID` | UUID |  Unique individual across all organisation |  `person_id` |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PATIENT_ID` | UUID | The organisations record for this person’s registration. Patients may have multiple records across clinical systems and may have registered at an organisation multiple times | `patient_id` |
+| `PATIENT_SHARD_ID` | NUMBER | clustering ID of `PATIENT_ID` | -- |
+| `PATIENT_ADDRESS_ID` | UUID | reference to the related patient address | -- |
+| `PUBLISHER_ORGANISATION_ID` | UUID | the organisation that published the record | `organization_id` |
+| `PROVIDER_ORGANISATION_ID` | UUID | the organisation that initiated the care under which this information was recorded. | `organization_id` |
+| `AUTHOR_ORGANISATION_ID` | UUID | the organisation that authored the record content | `organization_id` |
+| `UPRN` | TEXT | 'The matched unique property reference number' | uprn |
+| `USRN` | TEXT | 'The matched unique street reference number' |  |
+| `ORGANISATION_NAME` | TEXT | 'The organisation name of the address of the UPRN' | abp_address_organisation |
+| `DEPARTMENT_NAME` | TEXT | 'The department name of the address of the UPRN' |  |
+| `SUB_BUILDING_NAME` | TEXT | 'The sub-building name of the address of the UPRN' |  |
+| `BUILDING_NAME` | TEXT | 'The building name of the address of the UPRN' |  |
+| `BUILDING_NUMBER` | TEXT | 'The building number of the address of the UPRN' | abp_address_number |
+| `DEPENDENT_THOROUGHFARE` | TEXT | 'Added to uniquely distinguish addresses where the same thoroughfare exists twice in the same district' |  |
+| `THOROUGHFARE` | TEXT | 'Road or street name' | abp_address_street |
+| `DOUBLE_DEPENDENT_LOCALITY` | TEXT | 'A business park, industrial estate or hamlet which is smaller than a Dependent Locality' |  |
+| `DEPENDENT_LOCALITY` | TEXT | 'A small town or village name sometimes included in an address when the Delivery Point is outside the boundary of the main Post Town that serves it' | abp_address_locality |
+| `POST_TOWN` | TEXT | 'Also known as postal district, the outbound portion of the postcode (i.e. CM3) which denotes a postal distribution centre' | abp_address_town |
+| `POSTCODE` | TEXT | 'The postal code used for the Unique Property' | abp_address_postcode |
+| `ADDRESS_FORMAT_QUALITY` | TEXT | 'The quality of the input address (i.e. "good")' |  |
+| `POSTCODE_QUALITY` | TEXT | 'The quality of the input postcode (i.e. "good")' |  |
+| `MATCHED_WITH_ASSIGN` | TEXT | 'True/false - was a match possible' |  |
+| `QUALIFIER` | TEXT | 'Type of matched address (residential, child)' | qualifier |
+| `CLASSIFICATION` | TEXT | '<to be confirmed>' | uprn_property_classification |
+| `ALGORITHM` | TEXT | '<to be confirmed>' | match_rule |
+| `MATCH_PATTERN` | TEXT | '<to be confirmed>' | 'Concatenates match_pattern_flat, building, number and postcode fields' |
+| `UNSTRUCTURED_POSTAL_ADDRESS` | TEXT | 'The full input address as a string' |  |
+| `X_COORDINATE` | NUMBER | 'The Ordnance Survey X co-ordinate of the address' | uprn_xcoordinate |
+| `Y_COORDINATE` | NUMBER | 'The Ordnance Survey Y co-ordinate of the address' | uprn_ycoordinate |
+| `LATITUDE` | NUMBER | 'The latitude of the address' | latitude |
+| `LONGITUDE` | NUMBER | 'The longitude of the address' | longitude |
+| `LDS_ID` | UUID | 'LDS assigned Unique Identifier for this common modelled record version' |  |
+| `LDS_BUSINESS_KEY` | TEXT | 'Natural or source key for the unique event/entity of the table' |  |
+| `LDS_SOURCE_DATASET_ID` | UUID | 'LDS assigned identifier for the source dataset' |  |
+| `LDS_CDM_EVENT_ID` | UUID | 'LDS assigned identifier for the process run that transformed the source data into the common modelled item' |  |
+| `LDS_REGISTRAR_EVENT_ID` | UUID | 'LDS assigned identifier for the registrar event that processed the record' |  |
+| `PUBLISHER_ORGANISATION_CODE` | TEXT | The organisation code of the publisher / controller of the record governing access |  |
+| `LDS_DATETIME_UPDATE_ACQUIRED` | TIMESTAMP_NTZ | 'Date the data was extracted by, received by or supplied to LDS' |  |
+| `LDS_IS_DELETED` | BOOLEAN | 'LDS flag standardised presentation of deleted state of the record.' |  |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | 'LDS datetime stamp from which the record version was correct' |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | 'LDS date stamp when the data was landed into the lakehouse' |  |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | 'LDS datetime stamp when the data was updated in the lakehouse' |  |
+
+### person
+
+> [!NOTE]
+> harmonised person details extracted from person demographics services (PDS), or presented as a stub of known details where no PDS entry is found.
+
+| Column Name | Data Type | Description | Compass equivalent |
+| --- | --- | ---- | ---- | 
+| `LDS_SOURCE_RECORD_ID` | UUID | LDS assigned Unique Identifier for the source record version |  -- |
+| `LDS_SOURCE_RECORD_SHARD_ID` | NUMBER | LDS assigned grouping of `LDS_SOURCE_RECORD_ID` values for join optimisation | -- |
+| `ID` | UUID | 'Unique ID of the person' | No Foreign Key reference |  |
+| `PERSON_SHARD_ID` | NUMBER |  clustering ID of `PERSON_ID` |  -- |
+| `PERSON_VERSION_ID` | UUID | record-version of the person. a subscriber may be limited to a description of a person up to a point in time | -- |
+| `PERSON_RECORD_TYPE` | TEXT | "STUB" or "PDS" - stub person records are generated from supplied data in advance of a PDS reponse, or where no matched response is recieved .| -- |
+| `MATCHED_NHS_NO` | TEXT | This field needs to be checked for one of the values below. If there is a match with the values below, the record has not been successfully matched. Any other number indicates a match. <br>0000000000: No match was found <br>9999999999: Multiple matches were found. <br><blank>: Not enough fields provided for the trace. | -- |
+| `FAMILY_NAME` | TEXT | Surname, or family name. |  |
+| `GIVEN_NAME` | TEXT | Forename, or given name. |  |
+| `OTHER_GIVEN_NAME` | TEXT | Other given, or middle, name. |  |
+| `GENDER` | TEXT | Gender (sex) of the person, values:<br>0 = Not Known<br>1 = Male<br>2 = Female<br>9 = Not Specified |  |
+| `BIRTH_DATE` | TEXT | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |
+| `BIRTH_YEAR` | NUMBER | Birth year of the patient | birth_year |
+| `BIRTH_MONTH` | NUMBER | Birth month of the patient | birth_month |
+| `BIRTH_DAY` | NUMBER | Birth day of the patient |  |
+| `BIRTH_TIME` | TIME | Birth time of the patient | |
+| `DEATH_DATE` | TEXT | In one of the following formats:<br>full date and time (YYYYMMDDHHMM)<br>full date (YYYYMMDD)<br>year & month (YYYYMM)<br>year only (YYYY) |  |
+| `DEATH_YEAR` | NUMBER | Death year of the patient |  |
+| `DEATH_MONTH` | NUMBER | Death month of the patient |  |
+| `DEATH_DAY` | NUMBER | Death day of the patient |  |
+| `DEATH_TIME` | TIME | Death time of the patient | |
+| `DEATH_NOTIFICATION_STATUS` | TEXT | Single digit number code, 1 or 2. 1 is Informal death status where death is reported, but unconfirmed. 2 is formal death status, death has been confirmed officially. |  |
+| `ADDRESS_LINE_1` | TEXT | First line of a person’s usual address. |  |
+| `ADDRESS_LINE_2` | TEXT | Second line of a person’s usual address. |  |
+| `ADDRESS_LINE_3` | TEXT | Third line of a person’s usual address. |  |
+| `ADDRESS_LINE_4` | TEXT | Fourth line of a person’s usual address. |  |
+| `ADDRESS_LINE_5` | TEXT | Fifth line of a person’s usual address. |  |
+| `POSTCODE` | TEXT | Postcode of the person’s usual address. |  |
+| `PREFERRED_CONTACT_METHOD` | TEXT | Single digit number code as follows: 1=Letter, 2=Visit, 3=Phone, 4=Email, 5=TextPhone, 6=TextPhoneProxy, 7=Sign language, 8=NoPhone |  |
+| `NOMINATED_PHARMACY` | TEXT | Code to designate which community pharmacy is used for patient. Composed of double capital letters then 3 numbers, for example FC890 |  |
+| `DISPENSING_DOCTOR` | TEXT | Code to designate which dispensing doctor is used for patient. Composed of first character is a capital letter followed by 5 numbers, for example N85004 |  |
+| `MEDICAL_APPLIANCE_SUPPLIER` | TEXT | Code to designate which medical appliance supplier is used for patient. Composed of triple capital letters followed by 2 numbers, for example FFF14 |  |
+| `GP_PRACTICE_CODE` | TEXT | Primary Care Provider GP practice code. |  |
+| `GP_REGISTRATION_DATE` | TEXT | Date the patient was registered with a GP. |  |
+| `NHAIS_POSTING_ID` | TEXT | Unique code that represents the NHAIS box. |  |
+| `AS_AT_DATE` | TEXT | Ignore this field. |  |
+| `LOCAL_PATIENT_ID` | TEXT | Ignore this field. |  |
+| `INTERNAL_ID` | TEXT | Ignore this field. |  |
+| `TELEPHONE_NUMBER` | TEXT | Person's telephone number. |  |
+| `MOBILE_NUMBER` | TEXT | Person's mobile number. |  |
+| `EMAIL_ADDRESS` | TEXT | Person's email address. |  |
+| `SENSITIVITY_FLAG` | char(1) | The returned value of the sensitivity of the patient. Note: this value is rarely populated |
+| `ERROR_SUCCESS_CODE` | TEXT | The code corresponding to this record. <br>See the person level response code table for details.  |  |
+| `MPS_ID` | TEXT | Ignore this field. |  |
+| `IS_TEST_PATIENT` | BOOLEAN | true/false - is the matched NHS number a known test patient record |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | |
+| `LDS_SOURCE_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | |
+| `LDS_CDM_EVENT_ID` | UUID | LDS assigned identifier for the process run that transformed the source data into the common modelled item | |
+| `LDS_DATETIME_UPDATE_ACQUIRED_PERSON` | TIMESTAMP_NTZ | Date the data was extracted by, received by or supplied to LDS | |
+| `LDS_DATETIME_FIRST_ACQUIRED_PERSON` | TIMESTAMP_NTZ | Date the business id was first witnessed by, received by or supplied to LDS | |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse | |
+| `LDS_LAKEHOUSE_DATETIME_UPDATED` | TIMESTAMP_NTZ | LDS datetime stamp when the data was updated in the lakehouse | |
+
+## `[OLIDS_TERMINOLOGY]` Schema
+
+### concept
+
+> [!NOTE]
+> Used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
+>
+> Code systems define which codes (symbols and/or expressions) exist, and how they are understood. Value sets select a set of codes from one or more code systems to specify which codes can be used in a particular context.
+>
+> Here is an example query that returns concept IDs and display values for mapped values for patient gender.
+
+```sql
+SELECT P1."gender_concept_id"
+    ,M1."source_code_id"
+    ,C1."display" AS SOURCE_CODE_DISPLAY
+    ,M1."target_code_id"
+    ,C2."display" AS TARGET_CODE_DISPLAY
+FROM DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_MASKED.PATIENT P1
+JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT C1
+ON P1."gender_concept_id" = C1."id"
+JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT_MAP M1 --Sequence
+ON P1."gender_concept_id" = M1."source_code_id"
+JOIN DATA_STORE_OLIDS_SHARE_UAT_20251009131920.OLIDS_TERMINOLOGY.CONCEPT C2
+ON M1."target_code_id" = C2."id"
+LIMIT 10
+```
+
+
+| Column Name | Data Type |  Description | Compass equivalent |
+| --- | --- | ---- | ---- |
+| `CONCEPT_ID` | UUID | 'Unique ID of the person' | No Foreign Key reference |  |
+| `SYSTEM` | TEXT | The code system reference |  |
+| `CODE` | TEXT | The codified concept contained within the code system |  |
+| `DISPLAY` | TEXT |  The displayable description for the concept |  |
+| `IS_MAPPED` | BOOLEAN | true/false is the code mapped to a standard concept within the `concept_map` object |  |
+| `USE_COUNT` | NUMBER | the calculated frequency of use of the encoded concept within the processed data to date |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record. | |
+| `LDS_START_DATETIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |
+
+### concept_map
+
+> [!NOTE]
+> A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
+
+| Column Name | Data Type | Description | Compass equivalent |
+| --- | --- | ---- |  ---- |
+| `ID` | UUID | 'Unique ID of the person' | -- |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version | -- |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table | -- |
+| `LDS_DATASET_ID` | UUID | LDS assigned identifier for the source dataset | -- |
+| `CONCEPT_MAP_ID` | UUID | The Unique Identifier for the mapping group | -- |
+| `SOURCE_CODE_ID` | UUID | The Unique Identifier for the source concept_id  | -- |
+| `TARGET_CODE_ID` | UUID | The Unique Identifier for the target concept_id  | -- |
+| `IS_PRIMARY` | BOOLEAN | True/false is this the primary mapping for the code | -- |
+| `EQUIVALENCE` | TEXT | type of mapping equivalence, values include 'equivalent', 'wider', 'narrower', 'subsumes', 'inexact', 'unmatched', 'specializes', 'relatedto', 'unmatched' | -- |
+| `LDS_START_DATE_TIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct | -- |
+
+
+## `[OLIDS_GOVERNANCE]` Schema
+
+### allocation
+> [!NOTE]
+> Allocation table capturing subscription and subscriber allocation details along with LDS audit metadata.
+
+| Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
+| --- | --- | ---- | ---- | ---- |
+| `ID` | UUID | Unique business key generated as concatenation of LDSRecordId, SubscriberId, and SubscriptionId  | No Foreign Key reference |  |
+| `LDS_START_DATE_TIME` | timestamp | Timestamp indicating when this allocation record became active; taken from DateTimeUpdated or DateTimeCreated |  |  |
+| `LDS_RECORD_ID` | TEXT | LDS assigned unique identifier for the record |  |  |
+| `LDS_SOURCE_DATASET_ID` | TEXT | LDS identifier for the source dataset |  |  |
+| `LDS_SOURCE_DATASET_OBJECT_ID` | TEXT | LDS identifier for the specification object within the source dataset |  |  |
+| `LDS_SOURCE_FILE_ID` | TEXT | LDS identifier for the source file from which this record was sourced |  |  |
+| `LDS_BATCH_ID` | TEXT | LDS identifier for the batch processing this record |  |  |
+| `LDS_DATETIME_DATA_SUPPLIED` | timestamp | Date and time when the data was supplied to LDS |  |  |
+| `LDS_SUBSCRIBER_ID` | TEXT | Unique identifier for the subscriber |  |  |
+| `LDS_SUBSCRIPTION_ID` | TEXT | Unique identifier for the subscription |  |  |
+| `LDS_SUBSCRIBER_CODE` | TEXT | Subscriber code assigned by the source system |  |  |
+| `LDS_SUBSCRIPTION_ENDPOINT_CODE` | TEXT | Subscriber endpoint or subscription endpoint code |  |  |
+| `LDS_ALLOCATION_STATE` | TEXT | Status of the allocation, values: 'active', 'rescinded', 'expired' |  |  |
+| `LDS_CREATED_DATE` | timestamp | Date and time the record was created in LDS |  |  |
+| `LDS_CREATED_BY_RUN_ID` | TEXT | Pipeline run identifier that created the record |  |  |
+| `LDS_UPDATED_DATE` | timestamp | Date and time the record was last updated in LDS |  |  |
+| `LDS_UPDATED_BY_RUN_ID` | TEXT | Pipeline run identifier that last updated the record |  |  |
+
+## `[REFERENCE]` Schema
+
+### postcode_hash
+
+> [!NOTE]  
+> Stores hashed postcodes along with associated organisations and geographic areas for reference, including effective date ranges and LDS audit metadata.
+
+| Column Name | Data Type | Comment | Foreign Key Reference | Compass equivalent |
+| --- | --- | --- | --- | --- |
+| `ID` | BINARY(32) | Unique identifier for the record | No Foreign Key reference |  |
+| `LDS_ID` | UUID | LDS assigned Unique Identifier for this common modelled record version |  |  |
+| `LDS_BUSINESS_KEY` | TEXT | Natural or source key for the unique event/entity of the table |  |  |
+| `LDS_DATASET_ID` | UUID | LDS assigned identifier for the source dataset |  |  |
+| `POSTCODE_HASH` | BINARY(32) | Unique hashed value representing the postcode, also acts as a unique identifier |  |  |
+| `PRIMARY_CARE_ORGANISATION` | TEXT | Primary care organisation associated with the postcode |  |  |
+| `LOCAL_AUTHORITY_ORGANISATION` | TEXT | Local authority organisation linked to the postcode |  |  |
+| `YR2011_LSOA` | TEXT | 2011 Lower Super Output Area (LSOA) code for the postcode |  |  |
+| `YR2011_MSOA` | TEXT | 2011 Middle Super Output Area (MSOA) code for the postcode |  |  |
+| `YR2021_LSOA` | TEXT | 2021 Lower Super Output Area (LSOA) code for the postcode |  |  |
+| `YR2021_MSOA` | TEXT | 2021 Middle Super Output Area (MSOA) code for the postcode |  |  |
+| `EFFECTIVE_FROM` | TIMESTAMP_NTZ(9) | Start date/time from which this record is effective |  |  |
+| `EFFECTIVE_TO` | TIMESTAMP_NTZ(9) | End date/time until which this record is effective |  |  |
+| `IS_LATEST` | NUMBER(38,0) NOT NULL | Flag indicating if this is the latest record (1 = yes, 0 = no) |  |  |
+| `LDS_IS_DELETED` | BOOLEAN | LDS flag standardised presentation of deleted state of the record |  |  |
+| `LDS_START_DATE_TIME` | TIMESTAMP_NTZ | LDS datetime stamp from which the record version was correct |  |  |
+| `LAKEHOUSE_DATE_PROCESSED` | DATE NOT NULL | Date when the data was landed into the lakehouse |  |  |
+| `HIGH_WATERMARK_DATE_TIME` | TIMESTAMP_NTZ(9) NOT NULL | High watermark timestamp for incremental loads |  |  |
+| `LDS_LAKEHOUSE_DATE_PROCESSED` | DATE | LDS date stamp when the data was landed into the lakehouse |  |  |
+
+## Ages
+
+Ages shown in the OLIDS dataset for de-identified (also known as "masked" or "pseudonymised") data are shown in:
+
+- whole integer years
+- age brackets aligned to HES child ages
+- days since birth up to 27 days for neonates
+
+This is aligned with the Hospital Episode Statistics age categorisation as below:
+
+| OLIDS Column | HES column | Definitions | Values |
+| :--- | :--- | :--- | :--- |
+| `AGE_AT_EVENT` | `age` | **HES:** <br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. <br><br>**OLIDS:**<br> Number of whole years between patient's date of birth and the event. <br>The event date typically used is the end date, unless otherwise stated within the column name. | nnn = Age in years |
+| `AGE_AT_EVENT_BABY` | `ENDAGE` and `STARTAGE` (APC) <br> `APPTAGE` (OP) <br> `ARRIVALAGE` (AE) | **HES:**<br>The patient's age, in completed years, at the end of a finished episode. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply.<br><br>**OLIDS:**<br>The patient's age, in completed years, at the end of an event. <br>For patients under 1 year old, special codes in the range 7001 to 7007 apply. | nnn = Age in years<br> 120 = 120 years or more<br> 7001 = Less than 1 day  <br> 7002 = 1 to 6 days  <br> 7003 = 7 to 28 days  <br> 7004 = 29 to 90 days (under 3 months)  <br> 7005 = 91 to 181 days (approximately 3 months to under 6  months)  <br> 7006 = 182 to 272 days (approximately 6 months to under 9 months)  <br> 7007 = 273 to <1 year (approximately 9 months to under 1 year)  <br> Null = Not applicable (other maternity event) or not known <br> [See HES Data Dictionary](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/hospital-episode-statistics/hospital-episode-statistics-data-dictionary)|
+| `AGE_AT_EVENT_NEONATE` | `NEODUR` (APC) | **HES:** <br>The age in days of a baby admitted as a patient. It is derived from the Admission Date (ADMIDATE) and Date of Birth (DOB). <br>If the baby is older than 27 days, NEODUR is not calculated. <br><br>**OLIDS:** <br>The age of a patient at the end of an event where the patient is under 28 days old.<br> If the baby is older than 27 days, no age in days is given. | 2n = Age of patient in days from 0 to 27. <br> `NULL` = Not applicable. Patient is older than 27 days. |

@@ -80,6 +80,9 @@
     "MD051": false,
     "MD052": true,
     "MD053": true,
-    "MD058": true
+    "MD058": true,
+    "MD060": {
+        "style": "compact"
+    }
 }
     
