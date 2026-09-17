@@ -12,7 +12,7 @@
 | Ref | Area | Description | Impact on UAT | Status | Owner |
 | --- | --- | --- | --- | --- | --- |
 | KI01 | Encounters | The `is_latest` logic does not select a single record when EventLink records are sequenced. | Duplicates | ![Status](https://img.shields.io/badge/Status-Accepted-darkgreen) | ![Owner](https://img.shields.io/badge/LDS-00ADC3) |
-| KI02 | Patient Addresses | patient_address start date > end_date for few records | DQ issue in raw data | ![Status](https://img.shields.io/badge/Status-Closed-green) | n/a |
+| KI02 | Patient Addresses | patient_address start date > end_date for a few records | DQ issue in raw data | ![Status](https://img.shields.io/badge/Status-Closed-green) | n/a |
 
 ## 2. Deviations from DDS (Not Defects)
 
