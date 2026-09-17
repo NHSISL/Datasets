@@ -4,7 +4,9 @@ Documentation for the One London Integrated Data Set (OLIDS): how source data is
 
 ## Contents
 
-- [known-issues-deviations.md](known-issues-deviations.md) — Log of known defects and expected deviations from the DDS, maintained ahead of UAT so testers can distinguish genuine bugs from expected behaviour
+- **[Known issues and deviations (EMIS)](known-issues-deviations-emis.md)** — Log of known defects and expected deviations from the DDS, maintained ahead of UAT so testers can distinguish genuine bugs from expected behaviour
+
+- **[Known issues and deviations (TPP)](known-issues-deviations-tpp.md)** — Log of known defects and expected deviations from the DDS, maintained ahead of UAT so testers can distinguish genuine bugs from expected behaviour
 
 - **[Source-data/](Source-data/)** — Source system context
   - [supported-source-systems.md](Source-data/supported-source-systems.md) — LDS position on which GP clinical systems are in scope for ingestion
