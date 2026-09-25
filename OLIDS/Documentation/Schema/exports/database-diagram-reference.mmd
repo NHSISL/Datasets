@@ -1,0 +1,31 @@
+---
+title: OLIDS Reference and Hierarchy Tables
+---
+erDiagram
+    CONCEPT ||--o{ CONCEPT_MAP : SOURCE_CONCEPT_ID
+    CONCEPT ||--o{ CONCEPT_MAP : TARGET_CONCEPT_ID
+    CONCEPT ||--o{ PATIENT : GENDER_SOURCE_CONCEPT_ID
+    CONCEPT ||--o{ PATIENT_ADDRESS : ADDRESS_TYPE_SOURCE_CONCEPT_ID
+    CONCEPT ||--o{ PATIENT_CONTACT : CONTACT_TYPE_SOURCE_CONCEPT_ID
+    CONCEPT ||--o{ ORGANISATION : PRIMARY_LOCATION_TYPE_SOURCE_CONCEPT_ID
+    CONCEPT ||--o{ LOCATION : LOCATION_TYPE_SOURCE_CONCEPT_ID
+    CONCEPT ||--o{ APPOINTMENT : status_booking_contact_refs
+    CONCEPT ||--o{ ENCOUNTER : source_and_date_precision_refs
+    CONCEPT ||--o{ EPISODE_OF_CARE : type_and_status_refs
+    CONCEPT ||--o{ OBSERVATION : clinical_result_and_type_refs
+    CONCEPT ||--o{ ALLERGY_INTOLERANCE : date_precision_and_type_refs
+    CONCEPT ||--o{ MEDICATION_STATEMENT : date_authorisation_type_refs
+    CONCEPT ||--o{ MEDICATION_ORDER : date_precision_and_type_refs
+    CONCEPT ||--o{ REFERRAL_REQUEST : date_priority_type_specialty_refs
+
+    ORGANISATION ||--o{ ORGANISATION : PARENT_ORGANISATION_ID
+    ORGANISATION ||--o{ PATIENT : publisher_provider_author_registered_practice_refs
+    ORGANISATION ||--o{ EPISODE_OF_CARE : publisher_managing_author_refs
+    ORGANISATION ||--o{ ENCOUNTER : publisher_provider_author_refs
+    ORGANISATION ||--o{ OBSERVATION : publisher_provider_author_refs
+    ORGANISATION ||--o{ ALLERGY_INTOLERANCE : publisher_provider_author_refs
+    ORGANISATION ||--o{ DIAGNOSTIC_ORDER : publisher_provider_author_refs
+    ORGANISATION ||--o{ PROCEDURE_REQUEST : publisher_provider_author_refs
+    ORGANISATION ||--o{ REFERRAL_REQUEST : publisher_author_refs
+    ORGANISATION ||--o{ MEDICATION_STATEMENT : publisher_provider_author_refs
+    ORGANISATION ||--o{ MEDICATION_ORDER : publisher_provider_author_refs
