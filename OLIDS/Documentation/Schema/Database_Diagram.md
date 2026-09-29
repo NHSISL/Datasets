@@ -5,16 +5,6 @@ This page consolidates the foreign-key relationships documented across the schem
 > [!NOTE]
 > The diagrams below are derived from the documented `PK/FK` columns in each table page. They reflect the current documentation, including indicative relationships where the source pages note that optionality is still being clarified.
 
-## Static exports
-
-These files are intended for export into documents, slides, and tickets where Mermaid rendering may not be available:
-
-| Diagram | Mermaid source | SVG | PNG |
-| --- | --- | --- | --- |
-| Core patient and clinical flow | [exports/database-diagram-core.mmd](exports/database-diagram-core.mmd) | [exports/database-diagram-core.svg](exports/database-diagram-core.svg) | [exports/database-diagram-core.png](exports/database-diagram-core.png) |
-| Scheduling and workforce | [exports/database-diagram-scheduling.mmd](exports/database-diagram-scheduling.mmd) | [exports/database-diagram-scheduling.svg](exports/database-diagram-scheduling.svg) | [exports/database-diagram-scheduling.png](exports/database-diagram-scheduling.png) |
-| Reference and hierarchy | [exports/database-diagram-reference.mmd](exports/database-diagram-reference.mmd) | [exports/database-diagram-reference.svg](exports/database-diagram-reference.svg) | [exports/database-diagram-reference.png](exports/database-diagram-reference.png) |
-
 ## Core patient and clinical flow
 
 ```mermaid
