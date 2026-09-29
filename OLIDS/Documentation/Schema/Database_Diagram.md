@@ -125,7 +125,9 @@ erDiagram
     CONCEPT ||--o{ ALLERGY_INTOLERANCE : date_precision_and_type_refs
     CONCEPT ||--o{ MEDICATION_STATEMENT : date_authorisation_type_refs
     CONCEPT ||--o{ MEDICATION_ORDER : date_precision_and_type_refs
-    CONCEPT ||--o{ REFERRAL_REQUEST : date_priority_type_specialty_refs
+    CONCEPT ||--o{ DIAGNOSTIC_ORDER : date_units_order_episodicity_refs
+    CONCEPT ||--o{ PROCEDURE_REQUEST : date_and_procedure_refs
+    CONCEPT ||--o{ REFERRAL_REQUEST : date_priority_type_specialty_source_refs
 
     ORGANISATION ||--o{ ORGANISATION : PARENT_ORGANISATION_ID
     ORGANISATION ||--o{ PATIENT : publisher_provider_author_registered_practice_refs
