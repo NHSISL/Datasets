@@ -55,6 +55,7 @@ Start with [_schema_notes.md](_schema_notes.md) for cross-cutting conventions th
 
 | Table | Description |
 | --- | --- |
+| [Database_Diagram.md](Database_Diagram.md) | Consolidated schema-wide Mermaid ER diagrams derived from documented foreign keys. |
 | [_schema_notes.md](_schema_notes.md) | Cross-cutting standards: datetime format, source concept IDs, Publisher/Author/Provider/Supplier organisation definitions, patient age representation. |
 
 ## Masking policy symbols
