@@ -17,7 +17,7 @@ TPP extracted data published to subscribers will include all "shared care record
 - records shared from one GP practice to another as a TPP specific alternative to the national GP2GP system
 - records shared from a secondary care provider (i.e. community care) running a TPP SystmOne patient administration system, and where both the care provider as a whole, and the individual patient, agree to share the record back to the patients primary care provider.
 
-These records are distinguished by the difference between the `publishing_organisation_id` and the `author_organisation_id`.
+These records are distinguished by the difference between the `publisher_organisation_id` and the `author_organisation_id`.
 
 Users of Compass should note that the legacy system included only shared care records authored by another participating GP practice within the same region, so a shared care record was only made visible to the subscriber if the author was also a signatory to the commissioners sharing agreement.
 
